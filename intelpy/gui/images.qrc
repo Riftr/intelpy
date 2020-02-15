@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="pie">
+    <file>pie.jpg</file>
+  </qresource>
+</RCC>

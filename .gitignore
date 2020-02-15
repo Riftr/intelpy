@@ -1,0 +1,7 @@
+venv/
+settings.conf
+/.idea/
+.vscode/
+dist/
+build/
+intelpy.spec
