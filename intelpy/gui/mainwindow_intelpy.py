@@ -11,6 +11,7 @@ import intelpy.eve.eveloghandler_worker as eveloghandler
 from intelpy.eve.eveloghandler_signals import EveworkerSignals
 import threading
 import intelpy.gui.playalert_worker as playalertworker
+import time
 
 # Todo: fix multiple clients, improve file reading (from last line to known line), known line cleanup
 
@@ -90,7 +91,9 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.set_home()
 
         # Watchdog worker thread to monitor logs
-        self.eveloghandler_worker = None
+        #self.eveloghandler_worker = None
+        self.eveloghandler_worker = eveloghandler.Eveloghandler_worker(self.configuration, self.event_stop)
+        self.eveloghandler_worker.pass_message.connect(self.message_ready_process)
         self.start_watchdog()
 
     # Methods
@@ -160,7 +163,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
             self.configuration.value["eve_log_location"] = self.log_location
             self.configuration.flush_config_to_file()
             self.append_log(log.format_info("Log directory set to: " + self.configuration.value["eve_log_location"]))
-            self.stop_watchdog()
+            self.restart_watchdog()
 
     def choose_alarm_location(self):
         self.alarm_location = QFileDialog.getOpenFileName(
@@ -247,13 +250,18 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
 
     # Logs watchdog functions
     def start_watchdog(self):
-        self.eveloghandler_worker = eveloghandler.Eveloghandler_worker(self.configuration, self.event_stop)
         self.eveloghandler_worker.start()
-        self.eveloghandler_worker.pass_message.connect(self.message_ready_process)
+        #self.eveloghandler_worker.pass_message.connect(self.message_ready_process)
 
     #@pyqtSlot()
     def stop_watchdog(self):
         self.event_stop.set()
+
+    def restart_watchdog(self):
+        self.stop_watchdog()
+        time.sleep(1)
+        self.event_stop.clear()
+        self.start_watchdog()
 
     @pyqtSlot(list)
     def message_ready_process(self, message_list):
