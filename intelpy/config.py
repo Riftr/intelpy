@@ -42,16 +42,19 @@ class Config:
         self.default_config_file = default_config_file   # Path to file (without filename)
         self.app_name = app_name                         # App name for the folder to save in
         self.file_location = self.good_place_for_file()  # Path excluding filename to save/read file
+        self.debug = 1
 
         # If settings.json doesn't exist, create it and set default values
         if not Path(self.file_location + self.default_config_file).is_file():
             # Create directory as well if it doesn't exist
             if not Path(self.file_location).exists():
                 try:
-                    print("Making " + str(self.file_location))
+                    if self.debug:
+                        print("Making " + str(self.file_location))
                     makedirs(self.file_location)
                 except IOError as e:
-                    print("Could not access directory path for config, check permissions")
+                    if self.debug:
+                        print("Could not access directory path for config, check permissions")
                     print(str(e))
                     raise
 
@@ -62,26 +65,28 @@ class Config:
 
     def read_config_from_file(self):
         # LOAD (deserialize) JSON file into an object
-        print("Reading config from: " + str(self.file_location + self.default_config_file))
+        if self.debug:
+            print("Reading config from: " + str(self.file_location + self.default_config_file))
         try:
             with open(self.file_location + self.default_config_file, "r") as config_file:
                 self.value = json.load(config_file)
         except IOError as e:
-            print("Could not read configuration file")
+            if self.debug:
+                print("Could not read configuration file")
             print(str(e))
-            # exit(1)
             raise
 
     def flush_config_to_file(self):
         # DUMP (serialize) an object to JSON file
-        print("Writing config to: " + str(self.file_location + self.default_config_file))
+        if self.debug:
+            print("Writing config to: " + str(self.file_location + self.default_config_file))
         try:
             with open(self.file_location + self.default_config_file, "w") as config_file:
                 json.dump(self.value, config_file, indent=4)
         except IOError as e:
-            print("Could not write configuration file")
+            if self.debug:
+                print("Could not write configuration file")
             print(str(e))
-            # exit(1)
             raise
 
     def good_place_for_file(self):

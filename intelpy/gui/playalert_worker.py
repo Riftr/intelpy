@@ -1,8 +1,5 @@
 from PyQt5.QtCore import QThread
 from PyQt5.QtWidgets import QMessageBox
-from pathlib import Path
-#from pydub import AudioSegment
-#from pydub.playback import play
 import playsound
 
 
@@ -17,10 +14,9 @@ class PlayAlert_worker(QThread):
         try:
             playsound.playsound(alarm_sound)
         except FileNotFoundError as e:
-            self.error_diag("Error: Could not play alert sound!", str(e))
+            self.error_diag("Error: Could not play alert sound! File not found.", str(e))
         except Exception as e:
             self.error_diag("Error: Could not play alert sound!", str(e))
-
 
     def error_diag(self, message, error):
         msg_dialog = QMessageBox()

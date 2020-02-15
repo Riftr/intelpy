@@ -169,7 +169,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.alarm_location = QFileDialog.getOpenFileName(
             self,
             "Choose sound file",
-            str(Path.home()),
+            "intelpy/resources",
             "Sounds (*.mp3 *.wav)",
             options=QFileDialog.DontUseNativeDialog)
 

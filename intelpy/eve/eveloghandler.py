@@ -6,7 +6,7 @@ from datetime import datetime
 
 
 class EveLogHandler(PatternMatchingEventHandler, QObject):
-    message_ready = pyqtSignal(list)  # Custom signal to fire when a line is processed
+    message_ready = pyqtSignal(list)
 
     def __init__(self, patterns=None, ignore_patterns=None,
                  ignore_directories=False, case_sensitive=False, configuration=None):
@@ -32,7 +32,8 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
 
     def on_modified(self, event):
         # will fire on new files as well as modified files
-        print("Watchdog saw a file modified")
+        if self.configuration.value["debug"]:
+            print("Watchdog saw a file modified")
         # At this point, only files that match the filter will be available. Also,
         # they will have had an update to them. We need to get the file, compare to
         # our dict of files and figure out what line to process from. Once done, trigger
@@ -48,23 +49,25 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
             # We got a new file, add it
             self.known_files[event.src_path] = 13     # Start at line 13 to avoid processing header
 
-        print("Starting at line: " + str(self.known_files[event.src_path]))
+        #print("Starting at line: " + str(self.known_files[event.src_path]))
 
         # get line/s from file
         try:
             with open(event.src_path, "r", encoding="utf_16_le") as file_data:
                 all_lines = file_data.readlines()
                 if len(all_lines) < 13:
-                    print("file had less than 13 lines. Either is just a header file or not a chat log")
+                    if self.configuration.value["debug"]:
+                        print("file had less than 13 lines. Either is just a header file or not a chat log")
                     return
                 else:
                     sliced_lines = all_lines[self.known_files[event.src_path]-1:]   #
                     self.known_files[event.src_path] += len(sliced_lines)  # add how many lines we read in
                     last_line = sliced_lines[-1]
                     if not last_line[1] == "[":
-                        print("last line 0 is: " + last_line[0])
-                        print("last line 1 is: " + last_line[1])
-                        print("last line 2 is: " + last_line[2])
+                        if self.configuration.value["debug"]:
+                            print("last line 0 is: " + last_line[0])
+                            print("last line 1 is: " + last_line[1])
+                            print("last line 2 is: " + last_line[2])
                         return
                     else:
                         last_line_list = self.parse_message(last_line)
@@ -118,15 +121,14 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
             nick_and_msg = split_line[1].split(" > ", 1)   # split nick and message up
             message_list.append(nick_and_msg[0])  # nickname
             message_list.append(nick_and_msg[1])  # message
-
-            print("----")
-            print("parsing line: " + line)
-            print("DTS: " + message_list[0].strftime("%Y.%m.%d %H:%M:%S"))
-            print("Nickname: " + message_list[1])
-            print("Message: " + message_list[2])
+            if self.configuration.value["debug"]:
+                print("----")
+                print("parsing line: " + line)
+                print("DTS: " + message_list[0].strftime("%Y.%m.%d %H:%M:%S"))
+                print("Nickname: " + message_list[1])
+                print("Message: " + message_list[2])
 
             return message_list
 
         except Exception as e:
             raise
-            #sys.exit()     # Will handle differently in main app, prob just skip over it

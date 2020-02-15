@@ -4,4 +4,4 @@ settings.conf
 .vscode/
 dist/
 build/
-intelpy.spec
+*.spec

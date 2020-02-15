@@ -44,7 +44,7 @@ class EveData:
     def get_neighbours_within(self, id_code, jumps):
         # Get nodes within X edges, returns a 'set' which we then make a list
         neighbour_graph = set(nx.ego_graph(self.universe, id_code, radius=jumps))
-        print(neighbour_graph)
+        #print(neighbour_graph)
         return list(neighbour_graph)
 
 
