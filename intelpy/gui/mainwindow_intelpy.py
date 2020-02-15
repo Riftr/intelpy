@@ -281,10 +281,10 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
                     self.append_log(log.format_important("matched: " + system))
                     self.append_log("<b> > </b> " + log.format_info(str(message_list[0])))
                     self.append_log(log.format_info(message_list[2]))
+
                 # play alert (blocking on Linux so threading it)
                 self.playalert_worker = playalertworker.PlayAlert_worker(self.configuration)
                 self.playalert_worker.start()
-                #playsound(self.configuration.value["alarm_sound"])
                 return
 
         # Display all?

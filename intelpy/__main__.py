@@ -22,7 +22,7 @@ def main():
         "alert_systems": [],
         "log_watch_active": 1,
         "config_loc": "",
-        "alarm_sound": "intelpy/resources/sounds/alarm4.mp3",
+        "alarm_sound": "intelpy/resources/alarm4.mp3",
         "display_alerts": 0,
         "display_clear": 1,
         "display_all": 0

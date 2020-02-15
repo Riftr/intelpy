@@ -87,7 +87,7 @@
            <enum>Qt::NoFocus</enum>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="config_tab">
            <attribute name="title">
@@ -374,7 +374,11 @@
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QLineEdit" name="lineEdit_alarm"/>
+              <widget class="QLineEdit" name="lineEdit_alarm">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
              </item>
              <item row="0" column="1">
               <widget class="QLineEdit" name="lineEditEve_Log_Location">
@@ -405,7 +409,7 @@
              <rect>
               <x>150</x>
               <y>140</y>
-              <width>188</width>
+              <width>192</width>
               <height>92</height>
              </rect>
             </property>
