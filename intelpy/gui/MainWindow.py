@@ -223,7 +223,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tab_widget.setCurrentIndex(1)
+        self.tab_widget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.lineEditHome_System, self.pushButtonSet_Home)
         MainWindow.setTabOrder(self.pushButtonSet_Home, self.horizontalSlider_AlertJumps)

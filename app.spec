@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['app.py'],
-             pathex=['/home/robert/PycharmProjects/Intelpy'],
+             pathex=['/home/robert/PycharmProjects/intelpy'],
              binaries=[],
              datas=[('intelpy/resources', 'resources')],
              hiddenimports=['pygobject'],

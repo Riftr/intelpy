@@ -1,8 +1,9 @@
 from PyQt5.QtCore import QThread
 from PyQt5.QtWidgets import QMessageBox
 from pathlib import Path
-from pydub import AudioSegment
-from pydub.playback import play
+#from pydub import AudioSegment
+#from pydub.playback import play
+import playsound
 
 
 class PlayAlert_worker(QThread):
@@ -12,21 +13,14 @@ class PlayAlert_worker(QThread):
         self.configuration = configuration
 
     def run(self):
-        audio_file = None
         alarm_sound = self.configuration.value["alarm_sound"]
         try:
-            if Path(alarm_sound).suffix == ".wav":
-                audio_file = AudioSegment.from_wav(alarm_sound)
-            elif Path(alarm_sound).suffix == ".mp3":
-                audio_file = AudioSegment.from_mp3(alarm_sound)
-            else:
-                self.error_diag("Could not play alert sound as file format was not understood.",
-                                "Check the file format is a valid .mp3 or .wav file")
+            playsound.playsound(alarm_sound)
         except FileNotFoundError as e:
             self.error_diag("Error: Could not play alert sound!", str(e))
         except Exception as e:
             self.error_diag("Error: Could not play alert sound!", str(e))
-        play(audio_file)
+
 
     def error_diag(self, message, error):
         msg_dialog = QMessageBox()
