@@ -3,7 +3,6 @@ from watchdog.events import PatternMatchingEventHandler
 import pickle
 from pathlib import Path
 from datetime import datetime
-import re
 
 
 class EveLogHandler(PatternMatchingEventHandler, QObject):
@@ -28,8 +27,8 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
         self.known_files = {}
         self.known_files_loc = self.configuration.value["config_loc"] + "known_files.p"
         # Todo: clear this of files > 24 hours old to keep size in check
-        # Todo: also save it more frequently in case problems?
-        self.load_known_files()
+        self.unpickle_dict()
+        self.maintain_known_files_file()  # Remove old files
 
     def on_modified(self, event):
         # will fire on new files as well as modified files
@@ -111,8 +110,19 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
 
     def maintain_known_files_file(self):
         # use on load, go though known files and clear out anything > 24 hrs
+        remove_list = []
+
         for key in self.known_files.keys():
-            str(key).split("_", 1)
+            file_date = str(key)[-19:-11]  # Get the date from the file name
+            file_date_converted = datetime.strptime(file_date, "%Y%m%d")
+            present_time = datetime.utcnow()
+            gap_time = (present_time - file_date_converted).days
+            if gap_time > 1:
+                remove_list.append(str(key))
+
+        for key_to_del in remove_list:
+            if key_to_del in self.known_files:
+                self.known_files.pop(key_to_del)
 
 
     #def load_known_files(self):

@@ -6,7 +6,6 @@ import pie.eve.evedata as evedata
 from PyQt5.QtWidgets import QApplication
 from tests import debug_config
 
-# Todo: better log file handling - use known files and line up to instead of just getting last line
 
 def main():
     app_name = "PersonalIntel4Eve"
@@ -24,9 +23,11 @@ def main():
         "log_watch_active": 1,
         "config_loc": "",
         "alarm_sound": "pie/resources/alarm2.mp3",
-        "display_alerts": 0,
+        "display_alerts": 1,
         "display_clear": 1,
-        "display_all": 0,
+        "display_all": 1,
+        "filter_status": 1,
+        "filter_clear": 1,
         "debug": 1,
         "message_timeout": 1.0
     }

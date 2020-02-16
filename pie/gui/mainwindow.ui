@@ -455,7 +455,7 @@
              <rect>
               <x>150</x>
               <y>250</y>
-              <width>192</width>
+              <width>197</width>
               <height>61</height>
              </rect>
             </property>
@@ -463,14 +463,14 @@
              <item>
               <widget class="QCheckBox" name="checkBox_filterclear">
                <property name="text">
-                <string>filter clear messages</string>
+                <string>ignore clear messages</string>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QCheckBox" name="checkBox_filterstatus">
                <property name="text">
-                <string>filter status messages</string>
+                <string>ignore status messages</string>
                </property>
               </widget>
              </item>

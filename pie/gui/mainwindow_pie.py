@@ -1,6 +1,3 @@
-#from PyQt5.QtWidgets import *
-#from PyQt5.QtCore import *
-#from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QWidget, QMessageBox
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QWidget, QMessageBox
 from pie.gui.MainWindow import Ui_MainWindow
@@ -13,8 +10,6 @@ import threading
 import pie.gui.playalert_worker as playalertworker
 import time
 
-# Todo: fix multiple clients, improve file reading (from last line to known line), known line cleanup
-# Todo: filter options (clear, status etc)
 
 class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
     def __init__(self, configuration, eve_data, *args, obj=None, **kwargs):
@@ -40,6 +35,10 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
             self.checkBox_displayclear.setChecked(True)
         if self.configuration.value["display_all"]:
             self.checkBox_displayall.setChecked(True)
+        if self.configuration.value["filter_clear"]:
+            self.checkBox_filterclear.setChecked(True)
+        if self.configuration.value["filter_status"]:
+            self.checkBox_filterstatus.setChecked(True)
 
         # Set the channel list
         self.channelListWidget.addItems(configuration.value["watched_channels"])
@@ -65,6 +64,10 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
             lambda: self.checkbox_changed(self.checkBox_displayclear, "display_clear"))
         self.checkBox_displayall.stateChanged.connect(
             lambda: self.checkbox_changed(self.checkBox_displayall, "display_all"))
+        self.checkBox_filterclear.stateChanged.connect(
+            lambda: self.checkbox_changed(self.checkBox_filterclear, "filter_clear"))
+        self.checkBox_filterstatus.stateChanged.connect(
+            lambda: self.checkbox_changed(self.checkBox_filterstatus, "filter_status"))
 
         # Alert silder
         self.horizontalSlider_AlertJumps.valueChanged.connect(self.alert_slider_changed)
@@ -103,6 +106,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
     def checkbox_changed(self, state, which_button):
         alert_on = "set to <font color=\"green\">ON</font>"
         alert_off = "set to <font color=\"red\">OFF</font>"
+        ignore_on = "set to <font color=\"red\">IGNORE</font>"
+        ignore_off = "set to <font color=\"green\">NOT IGNORE</font>"
         if which_button == "display_alerts":
             if state.isChecked():
                 self.set_config_state("display_alerts", 1)
@@ -124,6 +129,21 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
             else:
                 self.set_config_state("display_all", 0)
                 self.append_log(log.format_info("Display all set to " + alert_off))
+        if which_button == "filter_clear":
+            if state.isChecked():
+                self.set_config_state("filter_clear", 1)
+                self.append_log(log.format_info("Clear messages set to " + ignore_on))
+            else:
+                self.set_config_state("filter_clear", 0)
+                self.append_log(log.format_info("Clear messages set to " + ignore_off))
+        if which_button == "filter_status":
+            if state.isChecked():
+                self.set_config_state("filter_status", 1)
+                self.append_log(log.format_info("Status messages set to " + ignore_on))
+            else:
+                self.set_config_state("filter_status", 0)
+                self.append_log(log.format_info("Status messages set to " + ignore_off))
+
 
     # Alert slider
     def alert_slider_changed(self):
@@ -271,15 +291,22 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         this_message = message_list[2]
         this_message = this_message.upper()
 
-        if message_list[3] >= 1:
-            self.append_log(log.format_important("Note, " + str(message_list[3] - 1) +
-                                                 " lines were updated since last run"))
+        #if message_list[3] >= 1:
+        #    self.append_log(log.format_important("Note, " + str(message_list[3] - 1) +
+        #                                         " lines were updated since last run"))
 
         # check for clear
-        if "CLEAR" in this_message or "CLR" in this_message:
-            if self.configuration.value["display_clear"]:
-                self.append_log(log.format_info("Clear message received: " + message_list[2]))
-            return
+        if self.configuration.value["filter_clear"]:
+            if "CLEAR" in this_message or "CLR" in this_message:
+                if self.configuration.value["display_clear"]:
+                    self.append_log(log.format_info("Clear message received: " + message_list[2]))
+                return
+
+        if self.configuration.value["filter_status"]:
+            if "STATUS" in this_message:
+                self.append_log(log.format_info("Status? message received: " + message_list[2]))
+                return
+
 
         # check if message contains a system within jump range
         for system in self.alert_system_names_readable:
@@ -290,10 +317,10 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
                                                  " jumps!"
                                                  ))
                 #check if details need to be printed
-                if self.configuration.value["display_alerts"]:   # for some reason this waits til sound plays sometimes
-                    self.append_log(log.format_important("matched: " + system))
-                    self.append_log("<b> > </b> " + log.format_info(str(message_list[0])))
-                    self.append_log(log.format_info(message_list[2]))
+                if self.configuration.value["display_alerts"]:
+                    self.append_log(log.format_important(str(message_list[0])))
+                    self.append_log(log.format_important("System: " + system))
+                    self.append_log(log.format_important("Message: " + message_list[2]))
 
                 # play alert (blocking on Linux so threading it)
                 self.playalert_worker = playalertworker.PlayAlert_worker(self.configuration)
