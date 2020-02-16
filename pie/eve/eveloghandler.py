@@ -60,22 +60,38 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
                         print("file had less than 13 lines. Either is just a header file or not a chat log")
                     return
                 else:
-                    sliced_lines = all_lines[self.known_files[event.src_path]-1:]   #
-                    self.known_files[event.src_path] += len(sliced_lines)  # add how many lines we read in
-                    last_line = sliced_lines[-1]
+                    sliced_lines = all_lines[self.known_files[event.src_path]-1:]   # What we haven't processed yet (could be multiple lines)
+                    self.known_files[event.src_path] += len(sliced_lines)           # add how many lines we read in
+                    self.pickle_dict()
+
+                    last_line = sliced_lines[-1] # just gets last line
                     if not last_line[1] == "[":
                         if self.configuration.value["debug"]:
+                            print("line was not processed as it did not start with [")
                             print("last line 0 is: " + last_line[0])
                             print("last line 1 is: " + last_line[1])
                             print("last line 2 is: " + last_line[2])
-                        return
+                        #return
                     else:
-                        last_line_list = self.parse_message(last_line)
-                        if last_line_list[1] == "EVE System":   # Chucking away this for now, will use one day
-                            return
+                        parsed_line = self.parse_message(last_line)
+                        if not parsed_line[1] == "EVE System":   # Chucking away this for now, will use one day
+                            #self.pickle_dict()  # Save our known lines file (was a test)
+
+                            # 4th item in list, how many lines were unknown
+                            if len(sliced_lines) > 1:
+                                parsed_line.append(len(sliced_lines))
+                                if self.configuration.value["debug"]:
+                                    print("more than 1 line was unknown")
+                                    print(sliced_lines)
+                            else:
+                                parsed_line.append(0)
+
+                            self.message_ready.emit(parsed_line)
                         else:
-                            self.pickle_dict() # saving as a test
-                            self.message_ready.emit(last_line_list)
+                            if self.configuration.value["debug"]:
+                                print("line was not processed, was an eve system msg")
+
+
 
         except IOError as e:
             print("Error reading Eve log file" + str(e))

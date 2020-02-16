@@ -3,14 +3,14 @@
 #from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QWidget, QMessageBox
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QWidget, QMessageBox
-from intelpy.gui.MainWindow import Ui_MainWindow
+from pie.gui.MainWindow import Ui_MainWindow
 from pathlib import Path
 import getpass
-import intelpy.gui.logformatting as log
-import intelpy.eve.eveloghandler_worker as eveloghandler
-from intelpy.eve.eveloghandler_signals import EveworkerSignals
+import pie.gui.logformatting as log
+import pie.eve.eveloghandler_worker as eveloghandler
+from pie.eve.eveloghandler_signals import EveworkerSignals
 import threading
-import intelpy.gui.playalert_worker as playalertworker
+import pie.gui.playalert_worker as playalertworker
 import time
 
 # Todo: fix multiple clients, improve file reading (from last line to known line), known line cleanup
@@ -169,7 +169,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.alarm_location = QFileDialog.getOpenFileName(
             self,
             "Choose sound file",
-            "intelpy/resources",
+            "pie/resources",
             "Sounds (*.mp3 *.wav)",
             options=QFileDialog.DontUseNativeDialog)
 
@@ -198,7 +198,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
             # New home not valid
             old_home = self.configuration.value["home_system"]
             self.lineEditHome_System.setText(old_home.upper())
-            self.error_message("IntelPy: Home not valid",
+            self.error_message("PersonalIntel4Eve: Home not valid",
                                "The home system you entered, " + new_home + ", was not valid.",
                                "Please enter a valid system name.",
                                "",
@@ -259,7 +259,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
 
     def restart_watchdog(self):
         self.stop_watchdog()
-        time.sleep(1)
+        time.sleep(1.1)
         self.event_stop.clear()
         self.start_watchdog()
 
@@ -269,6 +269,10 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         # message_list =  dts, nick, message
         this_message = message_list[2]
         this_message = this_message.upper()
+
+        if message_list[3] >= 1:
+            self.append_log(log.format_important("Note, " + str(message_list[3] - 1) +
+                                                 " lines were updated since last run"))
 
         # check for clear
         if "CLEAR" in this_message or "CLR" in this_message:

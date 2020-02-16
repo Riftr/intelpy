@@ -1,5 +1,5 @@
 from PyQt5.QtCore import *
-import intelpy.eve.eveloghandler as eveloghandler
+import pie.eve.eveloghandler as eveloghandler
 from watchdog.observers import Observer
 import time
 
@@ -35,8 +35,6 @@ class Eveloghandler_worker(QThread):
 
         while not self.event_stop.is_set():
             time.sleep(1)
-            #print("------------------------------")
-            #self.print_current_patterns()
 
         # when stopping
         self.eveloghandler_watchdog.pickle_dict()

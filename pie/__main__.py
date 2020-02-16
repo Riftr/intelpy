@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 import sys
-from intelpy import config
-from intelpy.gui import mainwindow_intelpy
-import intelpy.eve.evedata as evedata
+from pie import config
+from pie.gui import mainwindow_pie
+import pie.eve.evedata as evedata
 from PyQt5.QtWidgets import QApplication
 from tests import debug_config
 
 # Todo: better log file handling - use known files and line up to instead of just getting last line
 
 def main():
-    app_name = "intelpy"
+    app_name = "PersonalIntel4Eve"
 
     # Set the default configuration
     default_json = {
@@ -23,7 +23,7 @@ def main():
         "alert_systems": [],
         "log_watch_active": 1,
         "config_loc": "",
-        "alarm_sound": "intelpy/resources/alarm2.mp3",
+        "alarm_sound": "pie/resources/alarm2.mp3",
         "display_alerts": 0,
         "display_clear": 1,
         "display_all": 0,
@@ -34,13 +34,13 @@ def main():
     configuration.value["config_loc"] = configuration.file_location
 
     if configuration.value["debug"]:
-        print("---- IntelPy ----")
+        print("---- PersonalIntel4Eve ----")
         print("Debug enabled..")
 
     # Load eve data
-    eve_data_file = "intelpy/resources/evedata.p"
-    eve_systems = "intelpy/resources/systems.p"
-    eve_idstosystems = "intelpy/resources/idtosystems.p"
+    eve_data_file = "pie/resources/evedata.p"
+    eve_systems = "pie/resources/systems.p"
+    eve_idstosystems = "pie/resources/idtosystems.p"
     eve_data = evedata.EveData(eve_data_file, eve_systems, eve_idstosystems)
 
     if configuration.value["debug"]:
@@ -52,7 +52,7 @@ def main():
 
     # Load main window GUI
     app = QApplication(sys.argv)
-    window = mainwindow_intelpy.MainWindow(configuration, eve_data)
+    window = mainwindow_pie.MainWindow(configuration, eve_data)
     window.show()
     app.exec_()
 
