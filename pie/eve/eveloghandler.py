@@ -2,7 +2,7 @@ from PyQt5.QtCore import pyqtSignal, QObject
 from watchdog.events import PatternMatchingEventHandler
 import pickle
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class EveLogHandler(PatternMatchingEventHandler, QObject):
@@ -77,6 +77,15 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
                         if not parsed_line[1] == "EVE System":   # Chucking away this for now, will use one day
                             #self.pickle_dict()  # Save our known lines file (was a test)
 
+                            present_time = datetime.utcnow()
+                            past_time = parsed_line[0]
+                            gap_time = (present_time - past_time).total_seconds() / 60
+                            if gap_time > self.configuration.value["message_timeout"]:
+                                # message was old. Not sure if we care about remembering lines now
+                                if self.configuration.value["debug"]:
+                                    print("message was old, ignoring")
+                                return
+
                             # 4th item in list, how many lines were unknown
                             if len(sliced_lines) > 1:
                                 parsed_line.append(len(sliced_lines))
@@ -107,8 +116,9 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
             self.known_files = pickle.load(ku)
 
     def pickle_dict(self):
-        with open(self.known_files_loc, "wb") as kp:
-            pickle.dump(self.known_files, kp)
+        #with open(self.known_files_loc, "wb") as kp:
+        #    pickle.dump(self.known_files, kp)
+        pass
 
     def print_known_file_list(self):
         for key, value in self.known_files.items():
