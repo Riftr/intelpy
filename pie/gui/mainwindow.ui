@@ -450,6 +450,45 @@
              <string>Log options:</string>
             </property>
            </widget>
+           <widget class="QWidget" name="verticalLayoutWidget_2">
+            <property name="geometry">
+             <rect>
+              <x>150</x>
+              <y>250</y>
+              <width>192</width>
+              <height>61</height>
+             </rect>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <item>
+              <widget class="QCheckBox" name="checkBox_filterclear">
+               <property name="text">
+                <string>filter clear messages</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="checkBox_filterstatus">
+               <property name="text">
+                <string>filter status messages</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QLabel" name="label_9">
+            <property name="geometry">
+             <rect>
+              <x>50</x>
+              <y>250</y>
+              <width>101</width>
+              <height>22</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Filter options:</string>
+            </property>
+           </widget>
           </widget>
           <widget class="QWidget" name="zabout_tab">
            <attribute name="title">
@@ -474,7 +513,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Personal Intel</string>
+             <string>P. I. E.</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>

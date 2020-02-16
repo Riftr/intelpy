@@ -14,6 +14,7 @@ import pie.gui.playalert_worker as playalertworker
 import time
 
 # Todo: fix multiple clients, improve file reading (from last line to known line), known line cleanup
+# Todo: filter options (clear, status etc)
 
 class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
     def __init__(self, configuration, eve_data, *args, obj=None, **kwargs):

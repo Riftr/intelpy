@@ -28,7 +28,7 @@ def main():
         "display_clear": 1,
         "display_all": 0,
         "debug": 1,
-        "message_timeout": 10
+        "message_timeout": 1.0
     }
 
     configuration = config.Config(app_name, default_json)
