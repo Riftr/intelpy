@@ -3,6 +3,8 @@ from watchdog.events import PatternMatchingEventHandler
 import pickle
 from pathlib import Path
 from datetime import datetime
+from itertools import islice
+import re
 
 
 class EveLogHandler(PatternMatchingEventHandler, QObject):
@@ -21,14 +23,14 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
         self._ignore_directories = ignore_directories
         self._case_sensitive = case_sensitive
         self.configuration = configuration
-
+        self.known_msg_queue = []
 
         # Our variables
         self.known_files = {}
         self.known_files_loc = self.configuration.value["config_loc"] + "known_files.p"
-        # Todo: clear this of files > 24 hours old to keep size in check
         self.unpickle_dict()
         self.maintain_known_files_file()  # Remove old files
+        self.date_re = re.compile(".\[ \d\d\d\d.\d\d.\d\d \d\d:\d\d:\d\d \]")
 
     def on_modified(self, event):
         # will fire on new files as well as modified files
@@ -45,9 +47,9 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
 
         #return_list = []
 
-        if event.src_path not in self.known_files.keys():
+        if event.src_path not in self.known_files:
             # We got a new file, add it
-            self.known_files[event.src_path] = 13     # Start at line 13 to avoid processing header
+            self.known_files[event.src_path] = 12     # Start at line 13 to avoid processing header
 
         if self.configuration.value["debug"]:
             print("Starting at line: " + str(self.known_files[event.src_path]))
@@ -55,57 +57,49 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
         # get line/s from file
         try:
             with open(event.src_path, "r", encoding="utf_16_le") as file_data:
+                #all_lines = file_data.readlines()
+                new_lines = list(islice(file_data, self.known_files[event.src_path], None))
 
-                all_lines = file_data.readlines()
-                if len(all_lines) < 13:
-                    if self.configuration.value["debug"]:
-                        print("file had less than 13 lines. Either is just a header file or not a chat log")
-                    return
-                else:
-                    # instead of reading all lines ever time, lets try to read from where we left off
-                    diff_line = len(all_lines) - self.known_files[event.src_path]
-                    process_list = all_lines[-diff_line:]
-                    self.known_files[event.src_path] += len(process_list)  # add how many lines we read in
-                    self.pickle_dict()
-
-                    for raw_line in process_list:  # check lines and remove DTS > 10 mins or so
-
-                        if not raw_line[1] == "[":
-                            if self.configuration.value["debug"]:
-                                print("line was not processed as it did not start with [")
-                                print("last line 0 is: " + raw_line[0])
-                                print("last line 1 is: " + raw_line[1])
-                                print("last line 2 is: " + raw_line[2])
-                            #return
+                for line in new_lines:
+                    self.known_files[event.src_path] += 1
+                    print("Should be reading line " + str(self.known_files[event.src_path]))
+                    if self.date_re.match(line):  # if we get a line with a valid date time
+                        new_parsed_msg = self.parse_message(line)
+                        # Check for system msgs
+                        if new_parsed_msg[1] == "EVE System":
+                            print("Did not parse line, was system msg")
+                            print(new_parsed_msg)
+                            continue
+                        # Check for old messages
+                        present_time = datetime.utcnow()
+                        past_time = new_parsed_msg[0]
+                        gap_time = (present_time - past_time).total_seconds() / 60
+                        if gap_time > self.configuration.value["message_timeout"]:
+                            print("Did not parse line, was older than " + str(gap_time))
+                            print(new_parsed_msg)
+                            continue
+                        # Check if we've seen the line recently
+                        if new_parsed_msg[1] + ">" + new_parsed_msg[2] in self.known_msg_queue:
+                            print("Did not parse line, msg was seen recently")  # possibly from another client
+                            print(new_parsed_msg)
+                            continue
                         else:
-                            parsed_line = self.parse_message(raw_line)
-                            if not parsed_line[1] == "EVE System":   # Chucking away this for now, will use one day
-                                #self.pickle_dict()  # Save our known lines file (was a test)
+                            # Add line to self.known_msg_queue and remove the oldest line
+                            if len(self.known_msg_queue) > 10:
+                                self.known_msg_queue.pop()
+                            self.known_msg_queue.append(new_parsed_msg[1] + ">" + new_parsed_msg[2])
+                            # Message should be good and unique, bubble up
+                            self.message_ready.emit(new_parsed_msg)
+                    else:
+                        print("Line did not match date regex")
 
-                                present_time = datetime.utcnow()
-                                past_time = parsed_line[0]
-                                gap_time = (present_time - past_time).total_seconds() / 60
-                                if gap_time > self.configuration.value["message_timeout"]:
-                                    # message was old. Not sure if we care about remembering lines now
-                                    if self.configuration.value["debug"]:
-                                        print("message was old, ignoring")
-                                    #return
-                                # 4th item in list, how many lines were unknown
-                                else:
-                                    if len(process_list) > 1:
-                                        parsed_line.append(len(process_list))
-                                        if self.configuration.value["debug"]:
-                                            print("more than 1 line was unknown")
-                                            print(process_list)
-                                    else:
-                                        parsed_line.append(0)
-                                    self.message_ready.emit(parsed_line)
-                            else:
-                                if self.configuration.value["debug"]:
-                                    print("line was not processed, was an eve system msg")
+                self.pickle_dict()  # save file progress
 
         except IOError as e:
-            print("Error reading Eve log file" + str(e))
+            print("Eveloghandler - Error reading Eve log file" + str(e))
+            raise
+        except Exception as err:
+            print("Eveloghandler - Other error " + str(err))
             raise
 
     def maintain_known_files_file(self):
