@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>765</width>
-    <height>811</height>
+    <width>759</width>
+    <height>790</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>765</width>
-    <height>811</height>
+    <width>0</width>
+    <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>765</width>
-    <height>811</height>
+    <width>759</width>
+    <height>16777215</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -27,10 +27,16 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetNoConstraint</enum>
+    </property>
     <item>
      <layout class="QHBoxLayout" name="mainHorizontalLayout">
       <item>
        <layout class="QVBoxLayout" name="leftSideVerticalLayout">
+        <property name="spacing">
+         <number>10</number>
+        </property>
         <item>
          <widget class="QTextEdit" name="logTextEdit">
           <property name="maximumSize">
@@ -72,8 +78,8 @@
       </item>
       <item>
        <layout class="QVBoxLayout" name="rightSideVLayout">
-        <property name="sizeConstraint">
-         <enum>QLayout::SetFixedSize</enum>
+        <property name="spacing">
+         <number>10</number>
         </property>
         <item>
          <widget class="QTabWidget" name="tab_widget">
@@ -83,15 +89,21 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="minimumSize">
+           <size>
+            <width>370</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="focusPolicy">
            <enum>Qt::NoFocus</enum>
           </property>
           <property name="currentIndex">
            <number>0</number>
           </property>
-          <widget class="QWidget" name="config_tab">
+          <widget class="QWidget" name="main_tab">
            <attribute name="title">
-            <string>Config</string>
+            <string>Main</string>
            </attribute>
            <widget class="QWidget" name="layoutWidget">
             <property name="geometry">
@@ -144,7 +156,7 @@
            <widget class="QGroupBox" name="watchedChannelsGroupBox">
             <property name="geometry">
              <rect>
-              <x>-1</x>
+              <x>0</x>
               <y>170</y>
               <width>361</width>
               <height>330</height>
@@ -177,7 +189,7 @@
              <property name="minimumSize">
               <size>
                <width>0</width>
-               <height>200</height>
+               <height>100</height>
               </size>
              </property>
              <property name="uniformItemSizes">
@@ -300,10 +312,70 @@
              </item>
             </layout>
            </widget>
+           <widget class="QGroupBox" name="groupBox">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>510</y>
+              <width>361</width>
+              <height>201</height>
+             </rect>
+            </property>
+            <property name="title">
+             <string>Recent Alerts</string>
+            </property>
+            <widget class="QWidget" name="verticalLayoutWidget_3">
+             <property name="geometry">
+              <rect>
+               <x>9</x>
+               <y>35</y>
+               <width>341</width>
+               <height>161</height>
+              </rect>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <item>
+               <widget class="QLabel" name="label_recentalert1">
+                <property name="text">
+                 <string>Alert1</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_recentalert4">
+                <property name="text">
+                 <string>Alert2</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_recentalert3">
+                <property name="text">
+                 <string>Alert3</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_recentalert5">
+                <property name="text">
+                 <string>Alert4</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_recentalert2">
+                <property name="text">
+                 <string>Alert5</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </widget>
           </widget>
           <widget class="QWidget" name="advancedtab">
            <attribute name="title">
-            <string>Advanced</string>
+            <string>Adv. Config</string>
            </attribute>
            <widget class="QWidget" name="layoutWidget_2">
             <property name="geometry">
@@ -626,7 +698,13 @@
     </item>
    </layout>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="eve_statusbar">
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+  </widget>
  </widget>
  <tabstops>
   <tabstop>lineEditHome_System</tabstop>

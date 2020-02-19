@@ -1,4 +1,4 @@
-from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtCore import pyqtSlot, QTimer
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QWidget, QMessageBox
 from pie.gui.MainWindow import Ui_MainWindow
 from pathlib import Path
@@ -9,6 +9,7 @@ from pie.eve.eveloghandler_signals import EveworkerSignals
 import threading
 import pie.gui.playalert_worker as playalertworker
 import time
+from datetime import datetime
 
 
 class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
@@ -21,6 +22,12 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.event_stop = threading.Event()
         self.alert_system_names_readable = []
         self.update_alert_systems()  # update alert systems from config
+
+        # Time
+        self.eve_time_statusbar()
+        self.evetimer = QTimer(self)
+        self.evetimer.timeout.connect(self.eve_time_statusbar)
+        self.evetimer.start(10000)  # ms
 
         # Set initial state
         # Set home and log locations, force uppercase, numbers, hyphen in home field
@@ -101,6 +108,13 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.start_watchdog()
 
     # Methods
+
+    def eve_time_statusbar(self):
+        # Updates the time in the status, percice to 10 seconds (don't need anything faster tbh)
+        self.eve_statusbar.showMessage("Eve time: " + str(self.get_eve_time()), 10000)
+
+    def get_eve_time(self):
+        return datetime.utcnow().strftime("%H:%M %d/%m/%Y")
 
     # Log options
     def checkbox_changed(self, state, which_button):
