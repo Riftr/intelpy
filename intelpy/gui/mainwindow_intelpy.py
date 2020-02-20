@@ -164,6 +164,10 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         if len(self.recent_alerts) == 0:
             return   # no alerts
 
+        # pop off old alert
+        if self.recent_alerts[0][0] > self.configuration.value["alert_timeout"] * 60:
+            self.recent_alerts.popleft()
+
         if len(self.recent_alerts) >= 1:
             self.label_recentalert1.setText(self.alert_create_text(self.recent_alerts[0]) + "\n" + self.recent_alerts[0][3])
 
