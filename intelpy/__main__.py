@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys
 from intelpy import config
-from intelpy.gui import mainwindow_pie
+from intelpy.gui import mainwindow_intelpy
 import intelpy.eve.evedata as evedata
 from PyQt5.QtWidgets import QApplication
 from tests import debug_config
@@ -37,7 +37,7 @@ def main():
     configuration.value["config_loc"] = configuration.file_location
 
     if configuration.value["debug"]:
-        print("---- PersonalIntel4Eve ----")
+        print("---- IntelPy ----")
         print("Debug enabled..")
 
     # Load eve data
@@ -55,7 +55,7 @@ def main():
 
     # Load main window GUI
     app = QApplication(sys.argv)
-    window = mainwindow_pie.MainWindow(configuration, eve_data)
+    window = mainwindow_intelpy.MainWindow(configuration, eve_data)
     window.show()
     app.exec_()
 
