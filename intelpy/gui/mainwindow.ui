@@ -384,7 +384,7 @@
             <property name="geometry">
              <rect>
               <x>150</x>
-              <y>470</y>
+              <y>520</y>
               <width>192</width>
               <height>92</height>
              </rect>
@@ -417,7 +417,7 @@
             <property name="geometry">
              <rect>
               <x>60</x>
-              <y>470</y>
+              <y>520</y>
               <width>91</width>
               <height>22</height>
              </rect>
@@ -430,7 +430,7 @@
             <property name="geometry">
              <rect>
               <x>150</x>
-              <y>590</y>
+              <y>630</y>
               <width>197</width>
               <height>61</height>
              </rect>
@@ -456,7 +456,7 @@
             <property name="geometry">
              <rect>
               <x>50</x>
-              <y>590</y>
+              <y>630</y>
               <width>101</width>
               <height>22</height>
              </rect>
@@ -560,6 +560,38 @@
               </rect>
              </property>
             </widget>
+           </widget>
+           <widget class="QSpinBox" name="spinBox_recentalerttimeout">
+            <property name="geometry">
+             <rect>
+              <x>150</x>
+              <y>460</y>
+              <width>81</width>
+              <height>36</height>
+             </rect>
+            </property>
+            <property name="suffix">
+             <string>min</string>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>20</number>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_7">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>470</y>
+              <width>151</width>
+              <height>22</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Recent alert timeout:</string>
+            </property>
            </widget>
           </widget>
           <widget class="QWidget" name="zabout_tab">

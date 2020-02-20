@@ -39,9 +39,10 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
 
         # Set initial state
         # Set home and log locations, force uppercase, numbers, hyphen in home field
-        self.lineEditHome_System.setText(configuration.value["home_system"])
-        self.lineEditEve_Log_Location.setText(configuration.value["eve_log_location"])
-        self.lineEdit_alarm.setText(configuration.value["alarm_sound"])
+        self.lineEditHome_System.setText(self.configuration.value["home_system"])
+        self.lineEditEve_Log_Location.setText(self.configuration.value["eve_log_location"])
+        self.lineEdit_alarm.setText(self.configuration.value["alarm_sound"])
+        self.spinBox_recentalerttimeout.setValue(self.configuration.value["alert_timeout"])  # mins
 
         # Set checkboxes
         if self.configuration.value["display_alerts"]:
@@ -56,12 +57,12 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
             self.checkBox_filterstatus.setChecked(True)
 
         # Set the channel list
-        self.channelListWidget.addItems(configuration.value["watched_channels"])
+        self.channelListWidget.addItems(self.configuration.value["watched_channels"])
         self.add_channel()
 
         # Set the alert slider
-        self.horizontalSlider_AlertJumps.setValue(configuration.value["alert_jumps"])
-        self.label_alertjumps.setText(str(configuration.value["alert_jumps"]))
+        self.horizontalSlider_AlertJumps.setValue(self.configuration.value["alert_jumps"])
+        self.label_alertjumps.setText(str(self.configuration.value["alert_jumps"]))
 
         # Connections
         # Buttons
@@ -86,6 +87,9 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
 
         # Alert silder
         self.horizontalSlider_AlertJumps.valueChanged.connect(self.alert_slider_changed)
+
+        # Timeout spinner
+        self.spinBox_recentalerttimeout.valueChanged.connect(self.recent_alert_spinbox_changed)
 
         # Figure out where logs are stored
         if configuration.value["eve_log_location"] == "":
@@ -124,6 +128,11 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
 
     # Methods
 
+    def recent_alert_spinbox_changed(self):
+        spinbox_value = self.spinBox_recentalerttimeout.value()
+        self.configuration.value["alert_timeout"] = spinbox_value
+        self.configuration.flush_config_to_file()
+
     def alert_recent_update(self):
         #updates the UI
 
@@ -131,30 +140,37 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
 
         for alert in self.recent_alerts:
             # if greater than timer
-            if alert[0] < self.configuration.value["alert_timeout"]:
+            if alert[0] < self.configuration.value["alert_timeout"] * 60:
                 alert[0] += 1
                 new_alert_list.append(alert)
         self.recent_alerts = new_alert_list
+        print(self.recent_alerts)
 
         # timer - system - jumps
+        # clear alerts
+        self.label_recentalert1.setText("")
+        self.label_recentalert2.setText("")
+        self.label_recentalert3.setText("")
+        self.label_recentalert4.setText("")
+        self.label_recentalert5.setText("")
 
         if len(self.recent_alerts) == 0:
             return   # no alerts
 
-        if len(self.recent_alerts) == 1:
-            self.label_recentalert1.setText(self.alert_create_text(self.recent_alerts[0]))
+        if len(self.recent_alerts) >= 1:
+            self.label_recentalert1.setText(self.alert_create_text(self.recent_alerts[0]) + "\n" + self.recent_alerts[0][3])
 
-        if len(self.recent_alerts) == 2:
-            self.label_recentalert2.setText(self.alert_create_text(self.recent_alerts[1]))
+        if len(self.recent_alerts) >= 2:
+            self.label_recentalert2.setText(self.alert_create_text(self.recent_alerts[1]) + "\n" + self.recent_alerts[1][3])
 
-        if len(self.recent_alerts) == 3:
-            self.label_recentalert3.setText(self.alert_create_text(self.recent_alerts[2]))
+        if len(self.recent_alerts) >= 3:
+            self.label_recentalert3.setText(self.alert_create_text(self.recent_alerts[2]) + "\n" + self.recent_alerts[2][3])
 
-        if len(self.recent_alerts) == 4:
-            self.label_recentalert4.setText(self.alert_create_text(self.recent_alerts[3]))
+        if len(self.recent_alerts) >= 4:
+            self.label_recentalert4.setText(self.alert_create_text(self.recent_alerts[3]) + "\n" + self.recent_alerts[3][3])
 
-        if len(self.recent_alerts) == 5:
-            self.label_recentalert5.setText(self.alert_create_text(self.recent_alerts[4]))
+        if len(self.recent_alerts) >= 5:
+            self.label_recentalert5.setText(self.alert_create_text(self.recent_alerts[4]) + "\n" + self.recent_alerts[4][3])
 
     def alert_create_text(self, alert_list):
         if alert_list[0] < 60:
@@ -163,7 +179,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
             secs_to_mins = alert_list[0] / 60
             alert_timer = str(secs_to_mins).split(".")[0] + " mins "
 
-        alert_txt = alert_list[1] + " " + alert_list[2] + " jumps"
+        alert_txt = alert_list[1] + " - " + alert_list[2] + " jumps"
         return alert_timer + alert_txt
 
     def alert_recent_add(self, secs, system, jumps, message):
