@@ -31,6 +31,7 @@ class EveData:
             return False
 
     def shortest_path_length(self, source, destination):
+        # needs ID codes
         return nx.shortest_path_length(self.universe, source, destination)
 
     def get_system_name(self, id_code):

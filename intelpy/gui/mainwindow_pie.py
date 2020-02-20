@@ -1,19 +1,20 @@
 from PyQt5.QtCore import pyqtSlot, QTimer
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QWidget, QMessageBox
-from pie.gui.MainWindow import Ui_MainWindow
+from intelpy.gui.MainWindow import Ui_MainWindow
 from pathlib import Path
 import getpass
-import pie.gui.logformatting as log
-import pie.eve.eveloghandler_worker as eveloghandler
-from pie.eve.eveloghandler_signals import EveworkerSignals
+import intelpy.gui.logformatting as log
+import intelpy.eve.eveloghandler_worker as eveloghandler
+from intelpy.eve.eveloghandler_signals import EveworkerSignals
 import threading
-import pie.gui.playalert_worker as playalertworker
+import intelpy.gui.playalert_worker as playalertworker
 import time
 from datetime import datetime
+#import intelpy.eve.evedata as evedata
 
 
 class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
-    def __init__(self, configuration, eve_data, *args, obj=None, **kwargs):
+    def __init__(self, configuration, eve_data, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.configuration = configuration
@@ -22,12 +23,19 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.event_stop = threading.Event()
         self.alert_system_names_readable = []
         self.update_alert_systems()  # update alert systems from config
+        #self.evedataobj = evedata.EveData()
 
-        # Time
+        # Eve Time
         self.eve_time_statusbar()
         self.evetimer = QTimer(self)
         self.evetimer.timeout.connect(self.eve_time_statusbar)
         self.evetimer.start(10000)  # ms
+
+        # Recent alerts timer
+        self.recent_alerts_timer = QTimer(self)
+        self.recent_alerts_timer.timeout.connect(self.alert_recent_update)
+        self.recent_alerts_timer.start(1000)  # ms
+        self.recent_alerts = []
 
         # Set initial state
         # Set home and log locations, force uppercase, numbers, hyphen in home field
@@ -107,7 +115,68 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.eveloghandler_worker.pass_message.connect(self.message_ready_process)
         self.start_watchdog()
 
+        # Set recent alerts to blank
+        self.label_recentalert1.setText("")
+        self.label_recentalert2.setText("")
+        self.label_recentalert3.setText("")
+        self.label_recentalert4.setText("")
+        self.label_recentalert5.setText("")
+
     # Methods
+
+    def alert_recent_update(self):
+        #updates the UI
+
+        new_alert_list = []
+
+        for alert in self.recent_alerts:
+            # if greater than timer
+            if alert[0] < self.configuration.value["alert_timeout"]:
+                alert[0] += 1
+                new_alert_list.append(alert)
+        self.recent_alerts = new_alert_list
+
+        # timer - system - jumps
+
+        if len(self.recent_alerts) == 0:
+            return   # no alerts
+
+        if len(self.recent_alerts) == 1:
+            self.label_recentalert1.setText(self.alert_create_text(self.recent_alerts[0]))
+
+        if len(self.recent_alerts) == 2:
+            self.label_recentalert2.setText(self.alert_create_text(self.recent_alerts[1]))
+
+        if len(self.recent_alerts) == 3:
+            self.label_recentalert3.setText(self.alert_create_text(self.recent_alerts[2]))
+
+        if len(self.recent_alerts) == 4:
+            self.label_recentalert4.setText(self.alert_create_text(self.recent_alerts[3]))
+
+        if len(self.recent_alerts) == 5:
+            self.label_recentalert5.setText(self.alert_create_text(self.recent_alerts[4]))
+
+    def alert_create_text(self, alert_list):
+        if alert_list[0] < 60:
+            alert_timer = "<1 min "
+        else:
+            secs_to_mins = alert_list[0] / 60
+            alert_timer = str(secs_to_mins).split(".")[0] + " mins "
+
+        alert_txt = alert_list[1] + " " + alert_list[2] + " jumps"
+        return alert_timer + alert_txt
+
+    def alert_recent_add(self, secs, system, jumps, message):
+        # Add a new alert to the UI
+
+        if len(self.recent_alerts) == 5:  # 2d list
+            self.recent_alerts.pop()  # remove the oldest one
+
+        # timer - system - jumps
+        # message
+        # todo: format secs
+        self.recent_alerts.append([secs, system, jumps, message])  # add a list to the list
+        self.alert_recent_update()
 
     def eve_time_statusbar(self):
         # Updates the time in the status, percice to 10 seconds (don't need anything faster tbh)
@@ -204,7 +273,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.alarm_location = QFileDialog.getOpenFileName(
             self,
             "Choose sound file",
-            "pie/resources",
+            "intelpy/resources",
             "Sounds (*.mp3 *.wav)",
             options=QFileDialog.DontUseNativeDialog)
 
@@ -305,10 +374,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         this_message = message_list[2]
         this_message = this_message.upper()
 
-        #if message_list[3] >= 1:
-        #    self.append_log(log.format_important("Note, " + str(message_list[3] - 1) +
-        #                                         " lines were updated since last run"))
-
         # check for clear
         if self.configuration.value["filter_clear"]:
             if "CLEAR" in this_message or "CLR" in this_message:
@@ -320,7 +385,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
             if "STATUS" in this_message:
                 self.append_log(log.format_info("Status? message received: " + message_list[2]))
                 return
-
 
         # check if message contains a system within jump range
         for system in self.alert_system_names_readable:
@@ -334,11 +398,21 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
                 if self.configuration.value["display_alerts"]:
                     self.append_log(log.format_important(str(message_list[0])))
                     self.append_log(log.format_important("System: " + system))
-                    self.append_log(log.format_important("Message: " + message_list[2]))
+                    self.append_log(log.format_important("Message: " + message_list[1] + "> " + message_list[2]))
 
                 # play alert (blocking on Linux so threading it)
                 self.playalert_worker = playalertworker.PlayAlert_worker(self.configuration)
                 self.playalert_worker.start()
+
+                # Todo: update recent alerts
+
+                # get id codes
+                system_id = self.eve_data.get_id_code(system)
+                home_id = self.eve_data.get_id_code(self.lineEditHome_System.text())
+                short_path = self.eve_data.shortest_path_length(home_id, system_id)
+                # secs, reported system, jumps, msg
+                self.alert_recent_add(0, system, str(short_path), message_list[2])
+
                 return
 
         # Display all?

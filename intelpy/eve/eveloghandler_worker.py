@@ -1,5 +1,5 @@
 from PyQt5.QtCore import *
-import pie.eve.eveloghandler as eveloghandler
+import intelpy.eve.eveloghandler as eveloghandler
 from watchdog.observers import Observer
 import time
 

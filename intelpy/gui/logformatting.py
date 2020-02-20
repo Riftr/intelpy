@@ -9,3 +9,11 @@ def format_info(string):
 
 def format_important(string):
     return ("<b>" + string + "</b>")
+
+
+def format_recent_alert(string):
+    return ("<b>" + string + "</b>")
+
+
+def format_recent_alert_timer(string):
+    return ("<font color=\"red\"><b>" + string + "</b></font>")

@@ -1,4 +1,4 @@
-"""Setup script for pie"""
+"""Setup script for intelpy"""
 
 import os.path
 from setuptools import setup
@@ -12,7 +12,7 @@ with open(os.path.join(HERE, "README.md")) as fid:
 
 # This call to setup() does all the work
 setup(
-    name="pie",
+    name="intelpy",
     version="1.0.0b",
     description="Personal Intel 4 Eve - Don't let bad guys blow up your stuff",
     long_description=README,
@@ -26,10 +26,10 @@ setup(
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
     ],
-    packages=["pie"],
+    packages=["intelpy"],
     include_package_data=True,
     install_requires=[
         "pyqt5", "pathlib", "watchdog", "networkx", "playsound", "pygobject",
     ],
-    entry_points={"console_scripts": ["pie=pie.__main__:main"]},
+    entry_points={"console_scripts": ["intelpy=intelpy.__main__:main"]},
 )
