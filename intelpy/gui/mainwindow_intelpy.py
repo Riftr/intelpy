@@ -10,6 +10,7 @@ import threading
 import intelpy.gui.playalert_worker as playalertworker
 import time
 from datetime import datetime
+from collections import deque
 #import intelpy.eve.evedata as evedata
 
 
@@ -34,8 +35,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         # Recent alerts timer
         self.recent_alerts_timer = QTimer(self)
         self.recent_alerts_timer.timeout.connect(self.alert_recent_update)
-        self.recent_alerts_timer.start(1000)  # ms
-        self.recent_alerts = []
+        self.recent_alerts_timer.start(5000)  # ms
+        self.recent_alerts = deque ()
 
         # Set initial state
         # Set home and log locations, force uppercase, numbers, hyphen in home field
@@ -136,14 +137,20 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
     def alert_recent_update(self):
         #updates the UI
 
-        new_alert_list = []
+        #new_alert_list = deque()
+
+        #for alert in self.recent_alerts:
+        #    # if greater than timer
+        #    if alert[0] < self.configuration.value["alert_timeout"] * 60:
+        #        alert[0] += 1
+        #        new_alert_list.append(alert)
+        #self.recent_alerts = new_alert_list
+        #print(self.recent_alerts)
 
         for alert in self.recent_alerts:
-            # if greater than timer
-            if alert[0] < self.configuration.value["alert_timeout"] * 60:
-                alert[0] += 1
-                new_alert_list.append(alert)
-        self.recent_alerts = new_alert_list
+            alert[0] += 5
+            #todo: remove timed out items from queue |   if len(self.recent_alerts) == 5:  self.recent_alerts.popleft()
+
         print(self.recent_alerts)
 
         # timer - system - jumps
@@ -185,8 +192,10 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
     def alert_recent_add(self, secs, system, jumps, message):
         # Add a new alert to the UI
 
+        #if len(self.recent_alerts) == 5:  # 2d list
+        #    self.recent_alerts.pop()  # remove the oldest one
         if len(self.recent_alerts) == 5:  # 2d list
-            self.recent_alerts.pop()  # remove the oldest one
+            self.recent_alerts.popleft()  # remove the oldest one
 
         # timer - system - jumps
         # message
