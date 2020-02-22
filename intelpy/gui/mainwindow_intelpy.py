@@ -149,9 +149,9 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
 
         for alert in self.recent_alerts:
             alert[0] += 5
-            #todo: remove timed out items from queue |   if len(self.recent_alerts) == 5:  self.recent_alerts.popleft()
 
-        print(self.recent_alerts)
+        if self.configuration.value["debug"]:
+            print(self.recent_alerts)
 
         # timer - system - jumps
         # clear alerts
@@ -195,15 +195,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
 
     def alert_recent_add(self, secs, system, jumps, message):
         # Add a new alert to the UI
-
-        #if len(self.recent_alerts) == 5:  # 2d list
-        #    self.recent_alerts.pop()  # remove the oldest one
         if len(self.recent_alerts) == 5:  # 2d list
             self.recent_alerts.popleft()  # remove the oldest one
-
-        # timer - system - jumps
-        # message
-        # todo: format secs
         self.recent_alerts.append([secs, system, jumps, message])  # add a list to the list
         self.alert_recent_update()
 

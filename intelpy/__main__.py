@@ -16,9 +16,15 @@ def main():
         "eve_log_location": "",
         "watched_channels": [
             "delve",
-            "querious"
+            "querious",
+            "ftn",
+            "vnl",
+            "cr",
+            "aridia",
+            "khanid",
+            "lone"
         ],
-        "alert_jumps": 2,
+        "alert_jumps": 3,
         "alert_systems": [],
         "log_watch_active": 1,
         "config_loc": "",

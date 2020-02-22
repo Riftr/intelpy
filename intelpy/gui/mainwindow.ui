@@ -25,6 +25,10 @@
   <property name="windowTitle">
    <string>IntelPy</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="images.qrc">
+    <normaloff>:/pieico/goodpie2.ico</normaloff>:/pieico/goodpie2.ico</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <property name="sizeConstraint">
@@ -234,12 +238,18 @@
                <x>9</x>
                <y>35</y>
                <width>341</width>
-               <height>161</height>
+               <height>501</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_4">
               <item>
                <widget class="QLabel" name="label_recentalert1">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="text">
                  <string>Alert1</string>
                 </property>
@@ -247,6 +257,12 @@
               </item>
               <item>
                <widget class="QLabel" name="label_recentalert2">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="text">
                  <string>Alert2</string>
                 </property>
@@ -254,6 +270,12 @@
               </item>
               <item>
                <widget class="QLabel" name="label_recentalert3">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="text">
                  <string>Alert3</string>
                 </property>
@@ -261,6 +283,12 @@
               </item>
               <item>
                <widget class="QLabel" name="label_recentalert4">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="text">
                  <string>Alert4</string>
                 </property>
@@ -268,6 +296,12 @@
               </item>
               <item>
                <widget class="QLabel" name="label_recentalert5">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="text">
                  <string>Alert5</string>
                 </property>
@@ -655,17 +689,17 @@
            <widget class="QLabel" name="label_4">
             <property name="geometry">
              <rect>
-              <x>30</x>
-              <y>200</y>
-              <width>301</width>
-              <height>301</height>
+              <x>100</x>
+              <y>170</y>
+              <width>161</width>
+              <height>111</height>
              </rect>
             </property>
             <property name="text">
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="images.qrc">:/pie/pie.jpg</pixmap>
+             <pixmap resource="images.qrc">:/piebig/goodpie2.png</pixmap>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
