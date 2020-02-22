@@ -259,11 +259,17 @@
                   <height>50</height>
                  </size>
                 </property>
+                <property name="contextMenuPolicy">
+                 <enum>Qt::ActionsContextMenu</enum>
+                </property>
                 <property name="text">
                  <string>Alert1</string>
                 </property>
                 <property name="wordWrap">
                  <bool>false</bool>
+                </property>
+                <property name="openExternalLinks">
+                 <bool>true</bool>
                 </property>
                 <property name="textInteractionFlags">
                  <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -284,11 +290,17 @@
                   <height>50</height>
                  </size>
                 </property>
+                <property name="contextMenuPolicy">
+                 <enum>Qt::ActionsContextMenu</enum>
+                </property>
                 <property name="text">
                  <string>Alert2</string>
                 </property>
                 <property name="wordWrap">
                  <bool>false</bool>
+                </property>
+                <property name="openExternalLinks">
+                 <bool>true</bool>
                 </property>
                 <property name="textInteractionFlags">
                  <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -309,11 +321,17 @@
                   <height>50</height>
                  </size>
                 </property>
+                <property name="contextMenuPolicy">
+                 <enum>Qt::ActionsContextMenu</enum>
+                </property>
                 <property name="text">
                  <string>Alert3</string>
                 </property>
                 <property name="wordWrap">
                  <bool>false</bool>
+                </property>
+                <property name="openExternalLinks">
+                 <bool>true</bool>
                 </property>
                 <property name="textInteractionFlags">
                  <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -334,11 +352,17 @@
                   <height>50</height>
                  </size>
                 </property>
+                <property name="contextMenuPolicy">
+                 <enum>Qt::ActionsContextMenu</enum>
+                </property>
                 <property name="text">
                  <string>Alert4</string>
                 </property>
                 <property name="wordWrap">
                  <bool>false</bool>
+                </property>
+                <property name="openExternalLinks">
+                 <bool>true</bool>
                 </property>
                 <property name="textInteractionFlags">
                  <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -359,11 +383,17 @@
                   <height>50</height>
                  </size>
                 </property>
+                <property name="contextMenuPolicy">
+                 <enum>Qt::ActionsContextMenu</enum>
+                </property>
                 <property name="text">
                  <string>Alert5</string>
                 </property>
                 <property name="wordWrap">
                  <bool>false</bool>
+                </property>
+                <property name="openExternalLinks">
+                 <bool>true</bool>
                 </property>
                 <property name="textInteractionFlags">
                  <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -784,6 +814,25 @@
     </font>
    </property>
   </widget>
+  <action name="actionCopy">
+   <property name="text">
+    <string>Copy</string>
+   </property>
+   <property name="toolTip">
+    <string>Copy text</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionLook_up_zKill">
+   <property name="text">
+    <string>Look up zKill</string>
+   </property>
+   <property name="toolTip">
+    <string>Look up on zKillboard</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>lineEditHome_System</tabstop>

@@ -11,6 +11,8 @@ import intelpy.gui.playalert_worker as playalertworker
 import time
 from datetime import datetime
 from collections import deque
+from mechanize import Browser
+import webbrowser
 #import intelpy.eve.evedata as evedata
 
 
@@ -127,7 +129,58 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.label_recentalert4.setText("")
         self.label_recentalert5.setText("")
 
+        # Action menu for alerts
+        self.label_recentalert1.addAction(self.actionCopy)
+        self.label_recentalert1.addAction(self.actionLook_up_zKill)
+        self.label_recentalert2.addAction(self.actionCopy)
+        self.label_recentalert2.addAction(self.actionLook_up_zKill)
+        self.label_recentalert3.addAction(self.actionCopy)
+        self.label_recentalert3.addAction(self.actionLook_up_zKill)
+        self.label_recentalert4.addAction(self.actionCopy)
+        self.label_recentalert4.addAction(self.actionLook_up_zKill)
+        self.label_recentalert5.addAction(self.actionCopy)
+        self.label_recentalert5.addAction(self.actionLook_up_zKill)
+
+        # Action menu connections
+        self.actionLook_up_zKill.triggered.connect(lambda: self.look_up_zkill(self.label_recentalert1.selectedText()))
+        # todo: hook up other alerts somehow, prob like the checkboxes
+
     # Methods
+
+    def look_up_zkill(self, pilot):
+        br = Browser()
+        try:
+            br.open("http://zkillboard.com/")
+            br.select_form(name="search")
+            br["searchbox"] = pilot
+            response = br.submit()
+            webbrowser.open_new_tab(response.geturl())
+        except Exception as e:
+            self.error_message("Error: zKillboard",
+                               "Could not look up " + pilot + " on zKillboard.com as there was an error.",
+                               "See details for more details.",
+                               str(e)
+                               )
+            return
+
+    def look_up_evewho(self, pilot):
+        # Note - squzz specifically doesn't like doing this, prob scared someone will scrape his website
+        # gives robot.txt error if you try to do it, 503 if you fake it. zkill works fine however.
+        br = Browser()
+        br.set_handle_equiv(False)
+        br.set_handle_robots(False)
+        br.addheaders = [
+            ('User-agent', 'Mozilla/5.0 (X11; Linux x86_64; rv:18.0)Gecko/20100101 Firefox/18.0 (compatible;)'),
+            ('Accept', '*/*')]
+        br.open("https://evewho.com/")
+        br.select_form(onsubmit="return false;")
+        br["autocomplete"] = pilot
+        response = br.submit()
+        try:
+            webbrowser.open_new_tab(response.geturl())
+        except:
+            return
+
 
     def recent_alert_spinbox_changed(self):
         spinbox_value = self.spinBox_recentalerttimeout.value()
