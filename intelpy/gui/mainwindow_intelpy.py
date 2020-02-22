@@ -169,28 +169,28 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
             self.recent_alerts.popleft()
 
         if len(self.recent_alerts) >= 1:
-            self.label_recentalert1.setText(self.alert_create_text(self.recent_alerts[0]) + "\n" + self.recent_alerts[0][3])
+            self.label_recentalert1.setText(self.alert_create_text(self.recent_alerts[0]) + "\n<br>" + self.recent_alerts[0][3])
 
         if len(self.recent_alerts) >= 2:
-            self.label_recentalert2.setText(self.alert_create_text(self.recent_alerts[1]) + "\n" + self.recent_alerts[1][3])
+            self.label_recentalert2.setText(self.alert_create_text(self.recent_alerts[1]) + "\n<br>" + self.recent_alerts[1][3])
 
         if len(self.recent_alerts) >= 3:
-            self.label_recentalert3.setText(self.alert_create_text(self.recent_alerts[2]) + "\n" + self.recent_alerts[2][3])
+            self.label_recentalert3.setText(self.alert_create_text(self.recent_alerts[2]) + "\n<br>" + self.recent_alerts[2][3])
 
         if len(self.recent_alerts) >= 4:
-            self.label_recentalert4.setText(self.alert_create_text(self.recent_alerts[3]) + "\n" + self.recent_alerts[3][3])
+            self.label_recentalert4.setText(self.alert_create_text(self.recent_alerts[3]) + "\n<br>" + self.recent_alerts[3][3])
 
         if len(self.recent_alerts) >= 5:
-            self.label_recentalert5.setText(self.alert_create_text(self.recent_alerts[4]) + "\n" + self.recent_alerts[4][3])
+            self.label_recentalert5.setText(self.alert_create_text(self.recent_alerts[4]) + "\n<br>" + self.recent_alerts[4][3])
 
     def alert_create_text(self, alert_list):
         if alert_list[0] < 60:
-            alert_timer = "<1 min "
+            alert_timer = "<br><font color=\"red\" size=\"4\"><b>&lt;1 min &nbsp;&nbsp; </b></font>"
         else:
             secs_to_mins = alert_list[0] / 60
-            alert_timer = str(secs_to_mins).split(".")[0] + " mins "
+            alert_timer = "<br><b>" + str(secs_to_mins).split(".")[0] + " mins &nbsp;</b>"
 
-        alert_txt = alert_list[1] + " - " + alert_list[2] + " jumps"
+        alert_txt = alert_list[1] + " &nbsp;&nbsp; <b>" + alert_list[2] + "</b> jumps"
         return alert_timer + alert_txt
 
     def alert_recent_add(self, secs, system, jumps, message):
@@ -418,9 +418,10 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
                                                  ))
                 #check if details need to be printed
                 if self.configuration.value["display_alerts"]:
-                    self.append_log(log.format_important(str(message_list[0])))
-                    self.append_log(log.format_important("System: " + system))
-                    self.append_log(log.format_important("Message: " + message_list[1] + "> " + message_list[2]))
+                    self.append_log(log.format_important("<font color=\"red\">Time: </font>" + str(message_list[0])))
+                    self.append_log(log.format_important("<font color=\"red\">System: </font>" + system))
+                    self.append_log(log.format_important("<font color=\"red\">Reported by: </font>" + message_list[1]))
+                    self.append_log(log.format_important("<font color=\"red\">Message: </font>" + message_list[2]))
 
                 # play alert (blocking on Linux so threading it)
                 self.playalert_worker = playalertworker.PlayAlert_worker(self.configuration)
