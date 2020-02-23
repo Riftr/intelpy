@@ -1,4 +1,4 @@
-from PyQt5.QtCore import pyqtSlot, QTimer
+from PyQt5.QtCore import pyqtSlot, QTimer, QThreadPool
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QWidget, QMessageBox
 from intelpy.gui.MainWindow import Ui_MainWindow
 from pathlib import Path
@@ -11,9 +11,6 @@ import intelpy.gui.playalert_worker as playalertworker
 import time
 from datetime import datetime
 from collections import deque
-from mechanize import Browser
-import webbrowser
-#import intelpy.eve.evedata as evedata
 
 
 class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
@@ -26,7 +23,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.event_stop = threading.Event()
         self.alert_system_names_readable = []
         self.update_alert_systems()  # update alert systems from config
-        #self.evedataobj = evedata.EveData()
+        self.threadpool = QThreadPool()
 
         # Eve Time
         self.eve_time_statusbar()
@@ -37,8 +34,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         # Recent alerts timer
         self.recent_alerts_timer = QTimer(self)
         self.recent_alerts_timer.timeout.connect(self.alert_recent_update)
-        self.recent_alerts_timer.start(5000)  # ms
-        self.recent_alerts = deque ()
+        self.recent_alerts_timer.start(30000)  # ms
+        self.recent_alerts = deque()
 
         # Set initial state
         # Set home and log locations, force uppercase, numbers, hyphen in home field
@@ -117,7 +114,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.set_home()
 
         # Watchdog worker thread to monitor logs
-        #self.eveloghandler_worker = None
         self.eveloghandler_worker = eveloghandler.Eveloghandler_worker(self.configuration, self.event_stop)
         self.eveloghandler_worker.pass_message.connect(self.message_ready_process)
         self.start_watchdog()
@@ -129,83 +125,19 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.label_recentalert4.setText("")
         self.label_recentalert5.setText("")
 
-        # Action menu for alerts
-        self.label_recentalert1.addAction(self.actionCopy)
-        self.label_recentalert1.addAction(self.actionLook_up_zKill)
-        self.label_recentalert2.addAction(self.actionCopy)
-        self.label_recentalert2.addAction(self.actionLook_up_zKill)
-        self.label_recentalert3.addAction(self.actionCopy)
-        self.label_recentalert3.addAction(self.actionLook_up_zKill)
-        self.label_recentalert4.addAction(self.actionCopy)
-        self.label_recentalert4.addAction(self.actionLook_up_zKill)
-        self.label_recentalert5.addAction(self.actionCopy)
-        self.label_recentalert5.addAction(self.actionLook_up_zKill)
-
-        # Action menu connections
-        self.actionLook_up_zKill.triggered.connect(lambda: self.look_up_zkill(self.label_recentalert1.selectedText()))
-        # todo: hook up other alerts somehow, prob like the checkboxes
-
     # Methods
-
-    def look_up_zkill(self, pilot):
-        br = Browser()
-        try:
-            br.open("http://zkillboard.com/")
-            br.select_form(name="search")
-            br["searchbox"] = pilot
-            response = br.submit()
-            webbrowser.open_new_tab(response.geturl())
-        except Exception as e:
-            self.error_message("Error: zKillboard",
-                               "Could not look up " + pilot + " on zKillboard.com as there was an error.",
-                               "See details for more details.",
-                               str(e)
-                               )
-            return
-
-    def look_up_evewho(self, pilot):
-        # Note - squzz specifically doesn't like doing this, prob scared someone will scrape his website
-        # gives robot.txt error if you try to do it, 503 if you fake it. zkill works fine however.
-        br = Browser()
-        br.set_handle_equiv(False)
-        br.set_handle_robots(False)
-        br.addheaders = [
-            ('User-agent', 'Mozilla/5.0 (X11; Linux x86_64; rv:18.0)Gecko/20100101 Firefox/18.0 (compatible;)'),
-            ('Accept', '*/*')]
-        br.open("https://evewho.com/")
-        br.select_form(onsubmit="return false;")
-        br["autocomplete"] = pilot
-        response = br.submit()
-        try:
-            webbrowser.open_new_tab(response.geturl())
-        except:
-            return
-
-
     def recent_alert_spinbox_changed(self):
         spinbox_value = self.spinBox_recentalerttimeout.value()
         self.configuration.value["alert_timeout"] = spinbox_value
         self.configuration.flush_config_to_file()
 
     def alert_recent_update(self):
-        #updates the UI
-
-        #new_alert_list = deque()
-
-        #for alert in self.recent_alerts:
-        #    # if greater than timer
-        #    if alert[0] < self.configuration.value["alert_timeout"] * 60:
-        #        alert[0] += 1
-        #        new_alert_list.append(alert)
-        #self.recent_alerts = new_alert_list
-        #print(self.recent_alerts)
-
+        # Updates the recent alert UI
         for alert in self.recent_alerts:
             alert[0] += 5
 
         if self.configuration.value["debug"]:
             print(self.recent_alerts)
-
         # timer - system - jumps
         # clear alerts
         self.label_recentalert1.setText("")
@@ -213,28 +145,26 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.label_recentalert3.setText("")
         self.label_recentalert4.setText("")
         self.label_recentalert5.setText("")
-
         if len(self.recent_alerts) == 0:
             return   # no alerts
-
         # pop off old alert
         if self.recent_alerts[0][0] > self.configuration.value["alert_timeout"] * 60:
             self.recent_alerts.popleft()
-
         if len(self.recent_alerts) >= 1:
-            self.label_recentalert1.setText(self.alert_create_text(self.recent_alerts[0]) + "\n<br>" + self.recent_alerts[0][3])
-
+            self.label_recentalert1.setText(self.alert_create_text(self.recent_alerts[0]) +
+                                            "\n<br>" + self.recent_alerts[0][3])
         if len(self.recent_alerts) >= 2:
-            self.label_recentalert2.setText(self.alert_create_text(self.recent_alerts[1]) + "\n<br>" + self.recent_alerts[1][3])
-
+            self.label_recentalert2.setText(self.alert_create_text(self.recent_alerts[1]) +
+                                            "\n<br>" + self.recent_alerts[1][3])
         if len(self.recent_alerts) >= 3:
-            self.label_recentalert3.setText(self.alert_create_text(self.recent_alerts[2]) + "\n<br>" + self.recent_alerts[2][3])
-
+            self.label_recentalert3.setText(self.alert_create_text(self.recent_alerts[2]) +
+                                            "\n<br>" + self.recent_alerts[2][3])
         if len(self.recent_alerts) >= 4:
-            self.label_recentalert4.setText(self.alert_create_text(self.recent_alerts[3]) + "\n<br>" + self.recent_alerts[3][3])
-
+            self.label_recentalert4.setText(self.alert_create_text(self.recent_alerts[3]) +
+                                            "\n<br>" + self.recent_alerts[3][3])
         if len(self.recent_alerts) >= 5:
-            self.label_recentalert5.setText(self.alert_create_text(self.recent_alerts[4]) + "\n<br>" + self.recent_alerts[4][3])
+            self.label_recentalert5.setText(self.alert_create_text(self.recent_alerts[4]) +
+                                            "\n<br>" + self.recent_alerts[4][3])
 
     def alert_create_text(self, alert_list):
         if alert_list[0] < 60:
@@ -301,7 +231,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
             else:
                 self.set_config_state("filter_status", 0)
                 self.append_log(log.format_info("Status messages set to " + ignore_off))
-
 
     # Alert slider
     def alert_slider_changed(self):
@@ -479,16 +408,12 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
                 # play alert (blocking on Linux so threading it)
                 self.playalert_worker = playalertworker.PlayAlert_worker(self.configuration)
                 self.playalert_worker.start()
-
-                # Todo: update recent alerts
-
                 # get id codes
                 system_id = self.eve_data.get_id_code(system)
                 home_id = self.eve_data.get_id_code(self.lineEditHome_System.text())
                 short_path = self.eve_data.shortest_path_length(home_id, system_id)
                 # secs, reported system, jumps, msg
                 self.alert_recent_add(0, system, str(short_path), message_list[2])
-
                 return
 
         # Display all?

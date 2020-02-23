@@ -260,7 +260,7 @@
                  </size>
                 </property>
                 <property name="contextMenuPolicy">
-                 <enum>Qt::ActionsContextMenu</enum>
+                 <enum>Qt::DefaultContextMenu</enum>
                 </property>
                 <property name="text">
                  <string>Alert1</string>
@@ -291,7 +291,7 @@
                  </size>
                 </property>
                 <property name="contextMenuPolicy">
-                 <enum>Qt::ActionsContextMenu</enum>
+                 <enum>Qt::DefaultContextMenu</enum>
                 </property>
                 <property name="text">
                  <string>Alert2</string>
@@ -322,7 +322,7 @@
                  </size>
                 </property>
                 <property name="contextMenuPolicy">
-                 <enum>Qt::ActionsContextMenu</enum>
+                 <enum>Qt::DefaultContextMenu</enum>
                 </property>
                 <property name="text">
                  <string>Alert3</string>
@@ -353,7 +353,7 @@
                  </size>
                 </property>
                 <property name="contextMenuPolicy">
-                 <enum>Qt::ActionsContextMenu</enum>
+                 <enum>Qt::DefaultContextMenu</enum>
                 </property>
                 <property name="text">
                  <string>Alert4</string>
@@ -384,7 +384,7 @@
                  </size>
                 </property>
                 <property name="contextMenuPolicy">
-                 <enum>Qt::ActionsContextMenu</enum>
+                 <enum>Qt::DefaultContextMenu</enum>
                 </property>
                 <property name="text">
                  <string>Alert5</string>
@@ -843,9 +843,16 @@
   <tabstop>pushButtonChoose_Eve_Log_Location</tabstop>
   <tabstop>lineEdit_alarm</tabstop>
   <tabstop>pushButtonChoose_alarm_Location</tabstop>
+  <tabstop>lineEditChannelAdd</tabstop>
+  <tabstop>addChannelAddButton</tabstop>
+  <tabstop>channelListWidget</tabstop>
+  <tabstop>removeChannelButton</tabstop>
+  <tabstop>spinBox_recentalerttimeout</tabstop>
   <tabstop>checkbox_displayalerts</tabstop>
   <tabstop>checkBox_displayclear</tabstop>
   <tabstop>checkBox_displayall</tabstop>
+  <tabstop>checkBox_filterclear</tabstop>
+  <tabstop>checkBox_filterstatus</tabstop>
  </tabstops>
  <resources>
   <include location="images.qrc"/>
