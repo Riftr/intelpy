@@ -5,10 +5,14 @@ from intelpy.gui import mainwindow_intelpy
 import intelpy.eve.evedata as evedata
 from PyQt5.QtWidgets import QApplication
 from tests import debug_config
+import os
 
 
 def main():
     app_name = "IntelPy"
+
+    script_dir = os.path.dirname(__file__)
+    resources_dir = os.path.join(script_dir, "resources")
 
     # Set the default configuration
     default_json = {
@@ -28,7 +32,7 @@ def main():
         "alert_systems": [],
         "log_watch_active": 1,
         "config_loc": "",
-        "alarm_sound": "intelpy/resources/alarm2.mp3",
+        "alarm_sound": str(resources_dir) + os.sep + "alarm2.mp3",
         "display_alerts": 1,
         "display_clear": 1,
         "display_all": 1,
@@ -47,9 +51,9 @@ def main():
         print("Debug enabled..")
 
     # Load eve data
-    eve_data_file = "intelpy/resources/evedata.p"
-    eve_systems = "intelpy/resources/systems.p"
-    eve_idstosystems = "intelpy/resources/idtosystems.p"
+    eve_data_file = str(resources_dir) + os.sep + "evedata.p"
+    eve_systems = str(resources_dir) + os.sep + "systems.p"
+    eve_idstosystems = str(resources_dir) + os.sep + "idtosystems.p"
     eve_data = evedata.EveData(eve_data_file, eve_systems, eve_idstosystems)
 
     if configuration.value["debug"]:

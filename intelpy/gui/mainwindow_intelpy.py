@@ -34,7 +34,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         # Recent alerts timer
         self.recent_alerts_timer = QTimer(self)
         self.recent_alerts_timer.timeout.connect(self.alert_recent_update)
-        self.recent_alerts_timer.start(30000)  # ms
+        self.recent_alerts_timer.start(10000)  # ms
         self.recent_alerts = deque()
 
         # Set initial state

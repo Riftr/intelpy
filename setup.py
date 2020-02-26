@@ -14,7 +14,7 @@ with open(os.path.join(HERE, "README.md")) as fid:
 setup(
     name="intelpy",
     version="1.0.0b",
-    description="Personal Intel 4 Eve - Don't let bad guys blow up your stuff",
+    description="Don't let bad guys blow up your stuff",
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/Riifta/intelpy",
@@ -29,7 +29,7 @@ setup(
     packages=["intelpy"],
     include_package_data=True,
     install_requires=[
-        "pyqt5", "pathlib", "watchdog", "networkx", "playsound", "pygobject", 'mechanize'
+        "pyqt5", "pathlib", "watchdog", "networkx", "playsound", "pygobject", 'mechanize', 'tornado'
     ],
     entry_points={"console_scripts": ["intelpy=intelpy.__main__:main"]},
 )
