@@ -361,7 +361,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.eveloghandler_worker.start()
         #self.eveloghandler_worker.pass_message.connect(self.message_ready_process)
 
-    #@pyqtSlot()
     def stop_watchdog(self):
         self.event_stop.set()
 

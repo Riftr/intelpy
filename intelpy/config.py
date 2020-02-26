@@ -12,8 +12,6 @@ class Config:
     Saves a default configuration (specified) if none exists.
     Uses ~/.config/appname/ or c:/home/users/AppData/Local/appname/ to save the configuration under.
 
-    Created by me :)
-
     Usage:
 
         obj = config.Config(name_of_ application, default_JSON, (optional) file_name)
@@ -99,15 +97,15 @@ class Config:
         if my_platform == "unix":
             return(str(Path.home()) + "/.config/" + self.app_name + "/")
         elif my_platform == "windows":
-            return(str(Path.home()) + "/AppData/Local/" + self.app_name + "/")
+            return str(Path.home()) + "\\AppData\\Local\\" + self.app_name + "\\"
         else:
-            return("")  # Fallback, return blank string so it saves in the current app location
+            return ""  # Fallback, return blank string so it saves in the current app location
 
     def get_platform(self):
         if platform.startswith("linux") or platform.startswith("freebsd") or platform.startswith("darwin"):
-            return("unix")
+            return "unix"
         elif platform.startswith("win"):
-            return("windows")
+            return "windows"
         else:
             return None
 

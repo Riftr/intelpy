@@ -10,10 +10,8 @@ import os
 
 def main():
     app_name = "IntelPy"
-
     script_dir = os.path.dirname(__file__)
     resources_dir = os.path.join(script_dir, "resources")
-
     # Set the default configuration
     default_json = {
         "home_system": "NIDJ-K",
