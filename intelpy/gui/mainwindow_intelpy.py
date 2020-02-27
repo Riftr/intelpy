@@ -99,7 +99,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
                                                           "/My Documents/EVE/logs/Chatlogs/"
             elif configuration.get_platform() == "windows":
                 configuration.value["eve_log_location"] = str(Path.home()) + \
-                                                          "\\My Documents\\EVE\\logs\\Chatlogs\\"
+                                                          "\\Documents\\EVE\\logs\\Chatlogs\\"
             else:
                 self.error_message("IntelPy: Eve log file location",
                                      "Could not automatically figure out where your Eve logs are located.",
