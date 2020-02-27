@@ -50,7 +50,7 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
         if event.src_path not in self.known_files:
             # We got a new file, add it
             self.known_files[event.src_path] = 12     # Start at line 13 to avoid processing header
-
+            self.pickle_dict()
         if self.configuration.value["debug"]:
             print("Starting at line: " + str(self.known_files[event.src_path]))
 
@@ -107,16 +107,27 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
         remove_list = []
 
         for key in self.known_files.keys():
-            file_date = str(key)[-19:-11]  # Get the date from the file name
-            file_date_converted = datetime.strptime(file_date, "%Y%m%d")
+            try:
+                file_date = str(key)[-19:-11]  # Get the date from the file name
+                file_date_converted = datetime.strptime(file_date, "%Y%m%d")
+            except ValueError as e:
+                print("Error with known file data: " + str(e))
+                remove_list.append(key)
+                continue
             present_time = datetime.utcnow()
             gap_time = (present_time - file_date_converted).days
             if gap_time > 1:
-                remove_list.append(str(key))
+                remove_list.append(key)
 
         for key_to_del in remove_list:
             if key_to_del in self.known_files:
-                self.known_files.pop(key_to_del)
+                try:
+                    print("deleting key: " + str(key_to_del))
+                    del self.known_files[key_to_del]
+                except KeyError as e:
+                    print("key error: " + str(e))
+
+        self.pickle_dict()
 
 
     #def load_known_files(self):

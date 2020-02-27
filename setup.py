@@ -10,7 +10,7 @@ HERE = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(HERE, "README.md")) as fid:
     README = fid.read()
 
-# This call to setup() does all the work
+# This call to setup() does all the work pygobject
 setup(
     name="intelpy",
     version="1.0.0b",
@@ -29,7 +29,7 @@ setup(
     packages=["intelpy"],
     include_package_data=True,
     install_requires=[
-        "pyqt5", "pathlib", "watchdog", "networkx", "playsound", "pygobject", 'mechanize', 'tornado'
+        "pyqt5", "pathlib", "watchdog", "networkx", "playsound", 'mechanize', 'tornado'
     ],
     entry_points={"console_scripts": ["intelpy=intelpy.__main__:main"]},
 )
