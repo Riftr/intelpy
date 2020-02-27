@@ -1,6 +1,7 @@
 from PyQt5.QtCore import *
 import intelpy.eve.eveloghandler as eveloghandler
 from watchdog.observers import Observer
+from watchdog.events import LoggingEventHandler
 import time
 
 class Eveloghandler_worker(QThread):
@@ -12,7 +13,7 @@ class Eveloghandler_worker(QThread):
         self.configuration = configuration
         self.watched_channels = self.watched_channels_to_wildcards()
         self.ignore_directories = True
-        self.case_sensitive = True
+        self.case_sensitive = False
         self.ignore_patterns = None
         self.eveloghandler_watchdog = None
         self.watchdog_observer = None
