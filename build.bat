@@ -1,0 +1,1 @@
+pyinstaller IntelPy.py --add-data intelpy\resources;intelpy\resources --noconfirm
