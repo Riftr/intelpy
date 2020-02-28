@@ -54,10 +54,6 @@ class Eveloghandler_worker(QThread):
         self.eveloghandler_watchdog.pickle_dict()
         self.watchdog_observer.stop()
 
-    def win_touch_files(self):
-        pass
-
-
     def set_patterns(self):
         # try to update the pattern list
         self.eveloghandler_watchdog.update_patterns(self.watched_channels_to_wildcards())

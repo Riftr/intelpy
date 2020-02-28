@@ -1,4 +1,4 @@
-from PyQt5.QtCore import pyqtSlot, QTimer, QThreadPool
+from PyQt5.QtCore import pyqtSlot, QTimer, QThreadPool, QDir
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QWidget, QMessageBox
 from intelpy.gui.MainWindow import Ui_MainWindow
 from pathlib import Path
@@ -24,6 +24,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.alert_system_names_readable = []
         self.update_alert_systems()  # update alert systems from config
         self.threadpool = QThreadPool()
+        self.log_location = ""
+        self.alarm_location = None
 
         # Eve Time
         self.eve_time_statusbar()
@@ -265,7 +267,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
             str(Path.home()),
             options=QFileDialog.DontUseNativeDialog | QFileDialog.ShowDirsOnly)
 
-        if self.log_location != "":
+        if len(self.log_location) > 0:
+            self.log_location = QDir.toNativeSeparators(self.log_location)
             self.lineEditEve_Log_Location.setText(self.log_location)
             self.configuration.value["eve_log_location"] = self.log_location
             self.configuration.flush_config_to_file()
@@ -281,8 +284,9 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
             options=QFileDialog.DontUseNativeDialog)
 
         if self.alarm_location[0]:
-            self.lineEdit_alarm.setText(self.alarm_location[0])
-            self.configuration.value["alarm_sound"] = self.alarm_location[0]
+            this_alarm_location = QDir.toNativeSeparators(self.alarm_location[0])
+            self.lineEdit_alarm.setText(this_alarm_location)
+            self.configuration.value["alarm_sound"] = this_alarm_location
             self.configuration.flush_config_to_file()
             self.append_log(log.format_info("Alarm set to: " + self.configuration.value["alarm_sound"]))
 
