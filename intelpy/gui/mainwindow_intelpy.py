@@ -256,7 +256,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.configuration.value["alert_systems"] = self.eve_data.get_neighbours_within(id_code, jumps)
 
     def set_config_state(self, key, value):
-        # Used for setting non-list values in the config, Todo; factor this out, its redundant
+        # Used for setting non-list values in the config Todo; factor this out, its redundant
         self.configuration.value[key] = value
         self.configuration.flush_config_to_file()
 
