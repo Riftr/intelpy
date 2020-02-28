@@ -711,11 +711,8 @@
               <x>50</x>
               <y>470</y>
               <width>101</width>
-              <height>31</height>
+              <height>22</height>
              </rect>
-            </property>
-            <property name="layoutDirection">
-             <enum>Qt::RightToLeft</enum>
             </property>
             <property name="text">
              <string>Alert timeout:</string>
