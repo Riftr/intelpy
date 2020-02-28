@@ -3,6 +3,8 @@ import intelpy.eve.eveloghandler as eveloghandler
 from watchdog.observers import Observer
 from watchdog.events import LoggingEventHandler
 import time
+import os
+from pathlib import Path
 
 class Eveloghandler_worker(QThread):
     pass_message = pyqtSignal(list)
@@ -20,9 +22,13 @@ class Eveloghandler_worker(QThread):
         self.watched_channels = self.watched_channels_to_wildcards()
         self._running = False
         self.event_stop = event_stop
+        self.platform = self.configuration.get_platform()
+        self.toucher = None
+
 
     @pyqtSlot()
     def run(self):
+
         # Eveloghandler
         self.eveloghandler_watchdog = eveloghandler.EveLogHandler(self.watched_channels, self.ignore_patterns,
                                                                   self.ignore_directories, self.case_sensitive,
@@ -35,11 +41,20 @@ class Eveloghandler_worker(QThread):
         self.watchdog_observer.start()
 
         while not self.event_stop.is_set():
-            time.sleep(1)
+            time.sleep(2)
+            # Windows workaround - for some reason Eve doesn't trigger the watchdog modify event on Windows.
+            if self.platform == "windows":
+                this_file_list = os.listdir(self.configuration.value["eve_log_location"])
+                #for file in this_file_list:
+                #    Path(file).touch()
 
         # when stopping
         self.eveloghandler_watchdog.pickle_dict()
         self.watchdog_observer.stop()
+
+    def win_touch_files(self):
+        pass
+
 
     def set_patterns(self):
         # try to update the pattern list

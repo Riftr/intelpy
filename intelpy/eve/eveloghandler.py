@@ -18,7 +18,6 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
         # we get */delve.imperium* etc
         # delve.imperium_20200207_151839.txt
         self._patterns = patterns
-
         self._ignore_patterns = ignore_patterns
         self._ignore_directories = ignore_directories
         self._case_sensitive = case_sensitive
