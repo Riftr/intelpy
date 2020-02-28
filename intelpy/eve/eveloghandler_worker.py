@@ -4,7 +4,7 @@ from watchdog.observers import Observer
 from watchdog.events import LoggingEventHandler
 import time
 import os
-from pathlib import Path
+from pathlib2 import Path
 
 class Eveloghandler_worker(QThread):
     pass_message = pyqtSignal(list)
@@ -41,12 +41,14 @@ class Eveloghandler_worker(QThread):
         self.watchdog_observer.start()
 
         while not self.event_stop.is_set():
-            time.sleep(2)
             # Windows workaround - for some reason Eve doesn't trigger the watchdog modify event on Windows.
             if self.platform == "windows":
-                this_file_list = os.listdir(self.configuration.value["eve_log_location"])
-                #for file in this_file_list:
-                #    Path(file).touch()
+                path = Path(self.configuration.value["eve_log_location"])
+                for file in path.iterdir():
+                    Path(file).touch()
+                time.sleep(2)
+            else:
+                time.sleep(1)
 
         # when stopping
         self.eveloghandler_watchdog.pickle_dict()
