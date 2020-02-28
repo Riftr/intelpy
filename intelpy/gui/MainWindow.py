@@ -308,7 +308,7 @@ class Ui_MainWindow(object):
         self.spinBox_recentalerttimeout.setMaximum(20)
         self.spinBox_recentalerttimeout.setObjectName("spinBox_recentalerttimeout")
         self.label_7 = QtWidgets.QLabel(self.advancedtab)
-        self.label_7.setGeometry(QtCore.QRect(50, 480, 91, 20))
+        self.label_7.setGeometry(QtCore.QRect(50, 470, 101, 31))
         self.label_7.setLayoutDirection(QtCore.Qt.RightToLeft)
         self.label_7.setObjectName("label_7")
         self.tab_widget.addTab(self.advancedtab, "")
