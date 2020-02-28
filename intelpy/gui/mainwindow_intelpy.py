@@ -22,7 +22,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.signals = EveworkerSignals()
         self.event_stop = threading.Event()
         self.alert_system_names_readable = []
-        self.update_alert_systems()  # update alert systems from config
+        self.update_alert_systems()
         self.threadpool = QThreadPool()
         self.log_location = ""
         self.alarm_location = None
@@ -31,12 +31,12 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.eve_time_statusbar()
         self.evetimer = QTimer(self)
         self.evetimer.timeout.connect(self.eve_time_statusbar)
-        self.evetimer.start(10000)  # ms
+        self.evetimer.start(10000)
 
         # Recent alerts timer
         self.recent_alerts_timer = QTimer(self)
         self.recent_alerts_timer.timeout.connect(self.alert_recent_update)
-        self.recent_alerts_timer.start(10000)  # ms
+        self.recent_alerts_timer.start(10000)
         self.recent_alerts = deque()
 
         # Set initial state
@@ -256,7 +256,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.configuration.value["alert_systems"] = self.eve_data.get_neighbours_within(id_code, jumps)
 
     def set_config_state(self, key, value):
-        # Used for setting non-list values in the config
+        # Used for setting non-list values in the config, Todo; factor this out, its redundant
         self.configuration.value[key] = value
         self.configuration.flush_config_to_file()
 

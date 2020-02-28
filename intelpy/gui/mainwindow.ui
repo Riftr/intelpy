@@ -616,86 +616,84 @@
             <property name="title">
              <string>Watched channels</string>
             </property>
-            <widget class="QListWidget" name="channelListWidget">
+            <widget class="QWidget" name="verticalLayoutWidget_4">
              <property name="geometry">
               <rect>
                <x>10</x>
-               <y>80</y>
+               <y>30</y>
                <width>341</width>
-               <height>200</height>
+               <height>291</height>
               </rect>
              </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>100</height>
-              </size>
-             </property>
-             <property name="uniformItemSizes">
-              <bool>true</bool>
-             </property>
-             <property name="selectionRectVisible">
-              <bool>true</bool>
-             </property>
-            </widget>
-            <widget class="QPushButton" name="removeChannelButton">
-             <property name="geometry">
-              <rect>
-               <x>210</x>
-               <y>280</y>
-               <width>141</width>
-               <height>34</height>
-              </rect>
-             </property>
-             <property name="text">
-              <string>Remove Channel</string>
-             </property>
-            </widget>
-            <widget class="QPushButton" name="addChannelAddButton">
-             <property name="geometry">
-              <rect>
-               <x>260</x>
-               <y>40</y>
-               <width>91</width>
-               <height>34</height>
-              </rect>
-             </property>
-             <property name="text">
-              <string>Add</string>
-             </property>
-            </widget>
-            <widget class="QLabel" name="labeldotimperium">
-             <property name="geometry">
-              <rect>
-               <x>170</x>
-               <y>50</y>
-               <width>81</width>
-               <height>22</height>
-              </rect>
-             </property>
-             <property name="text">
-              <string>.imperium</string>
-             </property>
-            </widget>
-            <widget class="QLineEdit" name="lineEditChannelAdd">
-             <property name="geometry">
-              <rect>
-               <x>10</x>
-               <y>40</y>
-               <width>161</width>
-               <height>36</height>
-              </rect>
-             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_3">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_4"/>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_2">
+                <item>
+                 <widget class="QLineEdit" name="lineEditChannelAdd"/>
+                </item>
+                <item>
+                 <widget class="QLabel" name="labeldotimperium">
+                  <property name="text">
+                   <string>.imperium</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="addChannelAddButton">
+                  <property name="text">
+                   <string>Add</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_3">
+                <item>
+                 <widget class="QListWidget" name="channelListWidget">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>100</height>
+                   </size>
+                  </property>
+                  <property name="uniformItemSizes">
+                   <bool>true</bool>
+                  </property>
+                  <property name="selectionRectVisible">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QPushButton" name="removeChannelButton">
+                <property name="text">
+                 <string>Remove Channel</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </widget>
            <widget class="QSpinBox" name="spinBox_recentalerttimeout">
             <property name="geometry">
              <rect>
               <x>150</x>
-              <y>460</y>
+              <y>470</y>
               <width>81</width>
-              <height>36</height>
+              <height>31</height>
              </rect>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
             <property name="suffix">
              <string>min</string>
@@ -710,14 +708,17 @@
            <widget class="QLabel" name="label_7">
             <property name="geometry">
              <rect>
-              <x>0</x>
-              <y>470</y>
-              <width>151</width>
-              <height>22</height>
+              <x>50</x>
+              <y>480</y>
+              <width>91</width>
+              <height>20</height>
              </rect>
             </property>
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
             <property name="text">
-             <string>Recent alert timeout:</string>
+             <string>Alert timeout:</string>
             </property>
            </widget>
           </widget>
@@ -843,10 +844,8 @@
   <tabstop>pushButtonChoose_Eve_Log_Location</tabstop>
   <tabstop>lineEdit_alarm</tabstop>
   <tabstop>pushButtonChoose_alarm_Location</tabstop>
-  <tabstop>lineEditChannelAdd</tabstop>
   <tabstop>addChannelAddButton</tabstop>
   <tabstop>channelListWidget</tabstop>
-  <tabstop>removeChannelButton</tabstop>
   <tabstop>spinBox_recentalerttimeout</tabstop>
   <tabstop>checkbox_displayalerts</tabstop>
   <tabstop>checkBox_displayclear</tabstop>
