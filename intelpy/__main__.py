@@ -14,7 +14,7 @@ def main():
     resources_dir = os.path.join(script_dir, "resources")
     # Set the default configuration
     default_json = {
-        "home_system": "NIDJ-K",
+        "home_system": "1DQ1-A",
         "eve_log_location": "",
         "watched_channels": [
             "delve",
