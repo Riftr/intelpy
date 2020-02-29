@@ -128,7 +128,6 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
 
         self.pickle_dict()
 
-
     #def load_known_files(self):
     #    if Path(self.known_files_loc).exists():
     #       self.unpickle_dict()

@@ -9,7 +9,6 @@ from PyQt5.QtGui import QPalette, QColor
 from tests import debug_config
 import os
 
-
 def main():
     app_name = "IntelPy"
     script_dir = os.path.dirname(__file__)
@@ -67,8 +66,8 @@ def main():
     # Load main window GUI
     app = QApplication(sys.argv)
 
+    # Nice dark theme for windows, assume linux users know how to set it themselves
     if configuration.get_platform() == "windows" and configuration.value['windows_dark_theme'] == 1:
-        # Nice dark theme for windows, assume linux users know how to set it themselves
         app.setStyle("Fusion")
         palette = QPalette()
         palette.setColor(QPalette.Window, QColor(53, 53, 53))
@@ -97,7 +96,6 @@ def main():
     # Flush configuration
     configuration.flush_config_to_file()
     window.stop_watchdog()
-
 
 if __name__ == '__main__':
     main()

@@ -11,7 +11,8 @@ import intelpy.gui.playalert_worker as playalertworker
 import time
 from datetime import datetime
 from collections import deque
-
+import os
+import shutil
 
 class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
     def __init__(self, configuration, eve_data, *args, **kwargs):
@@ -94,13 +95,13 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.spinBox_recentalerttimeout.valueChanged.connect(self.recent_alert_spinbox_changed)
 
         # Figure out where logs are stored
-        if configuration.value["eve_log_location"] == "":
-            if configuration.get_platform() == "unix":
-                configuration.value["eve_log_location"] = str(Path.home()) + "/Games/eve-online/drive_c/users/" + \
+        if self.configuration.value["eve_log_location"] == "":
+            if self.configuration.get_platform() == "unix":
+                self.configuration.value["eve_log_location"] = str(Path.home()) + "/Games/eve-online/drive_c/users/" + \
                                                           getpass.getuser() + \
                                                           "/My Documents/EVE/logs/Chatlogs/"
-            elif configuration.get_platform() == "windows":
-                configuration.value["eve_log_location"] = str(Path.home()) + \
+            elif self.configuration.get_platform() == "windows":
+                self.configuration.value["eve_log_location"] = str(Path.home()) + \
                                                           "\\Documents\\EVE\\logs\\Chatlogs\\"
             else:
                 self.error_message("IntelPy: Eve log file location",
@@ -110,6 +111,10 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
                                      "critical")
             self.lineEditEve_Log_Location.setText(configuration.value["eve_log_location"])
             self.configuration.flush_config_to_file()
+
+        # Clean up logs on Windows
+        if self.configuration.get_platform() == "windows":
+            self.archive_old_logs_windows()
 
         # Re-set home to calculate alerts
         self.set_home()
@@ -127,6 +132,27 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.label_recentalert5.setText("")
 
     # Methods
+
+    def archive_old_logs_windows(self):
+        # When on Windows, archive old chat logs so we aren't dealing with them. Linux will handle it
+        # automatically via watchdog
+        archive_path = self.configuration.value["eve_log_location"][:-1] + "_Archive"
+        if not Path(archive_path).exists():
+            try:
+                if self.debug:
+                    print("Making " + str(archive_path))
+                os.makedirs(archive_path)
+            except IOError as e:
+                if self.debug:
+                    print("Could not create log archive path")
+                print(str(e))
+                raise
+        try:
+            shutil.move(self.configuration.value["eve_log_location"] + "\\*", archive_path)
+        except IOError as e:
+            print(e)
+            raise
+
     def recent_alert_spinbox_changed(self):
         spinbox_value = self.spinBox_recentalerttimeout.value()
         self.configuration.value["alert_timeout"] = spinbox_value
