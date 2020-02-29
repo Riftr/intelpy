@@ -139,7 +139,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         archive_path = self.configuration.value["eve_log_location"][:-1] + "_Archive"
         if not Path(archive_path).exists():
             try:
-                if self.debug:
+                if self.configuration.value["debug"]:
                     print("Making " + str(archive_path))
                 os.makedirs(archive_path)
             except IOError as e:
@@ -148,7 +148,9 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
                 print(str(e))
                 raise
         try:
-            shutil.move(self.configuration.value["eve_log_location"] + "\\*", archive_path)
+            current_files = os.listdir(self.configuration.value["eve_log_location"])
+            for file in current_files:
+                shutil.move(self.configuration.value["eve_log_location"] + file, archive_path)
         except IOError as e:
             print(e)
             raise
