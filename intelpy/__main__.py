@@ -3,7 +3,9 @@ import sys
 from intelpy import config
 from intelpy.gui import mainwindow_intelpy
 import intelpy.eve.evedata as evedata
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication
+from PyQt5.QtGui import QPalette, QColor
 from tests import debug_config
 import os
 
@@ -38,7 +40,8 @@ def main():
         "filter_clear": 1,
         "debug": 1,
         "message_timeout": 1.0,
-        "alert_timeout": 5
+        "alert_timeout": 5,
+        "windows_dark_theme": 0
     }
 
     configuration = config.Config(app_name, default_json)
@@ -63,6 +66,26 @@ def main():
 
     # Load main window GUI
     app = QApplication(sys.argv)
+
+    if configuration.get_platform() == "windows" and configuration.value['windows_dark_theme'] == 1:
+        # Nice dark theme for windows, assume linux users know how to set it themselves
+        app.setStyle("Fusion")
+        palette = QPalette()
+        palette.setColor(QPalette.Window, QColor(53, 53, 53))
+        palette.setColor(QPalette.WindowText, Qt.white)
+        palette.setColor(QPalette.Base, QColor(25, 25, 25))
+        palette.setColor(QPalette.AlternateBase, QColor(53, 53, 53))
+        palette.setColor(QPalette.ToolTipBase, Qt.white)
+        palette.setColor(QPalette.ToolTipText, Qt.white)
+        palette.setColor(QPalette.Text, Qt.white)
+        palette.setColor(QPalette.Button, QColor(53, 53, 53))
+        palette.setColor(QPalette.ButtonText, Qt.white)
+        palette.setColor(QPalette.BrightText, Qt.red)
+        palette.setColor(QPalette.Link, QColor(42, 130, 218))
+        palette.setColor(QPalette.Highlight, QColor(42, 130, 218))
+        palette.setColor(QPalette.HighlightedText, Qt.black)
+        app.setPalette(palette)
+
     window = mainwindow_intelpy.MainWindow(configuration, eve_data)
     window.show()
     app.exec_()
