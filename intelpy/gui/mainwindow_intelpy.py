@@ -143,7 +143,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
                     print("Making " + str(archive_path))
                 os.makedirs(archive_path)
             except IOError as e:
-                if self.debug:
+                if self.configuration.value["debug"]:
                     print("Could not create log archive path")
                 print(str(e))
                 raise
