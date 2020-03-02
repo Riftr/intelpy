@@ -21,7 +21,6 @@ I didn't like the other options out there and I wanted to try to make something 
 * `Playsound` (may have to install via Pip on Arch Linux, would otherwise be `python-playsound`)
 * `Gobject` (`python-gobject` on Arch Linux, a dependency for Playsound)
 
-
 ### :warning: Notes :warning:
 
 * Note to Arch Linux users: Playsound doesn't appear to be in your repositories, so you may need to install via pip
@@ -59,7 +58,10 @@ Run Intelpy.py to start the application.
 
 Download a copy of the repository. Install the required packages for your OS (see above). Run Intel.py.
 
-Note: a setup.py file as well as an (untested) PKGBUILD is available at this time
+Note: a setup.py file as well as an (untested) PKGBUILD is available at this time.
+
+Included are the necessary files to build this application with PyInstaller to make stand-alone packages for your OS if you desire.
+These scrips are the `build.sh` and `build.bat` files for Linux and Windows respectively. 
 
 #### Other OSes
 
