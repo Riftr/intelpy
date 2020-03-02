@@ -35,7 +35,7 @@ and run IntelPy.exe. The program contains all the dependencies above and it shou
 
 ### Linux
 
-There are two options: manual install (and use your system libraries) or download the pre-built package.
+There are three options: download the pre-built package, use pip or manual install (and use your system libraries/packages). 
 
 #### Pre-built package
 
