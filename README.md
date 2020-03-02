@@ -58,7 +58,7 @@ Run Intelpy.py to start the application.
 
 Just grab the latest Linux release source code package [here](https://github.com/Riifta/intelpy/releases/latest) and extract somewhere such as /opt/intelpy.
 
-Note: a setup.py file as well as an (untested) PKGBUILD is available at this time.
+Note: an (untested) PKGBUILD is available for Arch Linux, however Arch Linux may not satisfy the requirements itself. 
 
 Included are the necessary files to build this application with PyInstaller to make stand-alone packages for your OS if you desire.
 The script to build these packages are the `build.sh` and `build.bat` files for Linux and Windows respectively. 
