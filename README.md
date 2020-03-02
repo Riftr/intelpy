@@ -43,7 +43,7 @@ and run IntelPy. The program contains all the dependencies above and it should j
 
 #### Pip
 
-Download a copy of the repository and put somewhere such as /opt/intelpy. 
+Just grab the latest Linux release source code package [here](https://github.com/Riifta/intelpy/releases/latest) and extract somewhere such as /opt/intelpy. 
 
 Next, install dependencies via pip:
 
@@ -56,12 +56,12 @@ Run Intelpy.py to start the application.
 
 #### Install from source
 
-Download a copy of the repository. Install the required packages for your OS (see above). Run Intel.py.
+Just grab the latest Linux release source code package [here](https://github.com/Riifta/intelpy/releases/latest) and extract somewhere such as /opt/intelpy.
 
 Note: a setup.py file as well as an (untested) PKGBUILD is available at this time.
 
 Included are the necessary files to build this application with PyInstaller to make stand-alone packages for your OS if you desire.
-These scrips are the `build.sh` and `build.bat` files for Linux and Windows respectively. 
+The script to build these packages are the `build.sh` and `build.bat` files for Linux and Windows respectively. 
 
 #### Other OSes
 
