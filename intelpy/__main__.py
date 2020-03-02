@@ -11,8 +11,9 @@ import os
 
 def main():
     app_name = "IntelPy"
-    script_dir = os. getcwd()  # os.path.dirname(__file__)  # note: when built as 1 file, this gets a bit funky
-    resources_dir = os.path.join(script_dir, "resources")
+    #os.path.dirname(__file__)
+    script_dir = os.getcwd()
+    resources_dir = os.path.join(script_dir, "intelpy", "resources")
     # Set the default configuration
     default_json = {
         "home_system": "1DQ1-A",
