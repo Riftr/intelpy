@@ -2,7 +2,7 @@
 
 > IntelPy is a simple, cross-platform chat log monitor for the game Eve Online 
 >
-> ![IntelPy](https://i.imgur.com/WQ8pife.png)
+> ![IntelPy](https://i.imgur.com/WQ8pife.png | width=819)
 
 ## Why another one of these?
 
