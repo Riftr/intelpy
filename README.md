@@ -12,18 +12,18 @@ I didn't like the other options out there and I wanted to try to make something 
 
 ### Required packages
 
-* `Python 3` (and possibly `python-distro` on Arch Linux)
+* `Python 3` (`python` and possibly `python-distro` on Arch Linux, should already be installed for most users)
 * `PyQt 5` (`python-pyqt5` on Arch Linux)
 * `pathlib` and
 * `pathlib2`  (`python-pathlib` and `python-pathlib2` on Arch Linux)
 * `Watchdog` (`python-watchdog`on Arch Linux)
 * `Networkx` (`python-networkx` on Arch Linux)
-* `Playsound` (may have to install via Pip on Arch Linux, would otherwise be `python-playsound`)
-* `Gobject` (`python-gobject` on Arch Linux, a dependency for Playsound)
+* `Playsound` (`python-playsound` if it were available via Arch Linux)
+* `PyGObject` (`python-gobject` on Arch Linux, a dependency for Playsound. May need to also install via pip)
 
 ### :warning: Notes :warning:
 
-* Note to Arch Linux users: Playsound doesn't appear to be in your repositories, so you may need to install it via pip
+* Note to Arch Linux users: Playsound doesn't appear to be in your repositories, so you may need to install both it and pygobject it via pip
 
 ## Installation
 
