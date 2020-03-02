@@ -13,8 +13,8 @@ with open(os.path.join(HERE, "README.md")) as fid:
 # This call to setup() does all the work pygobject
 setup(
     name="intelpy",
-    version="1.0.0b",
-    description="Don't let bad guys blow up your stuff",
+    version="1.0b",
+    description="Chat log monitor for the game Eve Online ",
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/Riifta/intelpy",
@@ -29,7 +29,7 @@ setup(
     packages=["intelpy"],
     include_package_data=True,
     install_requires=[
-        "pyqt5", "pathlib", "watchdog", "networkx", "playsound", 'mechanize', 'tornado', 'pathlib2'
+        "pyqt5", "pathlib", "watchdog", "networkx", "playsound", 'pathlib2'
     ],
     entry_points={"console_scripts": ["intelpy=intelpy.__main__:main"]},
 )
