@@ -77,3 +77,27 @@ On Windows systems, the configuration file will be found under %appdata%, under 
 optional dark mode interface you can turn on via this file if you wish by changing `"windows_dark_theme"` to `1`.
 
 On Linux etc systems, the configuration file will be found under `~/.config/IntelPy/settings.json`. 
+
+## Licences
+
+See LICENSE. In short, the source code is available under [GPL3](https://www.gnu.org/licenses/gpl-3.0.en.html) and the sound files as per Acknowledgements below.
+
+## Acknowledgements / Attributions
+
+The alarm sounds included in IntelPy were sourced from https://freesound.org. Below are credits and licences for these 
+sounds. Changes were made to most of these shorten the length to make them suitable for use with IntelPy. 
+
+* military_alarm.wav by KIZILSUNGUR  License: Creative Commons 0
+* alarming 1.flac by Timbre | License: Attribution Noncommercial
+* 1 alarm long c.wav by jobro | License: Attribution
+* Alarm Siren, Fast Oscillations by Kinoton | License: Creative Commons 0
+* alarms.wav by guitarguy1985 | License: Creative Commons 0
+* alarm_fatal.wav by sirplus | License: Creative Commons 0
+* DIN Alarm European.MP3 by Fizzlecube | License: Creative Commons 0
+* 003 - Invasion Alarm.mp3 by o_ultimo | License: Attribution
+* Alarm No. 1 by Vendarro | License: Creative Commons 0
+
+Links to sound licences:
+* Creative Commons 0: https://creativecommons.org/publicdomain/zero/1.0/
+* Attribution: https://creativecommons.org/licenses/by/3.0/
+* Attribution Noncommercial: http://creativecommons.org/licenses/by-nc/3.0/
