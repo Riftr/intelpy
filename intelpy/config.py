@@ -40,7 +40,7 @@ class Config:
         self.default_config_file = default_config_file   # Path to file (without filename)
         self.app_name = app_name                         # App name for the folder to save in
         self.file_location = self.good_place_for_file()  # Path excluding filename to save/read file
-        self.debug = 1
+        self.debug = 0
 
         # If settings.json doesn't exist, create it and set default values
         if not Path(self.file_location + self.default_config_file).is_file():
