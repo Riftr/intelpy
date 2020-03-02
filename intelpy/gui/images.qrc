@@ -1,7 +1,4 @@
 <RCC>
-  <qresource prefix="pie">
-    <file>pie.jpg</file>
-  </qresource>
   <qresource prefix="piebig">
     <file>goodpie2.png</file>
   </qresource>

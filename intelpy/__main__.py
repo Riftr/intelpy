@@ -37,7 +37,7 @@ def main():
         "display_all": 1,
         "filter_status": 1,
         "filter_clear": 1,
-        "debug": 1,
+        "debug": 0,
         "message_timeout": 1.0,
         "alert_timeout": 5,
         "windows_dark_theme": 0
