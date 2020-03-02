@@ -29,7 +29,7 @@ I didn't like the other options out there and I wanted to try to make something 
 
 ### Windows
 
-Just grab the latest Windows release [here](https://github.com/Riifta/intelpy/releases/latest), then copy it to a directory
+Just grab the latest Windows release .zip file [here](https://github.com/Riifta/intelpy/releases/latest), then copy it to a directory
 and run IntelPy.exe. The program contains all the dependencies above and it should just work. 
 
 ### Linux
@@ -38,7 +38,7 @@ There are three options: download the pre-built package, use pip or manual insta
 
 #### Pre-built package
 
-Just grab the latest Linux release [here](https://github.com/Riifta/intelpy/releases/latest), then copy it to a directory such as /opt/intelpy
+Just grab the latest Linux release .tar.gz [here](https://github.com/Riifta/intelpy/releases/latest), then copy it to a directory such as /opt/intelpy
 and run IntelPy. The program contains all the dependencies above and it should just work. 
 
 #### Pip
