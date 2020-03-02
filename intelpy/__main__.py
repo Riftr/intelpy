@@ -19,14 +19,14 @@ def main():
         "home_system": "1DQ1-A",
         "eve_log_location": "",
         "watched_channels": [
-            "delve",
-            "querious",
-            "ftn",
-            "vnl",
-            "cr",
-            "aridia",
-            "khanid",
-            "lone"
+            "delve.imperium",
+            "querious.imperium",
+            "ftn.imperium",
+            "vnl.imperium",
+            "cr.imperium",
+            "aridia.imperium",
+            "khanid.imperium",
+            "lone.imperium"
         ],
         "alert_jumps": 3,
         "alert_systems": [],

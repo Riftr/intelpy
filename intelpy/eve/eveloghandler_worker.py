@@ -67,7 +67,7 @@ class Eveloghandler_worker(QThread):
         if self.configuration.get_platform == "windows":
             first_slash = "*\\"
         for channel in self.configuration.value["watched_channels"]:
-            return_list.append(first_slash + channel + ".imperium*")
+            return_list.append(first_slash + channel + "*")
 
         return return_list
 

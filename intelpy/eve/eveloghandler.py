@@ -44,8 +44,6 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
         #         tuple(3) - str "modified", str "file location", mystry bool "false"
         #         src_path = full file location (ie ./logs/delve.imperium_1234_1234.txt)
 
-        #return_list = []
-
         if event.src_path not in self.known_files:
             # We got a new file, add it
             self.known_files[event.src_path] = 12     # Start at line 13 to avoid processing header

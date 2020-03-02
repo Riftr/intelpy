@@ -635,13 +635,6 @@
                  <widget class="QLineEdit" name="lineEditChannelAdd"/>
                 </item>
                 <item>
-                 <widget class="QLabel" name="labeldotimperium">
-                  <property name="text">
-                   <string>.imperium</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
                  <widget class="QPushButton" name="addChannelAddButton">
                   <property name="text">
                    <string>Add</string>

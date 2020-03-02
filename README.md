@@ -1,12 +1,12 @@
 # IntelPy
 
 > IntelPy is a simple, cross-platform chat log monitor for the game Eve Online 
-
-![IntelPy](https://i.imgur.com/Hk8FLAr.png)
+>
+> ![IntelPy](https://i.imgur.com/WQ8pife.png)
 
 ## Why another one of these?
 
-I didn't like the other options out there and I wanted to try to make something myself. 
+I didn't like the other options out there and I wanted to try to make something myself that worked cross-platform.
 
 ## Which packages do I need to run IntelPy?
 
@@ -80,15 +80,13 @@ optional dark mode interface you can turn on via this file if you wish by changi
 
 On Linux etc systems, the configuration file will be found under `~/.config/IntelPy/settings.json`. 
 
-## Licences
+## Licences / Acknowledgements / Attributions
 
-See LICENSE. 
+This source code is available under [GPL3](https://www.gnu.org/licenses/gpl-3.0.en.html). 
 
-In short, the source code is available under [GPL3](https://www.gnu.org/licenses/gpl-3.0.en.html) and the sound files as per Acknowledgements below. 
+Eve-related data was made available by CCP and obtained from the Eve static data dump. See CCP Copyright Notice below. 
 
-Eve related data was made available from CCP from the Eve static data dump. See CCP Copyright Notice below. 
-
-## Acknowledgements / Attributions
+### Sound Files
 
 The alarm sounds included in IntelPy were sourced from https://freesound.org. Below are credits and licences for these 
 sounds. Changes were made to most of these shorten the length to make them suitable for use with IntelPy. 
