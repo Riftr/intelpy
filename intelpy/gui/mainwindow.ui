@@ -755,7 +755,7 @@
              <item>
               <widget class="QLabel" name="label_3">
                <property name="text">
-                <string>v0.9b</string>
+                <string>v1.0b</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>

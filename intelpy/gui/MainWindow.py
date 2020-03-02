@@ -429,7 +429,7 @@ class Ui_MainWindow(object):
         self.spinBox_recentalerttimeout.setSuffix(_translate("MainWindow", "min"))
         self.tab_widget.setTabText(self.tab_widget.indexOf(self.advancedtab), _translate("MainWindow", "Config"))
         self.label.setText(_translate("MainWindow", "IntelPy"))
-        self.label_3.setText(_translate("MainWindow", "v0.9b"))
+        self.label_3.setText(_translate("MainWindow", "v1.0b"))
         self.label_2.setText(_translate("MainWindow", "by Swizzles Saissore"))
         self.tab_widget.setTabText(self.tab_widget.indexOf(self.zabout_tab), _translate("MainWindow", "About"))
         self.actionCopy.setText(_translate("MainWindow", "Copy"))
