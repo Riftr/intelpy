@@ -57,7 +57,7 @@ Run Intelpy.py to start the application.
 
 #### Install from source
 
-Download a copy of the repository. Install the required packages for your OS (see above. Run Intel.py.
+Download a copy of the repository. Install the required packages for your OS (see above). Run Intel.py.
 
 Note: a setup.py file as well as an (untested) PKGBUILD is available at this time
 
