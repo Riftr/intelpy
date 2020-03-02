@@ -692,6 +692,12 @@
             <layout class="QHBoxLayout" name="horizontalLayout_5">
              <item>
               <widget class="QLabel" name="label_7">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>10</height>
+                </size>
+               </property>
                <property name="text">
                 <string>Alert timeout:</string>
                </property>
@@ -704,6 +710,12 @@
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>30</height>
+                </size>
                </property>
                <property name="suffix">
                 <string>min</string>
@@ -786,8 +798,8 @@
            <widget class="QLabel" name="label_4">
             <property name="geometry">
              <rect>
-              <x>80</x>
-              <y>210</y>
+              <x>70</x>
+              <y>200</y>
               <width>211</width>
               <height>141</height>
              </rect>
