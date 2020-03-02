@@ -80,7 +80,11 @@ On Linux etc systems, the configuration file will be found under `~/.config/Inte
 
 ## Licences
 
-See LICENSE. In short, the source code is available under [GPL3](https://www.gnu.org/licenses/gpl-3.0.en.html) and the sound files as per Acknowledgements below.
+See LICENSE. 
+
+In short, the source code is available under [GPL3](https://www.gnu.org/licenses/gpl-3.0.en.html) and the sound files as per Acknowledgements below. 
+
+Eve related data was made available from CCP from the Eve static data dump. See CCP Copyright Notice below. 
 
 ## Acknowledgements / Attributions
 
