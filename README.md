@@ -84,7 +84,9 @@ On Linux etc systems, the configuration file will be found under `~/.config/Inte
 
 This source code is available under [GPL3](https://www.gnu.org/licenses/gpl-3.0.en.html). 
 
-Eve-related data was made available by CCP and obtained from the Eve static data dump. See CCP Copyright Notice below. 
+Eve-related data was made available by CCP and obtained from the Eve static data dump. See CCP Copyright Notice below.
+
+Some Eve data was also obtained from https://www.fuzzwork.co.uk/. Thanks heaps for your data dumps!
 
 ### Sound Files
 
