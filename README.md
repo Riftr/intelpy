@@ -23,7 +23,7 @@ I didn't like the other options out there and I wanted to try to make something 
 
 ### :warning: Notes :warning:
 
-* Note to Arch Linux users: Playsound doesn't appear to be in your repositories, so you may need to install via pip
+* Note to Arch Linux users: Playsound doesn't appear to be in your repositories, so you may need to install it via pip
 
 ## Installation
 
