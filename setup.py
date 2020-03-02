@@ -29,7 +29,7 @@ setup(
     packages=["intelpy"],
     include_package_data=True,
     install_requires=[
-        "pyqt5", "pathlib", "watchdog", "networkx", "playsound", 'pathlib2'
+        "pyqt5", "pathlib", "watchdog", "networkx", "playsound", 'pathlib2', 'pygobject'
     ],
     entry_points={"console_scripts": ["intelpy=intelpy.__main__:main"]},
 )

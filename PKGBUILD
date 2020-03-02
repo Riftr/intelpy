@@ -15,7 +15,7 @@ arch=('any')
 url="https://github.com/Riifta/intelpy"
 license=('GPL3')
 groups=()
-depends=('python3' 'python-pyqt5' 'python-pathlib' 'python-watchdog' 'python-networkx' 'python-pathlib2')
+depends=('python3' 'python-pyqt5' 'python-pathlib' 'python-watchdog' 'python-networkx' 'python-pathlib2' 'python-gobject')
 #'python-playsound')
 makedepends=()
 provides=('intelpy')
