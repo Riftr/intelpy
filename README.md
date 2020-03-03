@@ -56,7 +56,7 @@ Run Intelpy.py to start the application.
 
 #### Install from source
 
-Just grab the latest source code package [here](https://github.com/Riifta/intelpy/releases/latest) and extract somewhere such as /opt/intelpy or C:\intelpy
+Just grab the latest source code package [here](https://github.com/Riifta/intelpy/releases/latest) and extract somewhere such as /opt/intelpy
 
 Note: an (untested) PKGBUILD is available for Arch Linux, however Arch Linux may not satisfy the requirements itself. 
 
