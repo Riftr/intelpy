@@ -1,6 +1,6 @@
 # Copyrights
 
-Copyright 2020 Robert Stoffers <none@none.none>  
+Copyright 2020 Swizzles Saissore <none@none.none>  
 
 ## License
 
