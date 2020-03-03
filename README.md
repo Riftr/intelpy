@@ -38,12 +38,12 @@ There are three options: download the pre-built package, use pip or manual insta
 
 #### Pre-built package
 
-Just grab the latest Linux release .tar.gz [here](https://github.com/Riifta/intelpy/releases/latest), then copy it to a directory such as /opt/intelpy
+Just grab the latest Linux tar.gz release [here](https://github.com/Riifta/intelpy/releases/latest), then copy it to a directory such as /opt/intelpy
 and run IntelPy. The program contains all the dependencies above and it should just work. 
 
 #### Pip
 
-Just grab the latest Linux release source code package [here](https://github.com/Riifta/intelpy/releases/latest) and extract somewhere such as /opt/intelpy. 
+Just grab the latest tar.gz source code release [here](https://github.com/Riifta/intelpy/releases/latest) and extract somewhere such as /opt/intelpy. 
 
 Next, install dependencies via pip:
 
@@ -56,12 +56,13 @@ Run Intelpy.py to start the application.
 
 #### Install from source
 
-Just grab the latest Linux release source code package [here](https://github.com/Riifta/intelpy/releases/latest) and extract somewhere such as /opt/intelpy.
+Just grab the latest source code package [here](https://github.com/Riifta/intelpy/releases/latest) and extract somewhere such as /opt/intelpy or C:\intelpy
 
 Note: an (untested) PKGBUILD is available for Arch Linux, however Arch Linux may not satisfy the requirements itself. 
 
 Included are the necessary files to build this application with PyInstaller to make stand-alone packages for your OS if you desire.
-The script to build these packages are the `build.sh` and `build.bat` files for Linux and Windows respectively. 
+The script to build these packages are the `build.sh` and `build.bat` files for Linux and Windows respectively. `build.sh` may also
+work for OSX but this is untested at this time.
 
 #### Other OSes
 
