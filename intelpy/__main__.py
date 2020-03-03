@@ -61,7 +61,7 @@ def main():
         print("---- Configuration on loading ----")
         print("eve_data_file: " + eve_data_file)
         print("eve_systems: " + eve_systems)
-        print("eve_idstosystems: " + eve_idstosystems)
+        print("eve_ids to systems: " + eve_idstosystems)
         debug_config.debug_config(configuration)
 
     # Load main window GUI
