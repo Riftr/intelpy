@@ -1,6 +1,6 @@
 # Copyrights
 
-Copyright 2020 Swizzles Saissore <none@none.none>  
+Copyright 2020 Swizzles Saissore <noemail@none.none>  
 
 ## License
 
