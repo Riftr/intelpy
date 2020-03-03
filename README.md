@@ -88,7 +88,10 @@ Getting started is easy:
 1. If you are in the Imperium your intel channels are already configured. If not, go to the Config tab and enter
 the full name of the in-game intel channel in the Watched Channels configuration.
 
-2. In game, turn on logging via the settings menu (its a tick box). 
+2. In game, turn on logging via the settings menu under Chat. This is usually already enabled by default. 
+
+![Chat Setings](https://i.imgur.com/SWErZWy.png)
+
 
 3. Set your home system (the one where you are krabbing) by entering the name and clicking the Set Home button. The log
 screen will notify you of the change by indicating `Home set to: homesystem`.
