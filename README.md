@@ -29,8 +29,8 @@ I didn't like the other options out there and I wanted to try to make something 
 
 ### Windows
 
-Just grab the latest Windows release .zip file [here](https://github.com/Riifta/intelpy/releases/latest), then copy it to a directory
-and run IntelPy.exe. The program contains all the dependencies above and it should just work. 
+Download the latest Windows release .zip file [here](https://github.com/Riifta/intelpy/releases/latest), then copy it to a directory
+and run IntelPy.exe. The program contains all the dependencies above. 
 
 ### Linux
 
@@ -38,12 +38,12 @@ There are three options: download the pre-built package, use pip or manual insta
 
 #### Pre-built package
 
-Just grab the latest Linux tar.gz release [here](https://github.com/Riifta/intelpy/releases/latest), then copy it to a directory such as /opt/intelpy
+Download the latest Linux tar.gz release [here](https://github.com/Riifta/intelpy/releases/latest), then copy it to a directory such as /opt/intelpy
 and run IntelPy. The program contains all the dependencies above and it should just work. 
 
 #### Pip
 
-Just grab the latest tar.gz source code release [here](https://github.com/Riifta/intelpy/releases/latest) and extract somewhere such as /opt/intelpy. 
+Download the latest tar.gz source code release [here](https://github.com/Riifta/intelpy/releases/latest) and extract somewhere such as /opt/intelpy. 
 
 Next, install dependencies via pip:
 
@@ -56,7 +56,7 @@ Run Intelpy.py to start the application.
 
 #### Install from source
 
-Just grab the latest source code package [here](https://github.com/Riifta/intelpy/releases/latest) and extract somewhere such as /opt/intelpy
+Download the latest source code package [here](https://github.com/Riifta/intelpy/releases/latest) and extract somewhere such as /opt/intelpy
 
 Note: an (untested) PKGBUILD is available for Arch Linux, however Arch Linux may not satisfy the requirements itself. 
 
