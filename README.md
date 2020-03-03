@@ -92,7 +92,6 @@ the full name of the in-game intel channel in the Watched Channels configuration
 
 ![Chat Setings](https://i.imgur.com/SWErZWy.png)
 
-
 3. Set your home system (the one where you are krabbing) by entering the name and clicking the Set Home button. The log
 screen will notify you of the change by indicating `Home set to: homesystem`.
  
