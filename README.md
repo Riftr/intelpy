@@ -80,6 +80,31 @@ optional dark mode interface you can turn on via this file if you wish by changi
 
 On Linux etc systems, the configuration file will be found under `~/.config/IntelPy/settings.json`. 
 
+## Usage
+
+Getting started is easy:
+
+1. If you are in the Imperium your intel channels are already configured. If not, go to the Config tab and enter
+the full name of the in-game intel channel in the Watched Channels configuration.
+
+2. In game, turn on logging via the settings menu (its a tick box). 
+
+3. Set your home system (the one where you are krabbing) by entering the name and clicking the Set Home button. The log
+screen will notify you of the change by indicating `Home set to: homesystem`.
+ 
+3. Adjust the slider to set how many jumps away from your home system that you wish to be notified. IntelPy is aware
+of the Eve Online solar system map so when someone says the name of a system within that amount of jumps from you, 
+the alert sound and notification will trigger. The easiest way for people to alert each other is to drag and drop the 
+system name from the top left of their game screen to the chat dialog box and press enter. 
+
+If IntelPy is not picking up your intel channels, you may need to double check you have entered them in the Watched 
+Channels configuration, as well as double check the Eve Logs: section points to the place where Eve Online is logging
+your chats for you. 
+
+There are a handful of other options also configurable in the Config tab. This includes setting the alarm sound; IntelPy
+comes with a number of extra sounds or you may choose your own. You can also set how long until alerts time out from the
+recent alerts screen as well as various filter/ignore options as you desire.
+
 ## Licences / Acknowledgements / Attributions
 
 This source code is available under [GPL3](https://www.gnu.org/licenses/gpl-3.0.en.html). 
