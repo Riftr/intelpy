@@ -18,7 +18,7 @@ Ignore this section and simply download the latest Windows release. It should wo
 * `pathlib2`  (`python-pathlib` and `python-pathlib2` on Arch Linux)
 * `Watchdog` (`python-watchdog`on Arch Linux)
 * `Networkx` (`python-networkx` on Arch Linux)
-* `Playsound` (`python-playsound` if it were available via Arch Linux)
+* `Playsound` (install via pip if your distro does not have this)
 * `PyGObject` (`python-gobject` on Arch Linux, a dependency for Playsound. May need to also install via pip)
 
 ### :warning: Notes :warning:
