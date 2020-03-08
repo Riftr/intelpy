@@ -4,13 +4,13 @@
 >
 > ![IntelPy](https://i.imgur.com/WQ8pife.png)
 
-## Why another one of these?
+## Required packages
 
-I didn't like the other options out there and I wanted to try to make something myself that worked cross-platform.
+### Windows
 
-## Which packages do I need to run IntelPy?
+Ignore this section and simply download the latest Windows release. It should work out of the box.
 
-### Required packages
+### Linux
 
 * `Python 3` (`python` and possibly `python-distro` on Arch Linux, should already be installed for most users)
 * `PyQt 5` (`python-pyqt5` on Arch Linux)
@@ -30,7 +30,7 @@ I didn't like the other options out there and I wanted to try to make something 
 ### Windows
 
 Download the latest Windows release .zip file [here](https://github.com/Riifta/intelpy/releases/latest), then copy it to a directory
-and run IntelPy.exe. The program contains all the dependencies above. 
+and run IntelPy.exe. 
 
 ### Linux
 
@@ -51,14 +51,12 @@ Next, install dependencies via pip:
 $ sudo pip install pyqt5 pathlib watchdog networkx playsound pathlib2 pygobject
 ```
 
-Run Intelpy.py to start the application.
+Run ```python Intelpy.py``` to start the application.
 
 
 #### Install from source
 
 Download the latest source code package [here](https://github.com/Riifta/intelpy/releases/latest) and extract somewhere such as /opt/intelpy
-
-Note: an (untested) PKGBUILD is available for Arch Linux, however Arch Linux may not satisfy the requirements itself. 
 
 Included are the necessary files to build this application with PyInstaller to make stand-alone packages for your OS if you desire.
 The script to build these packages are the `build.sh` and `build.bat` files for Linux and Windows respectively. `build.sh` may also
