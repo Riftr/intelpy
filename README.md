@@ -36,7 +36,7 @@ and run IntelPy.exe.
 
 ### Linux
 
-There are three options: download the pre-built package, use pip or manual install (and use your system libraries/packages). 
+There are three options: download the pre-built package, use pip and/or your distribution's libraries or manual install (and use your system libraries/packages). 
 
 #### Pre-built package
 
@@ -55,8 +55,16 @@ $ sudo pip install pyqt5 pathlib watchdog networkx playsound pathlib2 pygobject
 
 Run ```python Intelpy.py``` to start the application. 
 
+#### Using your distrubtion libraries
+
+As per above, download the source package and extract somewhere such as /opt/intelpy. Install the required packages using 
+your distribution's package manager. Run `python Intelpy.py` from the install location.
+
 
 #### Build package from source
+
+:warning: Note: you don't need to do this to use IntelPy. This is handy if you wish to have a standalone all-in-one package for any
+reason.
 
 Download the latest source code package [here](https://github.com/Riifta/intelpy/releases/latest) and extract somewhere such as /opt/intelpy
 
