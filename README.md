@@ -61,8 +61,11 @@ Run ```python Intelpy.py``` to start the application.
 As per above, download the source package and extract somewhere such as /opt/intelpy. Install the required packages using 
 your distribution's package manager. Run ```python Intelpy.py``` from the install location.
 
+### Other OSes
 
-#### Build package from source
+IntelPy will probably run under OSX and other POSIX-like systems but I do not have the means to test this. If you encounter errors, please let me know.
+
+### Build package from source
 
 :warning: Note: you don't need to do this to use IntelPy. This is handy if you wish to have a standalone all-in-one package for any
 reason.
@@ -72,10 +75,6 @@ Download the latest source code package [here](https://github.com/Riifta/intelpy
 Included are the necessary files to build this application with PyInstaller to make stand-alone packages for your OS if you desire.
 The script to build these packages are the `build.sh` and `build.bat` files for Linux and Windows respectively. `build.sh` may also
 work for OSX but this is untested at this time.
-
-#### Other OSes
-
-IntelPy will probably run under OSX and other POSIX-like systems but I do not have the means to test this. If you encounter errors, please let me know.
 
 
 ## Configuration (optional)
