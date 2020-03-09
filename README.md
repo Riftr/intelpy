@@ -51,10 +51,10 @@ Next, install dependencies via pip:
 $ sudo pip install pyqt5 pathlib watchdog networkx playsound pathlib2 pygobject
 ```
 
-Run ```python Intelpy.py``` to start the application.
+Run ```python Intelpy.py``` to start the application. 
 
 
-#### Install from source
+#### Build package from source
 
 Download the latest source code package [here](https://github.com/Riifta/intelpy/releases/latest) and extract somewhere such as /opt/intelpy
 
