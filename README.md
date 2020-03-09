@@ -12,14 +12,16 @@ Ignore this section and simply download the latest Windows release. It should wo
 
 ### Linux
 
-* `Python 3` (`python` and possibly `python-distro` on Arch Linux, should already be installed for most users)
-* `PyQt 5` (`python-pyqt5` on Arch Linux)
+The versions below aren't hard requirements, only what IntelPy has been tested on.
+
+* `Python 3` 3.7 (`python` and possibly `python-distro` on Arch Linux, should already be installed for most users)
+* `PyQt 5` 5.14.1 (`python-pyqt5` on Arch Linux)
 * `pathlib` and
 * `pathlib2`  (`python-pathlib` and `python-pathlib2` on Arch Linux)
-* `Watchdog` (`python-watchdog`on Arch Linux)
-* `Networkx` (`python-networkx` on Arch Linux)
-* `Playsound` (install via pip if your distro does not have this)
-* `PyGObject` (`python-gobject` on Arch Linux, a dependency for Playsound. May need to also install via pip)
+* `Watchdog` 0.10.2 (`python-watchdog`on Arch Linux)
+* `Networkx` 2.4 (`python-networkx` on Arch Linux)
+* `Playsound` 1.2.2 (install via pip if your distro does not have this)
+* `PyGObject` 3.36.0 (`python-gobject` on Arch Linux, a dependency for Playsound. May need to also install via pip)
 
 ### :warning: Notes :warning:
 
