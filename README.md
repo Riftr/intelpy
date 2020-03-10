@@ -4,6 +4,12 @@
 >
 > ![IntelPy](https://i.imgur.com/WQ8pife.png)
 
+## TL;DR to use IntelPy
+
+* Download the latest version for your operating system from https://github.com/Riifta/intelpy/releases/latest 
+* Extract it to a folder
+* Run ```IntelPy.exe``` or ```IntelPy``` from the install directory
+
 ## Required packages
 
 ### Windows
