@@ -1,5 +1,6 @@
-from PyQt5.QtCore import pyqtSlot, QTimer, QThreadPool, QDir
+from PyQt5.QtCore import pyqtSlot, QTimer, QThreadPool, QDir, Qt
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QWidget, QMessageBox
+from PyQt5.QtGui import QPalette, QColor
 from intelpy.gui.MainWindow import Ui_MainWindow
 from pathlib import Path
 import getpass
@@ -58,6 +59,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
             self.checkBox_filterclear.setChecked(True)
         if self.configuration.value["filter_status"]:
             self.checkBox_filterstatus.setChecked(True)
+        if self.configuration.value["dark_theme"]:
+            self.checkBoxDarkMode.setChecked(True)
 
         # Set the channel list
         self.channelListWidget.addItems(self.configuration.value["watched_channels"])
@@ -75,6 +78,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.addChannelAddButton.clicked.connect(self.add_channel)
         self.removeChannelButton.clicked.connect(lambda: self.remove_channel(self.channelListWidget.selectedItems()))
 
+
         # Advanced config
         self.pushButtonChoose_alarm_Location.clicked.connect(self.choose_alarm_location)
         self.checkbox_displayalerts.stateChanged.connect(
@@ -87,6 +91,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
             lambda: self.checkbox_changed(self.checkBox_filterclear, "filter_clear"))
         self.checkBox_filterstatus.stateChanged.connect(
             lambda: self.checkbox_changed(self.checkBox_filterstatus, "filter_status"))
+        self.checkBoxDarkMode.stateChanged.connect(
+            lambda: self.checkbox_changed(self.checkBoxDarkMode, "dark_theme"))
 
         # Alert silder
         self.horizontalSlider_AlertJumps.valueChanged.connect(self.alert_slider_changed)
@@ -225,6 +231,16 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         alert_off = "set to <font color=\"red\">OFF</font>"
         ignore_on = "set to <font color=\"red\">IGNORE</font>"
         ignore_off = "set to <font color=\"green\">NOT IGNORE</font>"
+
+        if which_button == "dark_theme":
+            if state.isChecked():
+                self.set_config_state("dark_theme", 1)
+                self.append_log(log.format_info("Dark mode set to " + alert_on +
+                                                ". Please restart IntelPy to enable."))
+            else:
+                self.set_config_state("dark_theme", 0)
+                self.append_log(log.format_info("Dark mode set to " + alert_off +
+                                                ". Please restart IntelPy to disable."))
         if which_button == "display_alerts":
             if state.isChecked():
                 self.set_config_state("display_alerts", 1)

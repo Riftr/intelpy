@@ -41,7 +41,7 @@ def main():
         "debug": 0,
         "message_timeout": 1.0,
         "alert_timeout": 5,
-        "windows_dark_theme": 0
+        "dark_theme": 0
     }
 
     configuration = config.Config(app_name, default_json)
@@ -67,8 +67,8 @@ def main():
     # Load main window GUI
     app = QApplication(sys.argv)
 
-    # Nice dark theme for windows, assume linux users know how to set it themselves
-    if configuration.get_platform() == "windows" and configuration.value['windows_dark_theme'] == 1:
+    # Nice dark theme if the user wishes to use it
+    if configuration.value['dark_theme'] == 1:
         app.setStyle("Fusion")
         palette = QPalette()
         palette.setColor(QPalette.Window, QColor(53, 53, 53))

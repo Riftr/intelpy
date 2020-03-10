@@ -84,8 +84,7 @@ via the application so you don't need to manually go into your settings.json and
 it will attempt to configure are your Eve log directory, the alarm sound file to use and where to store the configuration.
 IntelPy comes with a number of extra alarm sounds or you can use your own.
 
-On Windows systems, the configuration file will be found under %appdata%, under `Local\IntelPy\settings.json`. There is an
-optional dark mode interface you can turn on via this file if you wish by changing `"windows_dark_theme"` to `1`.
+On Windows systems, the configuration file will be found under %appdata%, under `Local\IntelPy\settings.json`. 
 
 On Linux etc systems, the configuration file will be found under `~/.config/IntelPy/settings.json`. 
 
