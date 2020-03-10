@@ -68,6 +68,10 @@ def main():
     app = QApplication(sys.argv)
 
     # Nice dark theme if the user wishes to use it
+    if 'dark_theme' not in configuration.value:
+        configuration.value['dark_theme'] = 0
+        configuration.flush_config_to_file()
+
     if configuration.value['dark_theme'] == 1:
         app.setStyle("Fusion")
         palette = QPalette()
