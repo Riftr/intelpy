@@ -20,79 +20,37 @@ Ignore this section and simply download the latest Windows release. It should wo
 
 The versions below aren't hard requirements, only what IntelPy has been tested on.
 
-* `Python 3` 3.7 (`python` and possibly `python-distro` on Arch Linux, should already be installed for most users)
-* `PyQt 5` 5.14.1 (`python-pyqt5` on Arch Linux)
-* `pathlib` and
-* `pathlib2`  (`python-pathlib` and `python-pathlib2` on Arch Linux)
-* `Watchdog` 0.10.2 (`python-watchdog`on Arch Linux)
-* `Networkx` 2.4 (`python-networkx` on Arch Linux)
-* `Playsound` 1.2.2 (install via pip if your distro does not have this)
-* `PyGObject` 3.36.0 (`python-gobject` on Arch Linux, a dependency for Playsound. May need to also install via pip)
+* Python 3 3.7 
+* PyQt 5 5.14.1 
+* pathlib / pathlib2
+* Watchdog 0.10.2 
+* Networkx 2.4
+* Playsound 1.2.2 
+* PyGObject 3.36.0 
 
-### :warning: Notes :warning:
-
-* Note to Arch Linux users: Playsound doesn't appear to be in your repositories, so you may need to install both it and pygobject it via pip
 
 ## Installation
 
 ### Windows
 
-Download the latest Windows release .zip file [here](https://github.com/Riifta/intelpy/releases/latest), then copy it to a directory
-and run IntelPy.exe. 
+Download the latest Windows release .zip file [here](https://github.com/Riifta/intelpy/releases/latest), extract the contents to a directory and run IntelPy.exe. 
 
 ### Linux
 
-There are three options: download the pre-built package or use pip and/or your distrubtion package manager to install the
-required packages.  
 
 #### Pre-built package
 
-Download the latest Linux tar.gz release [here](https://github.com/Riifta/intelpy/releases/latest), then copy it to a directory such as /opt/intelpy
-and run IntelPy. The program contains all the dependencies above and it should just work. 
+Download the latest Linux tar.gz release [here](https://github.com/Riifta/intelpy/releases/latest), extract the contents to a directory such as /opt/intelpy and run IntelPy. The program contains all the dependencies above and should just work. 
 
-#### Pip
+#### From Source / Distribution Libraries
 
-Download the latest tar.gz source code release [here](https://github.com/Riifta/intelpy/releases/latest) and extract somewhere such as /opt/intelpy. 
-
-Next, install dependencies via pip:
+Install required packages above using either your distributions package manager or Pip. If you use pip, the following should be enough:
 
 ```shell
 $ sudo pip install pyqt5 pathlib watchdog networkx playsound pathlib2 pygobject
 ```
+Once required packages are installed, run ```python Intelpy.py``` to start the application. 
 
-Run ```python Intelpy.py``` to start the application. 
-
-#### Using your distribution libraries
-
-As per above, download the source package and extract somewhere such as /opt/intelpy. Install the required packages using 
-your distribution's package manager. Run ```python Intelpy.py``` from the install location.
-
-### Other OSes
-
-IntelPy will probably run under OSX and other POSIX-like systems but I do not have the means to test this. If you encounter errors, please let me know.
-
-### Build package from source
-
-:warning: Note: you don't need to do this to use IntelPy. This is handy if you wish to have a standalone all-in-one package for any
-reason.
-
-Download the latest source code package [here](https://github.com/Riifta/intelpy/releases/latest) and extract somewhere such as /opt/intelpy
-
-Included are the necessary files to build this application with PyInstaller to make stand-alone packages for your OS if you desire.
-The script to build these packages are the `build.sh` and `build.bat` files for Linux and Windows respectively. `build.sh` may also
-work for OSX but this is untested at this time.
-
-
-## Configuration (optional)
-
-When you first run IntelPy it will attempt to automatically configure itself. Useful configuration options are all done
-via the application so you don't need to manually go into your settings.json and edit things yourself. The key options 
-it will attempt to configure are your Eve log directory, the alarm sound file to use and where to store the configuration.
-IntelPy comes with a number of extra alarm sounds or you can use your own.
-
-On Windows systems, the configuration file will be found under %appdata%, under `Local\IntelPy\settings.json`. 
-
-On Linux etc systems, the configuration file will be found under `~/.config/IntelPy/settings.json`. 
 
 ## Usage
 
