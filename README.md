@@ -37,7 +37,6 @@ Download the latest Windows release .zip file [here](https://github.com/Riifta/i
 
 ### Linux
 
-
 #### Pre-built package
 
 Download the latest Linux tar.gz release [here](https://github.com/Riifta/intelpy/releases/latest), extract the contents to a directory such as /opt/intelpy and run IntelPy. The program contains all the dependencies above and should just work. 
@@ -51,6 +50,9 @@ $ sudo pip install pyqt5 pathlib watchdog networkx playsound pathlib2 pygobject
 ```
 Once required packages are installed, run ```python Intelpy.py``` to start the application. 
 
+### OSX and Others
+
+If your operating system can run Python and QT5 then you can probably run IntelPy using the source package itself. 
 
 ## Usage
 
@@ -90,7 +92,7 @@ Some Eve data was also obtained from https://www.fuzzwork.co.uk/. Thanks heaps f
 ### Sound Files
 
 The alarm sounds included in IntelPy were sourced from https://freesound.org. Below are credits and licences for these 
-sounds. Changes were made to most of these shorten the length to make them suitable for use with IntelPy. 
+sounds. Changes were made to most of these sounds to shorten the length to make them suitable for use with IntelPy. 
 
 * military_alarm.wav by KIZILSUNGUR  License: Creative Commons 0
 * alarming 1.flac by Timbre | License: Attribution Noncommercial
