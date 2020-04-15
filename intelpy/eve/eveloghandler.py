@@ -54,31 +54,34 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
         # get line/s from file
         try:
             with open(event.src_path, "r", encoding="utf_16_le") as file_data:
-                #all_lines = file_data.readlines()
                 new_lines = list(islice(file_data, self.known_files[event.src_path], None))
 
                 for line in new_lines:
                     self.known_files[event.src_path] += 1
-                    print("Should be reading line " + str(self.known_files[event.src_path]))
+                    if self.configuration.value["debug"]:
+                        print("Should be reading line " + str(self.known_files[event.src_path]))
                     if self.date_re.match(line):  # if we get a line with a valid date time
                         new_parsed_msg = self.parse_message(line)
                         # Check for system msgs
                         if new_parsed_msg[1] == "EVE System":
-                            print("Did not parse line, was system msg")
-                            print(new_parsed_msg)
+                            if self.configuration.value["debug"]:
+                                print("Did not parse line, was system msg")
+                                print(new_parsed_msg)
                             continue
                         # Check for old messages
                         present_time = datetime.utcnow()
                         past_time = new_parsed_msg[0]
                         gap_time = (present_time - past_time).total_seconds() / 60
                         if gap_time > self.configuration.value["message_timeout"]:
-                            print("Did not parse line, was older than " + str(gap_time))
-                            print(new_parsed_msg)
+                            if self.configuration.value["debug"]:
+                                print("Did not parse line, was older than " + str(gap_time))
+                                print(new_parsed_msg)
                             continue
                         # Check if we've seen the line recently
                         if new_parsed_msg[1] + ">" + new_parsed_msg[2] in self.known_msg_queue:
-                            print("Did not parse line, msg was seen recently")  # possibly from another client
-                            print(new_parsed_msg)
+                            if self.configuration.value["debug"]:
+                                print("Did not parse line, msg was seen recently")  # possibly from another client
+                                print(new_parsed_msg)
                             continue
                         else:
                             # Add line to self.known_msg_queue and remove the oldest line
@@ -88,7 +91,8 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
                             # Message should be good and unique, bubble up
                             self.message_ready.emit(new_parsed_msg)
                     else:
-                        print("Line did not match date regex")
+                        if self.configuration.value["debug"]:
+                            print("Line did not match date regex")
 
                 self.pickle_dict()  # save file progress
 
@@ -108,7 +112,8 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
                 file_date = str(key)[-19:-11]  # Get the date from the file name
                 file_date_converted = datetime.strptime(file_date, "%Y%m%d")
             except ValueError as e:
-                print("Error with known file data: " + str(e))
+                if self.configuration.value["debug"]:
+                    print("Error with known file data: " + str(e))
                 remove_list.append(key)
                 continue
             present_time = datetime.utcnow()
@@ -119,7 +124,8 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
         for key_to_del in remove_list:
             if key_to_del in self.known_files:
                 try:
-                    print("deleting key: " + str(key_to_del))
+                    if self.configuration.value["debug"]:
+                        print("deleting key: " + str(key_to_del))
                     del self.known_files[key_to_del]
                 except KeyError as e:
                     print("key error: " + str(e))
