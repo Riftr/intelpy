@@ -259,6 +259,11 @@
                   <height>50</height>
                  </size>
                 </property>
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
                 <property name="contextMenuPolicy">
                  <enum>Qt::DefaultContextMenu</enum>
                 </property>
@@ -289,6 +294,11 @@
                   <width>0</width>
                   <height>50</height>
                  </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
                 </property>
                 <property name="contextMenuPolicy">
                  <enum>Qt::DefaultContextMenu</enum>
@@ -321,6 +331,11 @@
                   <height>50</height>
                  </size>
                 </property>
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
                 <property name="contextMenuPolicy">
                  <enum>Qt::DefaultContextMenu</enum>
                 </property>
@@ -352,6 +367,11 @@
                   <height>50</height>
                  </size>
                 </property>
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
                 <property name="contextMenuPolicy">
                  <enum>Qt::DefaultContextMenu</enum>
                 </property>
@@ -382,6 +402,11 @@
                   <width>0</width>
                   <height>50</height>
                  </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
                 </property>
                 <property name="contextMenuPolicy">
                  <enum>Qt::DefaultContextMenu</enum>
@@ -763,7 +788,7 @@
              <item>
               <widget class="QLabel" name="label_3">
                <property name="text">
-                <string>v1.0</string>
+                <string>v1.1</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>

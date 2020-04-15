@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mainwindow.ui'
 #
-# Created by: PyQt5 UI code generator 5.14.1
+# Created by: PyQt5 UI code generator 5.14.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -125,6 +125,9 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.label_recentalert1.sizePolicy().hasHeightForWidth())
         self.label_recentalert1.setSizePolicy(sizePolicy)
         self.label_recentalert1.setMinimumSize(QtCore.QSize(0, 50))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.label_recentalert1.setFont(font)
         self.label_recentalert1.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
         self.label_recentalert1.setWordWrap(False)
         self.label_recentalert1.setOpenExternalLinks(True)
@@ -138,6 +141,9 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.label_recentalert2.sizePolicy().hasHeightForWidth())
         self.label_recentalert2.setSizePolicy(sizePolicy)
         self.label_recentalert2.setMinimumSize(QtCore.QSize(0, 50))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.label_recentalert2.setFont(font)
         self.label_recentalert2.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
         self.label_recentalert2.setWordWrap(False)
         self.label_recentalert2.setOpenExternalLinks(True)
@@ -151,6 +157,9 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.label_recentalert3.sizePolicy().hasHeightForWidth())
         self.label_recentalert3.setSizePolicy(sizePolicy)
         self.label_recentalert3.setMinimumSize(QtCore.QSize(0, 50))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.label_recentalert3.setFont(font)
         self.label_recentalert3.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
         self.label_recentalert3.setWordWrap(False)
         self.label_recentalert3.setOpenExternalLinks(True)
@@ -164,6 +173,9 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.label_recentalert4.sizePolicy().hasHeightForWidth())
         self.label_recentalert4.setSizePolicy(sizePolicy)
         self.label_recentalert4.setMinimumSize(QtCore.QSize(0, 50))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.label_recentalert4.setFont(font)
         self.label_recentalert4.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
         self.label_recentalert4.setWordWrap(False)
         self.label_recentalert4.setOpenExternalLinks(True)
@@ -177,6 +189,9 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.label_recentalert5.sizePolicy().hasHeightForWidth())
         self.label_recentalert5.setSizePolicy(sizePolicy)
         self.label_recentalert5.setMinimumSize(QtCore.QSize(0, 50))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.label_recentalert5.setFont(font)
         self.label_recentalert5.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
         self.label_recentalert5.setWordWrap(False)
         self.label_recentalert5.setOpenExternalLinks(True)
@@ -435,7 +450,7 @@ class Ui_MainWindow(object):
         self.spinBox_recentalerttimeout.setSuffix(_translate("MainWindow", "min"))
         self.tab_widget.setTabText(self.tab_widget.indexOf(self.advancedtab), _translate("MainWindow", "Config"))
         self.label.setText(_translate("MainWindow", "IntelPy"))
-        self.label_3.setText(_translate("MainWindow", "v1.0"))
+        self.label_3.setText(_translate("MainWindow", "v1.1"))
         self.label_2.setText(_translate("MainWindow", "by Swizzles Saissore"))
         self.checkBoxDarkMode.setText(_translate("MainWindow", "Dark mode (restart required)"))
         self.tab_widget.setTabText(self.tab_widget.indexOf(self.zabout_tab), _translate("MainWindow", "About"))

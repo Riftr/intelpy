@@ -2,22 +2,27 @@
 
 > IntelPy is a simple, cross-platform chat log monitor for the game Eve Online 
 >
-> ![IntelPy](https://i.imgur.com/WQ8pife.png)
+> ![IntelPy](https://i.imgur.com/HmTz4rl.png)
+>
 
-## TL;DR to use IntelPy
-
-* Download the latest version for your operating system from https://github.com/Riifta/intelpy/releases/latest 
-* Extract it to a folder
-* Run ```IntelPy.exe``` or ```IntelPy``` from the install directory
-
-## Required packages
+## How to get started with IntelPy
 
 ### Windows
 
-Ignore this section and simply download the latest Windows release. It should work out of the box.
-
+1. Download the latest Windows release from [here](https://github.com/Riifta/intelpy/releases/latest).
+2. Extract the contents to a directory 
+3. Run IntelPy.exe
+ 
 ### Linux
 
+#### Pre-built package
+
+1. Download the latest Linux tar.gz release [here](https://github.com/Riifta/intelpy/releases/latest)
+2. Extract the contents to a directory such as /opt/intelpy 
+3. Run the IntelPy execuitable 
+
+## Required packages (for building or running the source)
+ 
 The versions below aren't hard requirements, only what IntelPy has been tested on.
 
 * Python 3 3.7 
@@ -28,31 +33,11 @@ The versions below aren't hard requirements, only what IntelPy has been tested o
 * Playsound 1.2.2 
 * PyGObject 3.36.0 
 
-
-## Installation
-
-### Windows
-
-Download the latest Windows release .zip file [here](https://github.com/Riifta/intelpy/releases/latest), extract the contents to a directory and run IntelPy.exe. 
-
-### Linux
-
-#### Pre-built package
-
-Download the latest Linux tar.gz release [here](https://github.com/Riifta/intelpy/releases/latest), extract the contents to a directory such as /opt/intelpy and run IntelPy. The program contains all the dependencies above and should just work. 
-
-#### From Source / Distribution Libraries
-
-Install required packages above using either your distributions package manager or Pip. If you use pip, the following should be enough:
-
+### Pip one-liner
 ```shell
 $ sudo pip install pyqt5 pathlib watchdog networkx playsound pathlib2 pygobject
 ```
 Once required packages are installed, run ```python Intelpy.py``` to start the application. 
-
-### OSX and Others
-
-If your operating system can run Python and QT5 then you can probably run IntelPy using the source package itself. 
 
 ## Usage
 
