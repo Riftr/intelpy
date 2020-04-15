@@ -14,6 +14,7 @@ from datetime import datetime
 from collections import deque
 import os
 import shutil
+import random
 
 class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
     def __init__(self, configuration, eve_data, *args, **kwargs):
@@ -102,19 +103,36 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
 
         # Figure out where logs are stored
         if self.configuration.value["eve_log_location"] == "":
+            self.test_path = ""
             if self.configuration.get_platform() == "unix":
-                self.configuration.value["eve_log_location"] = str(Path.home()) + "/Games/eve-online/drive_c/users/" + \
-                                                          getpass.getuser() + \
-                                                          "/My Documents/EVE/logs/Chatlogs/"
+                self.test_path = Path(str(Path.home()) +
+                                      "/Games/eve-online/drive_c/users/" +
+                                      getpass.getuser() +
+                                      "/My Documents/EVE/logs/Chatlogs/")
+
+                if self.check_path(self.test_path):
+                    self.configuration.value["eve_log_location"] = str(self.test_path)
+
             elif self.configuration.get_platform() == "windows":
-                self.configuration.value["eve_log_location"] = str(Path.home()) + \
-                                                          "\\Documents\\EVE\\logs\\Chatlogs\\"
-            else:
-                self.error_message("IntelPy: Eve log file location",
-                                     "Could not automatically figure out where your Eve logs are located.",
-                                     "Please manually set this in the application for alerts to function.",
-                                     "",
-                                     "critical")
+                # Check default path on windows
+                self.home_path = Path.home()
+                self.test_path = self.home_path / "Documents" / "EVE" / "logs" / "Chatlogs"
+                if self.check_path(self.test_path):
+                    self.configuration.value["eve_log_location"] = str(self.test_path)
+                else:
+                    # Check if its on Onedrive instead
+                    # C:\Users\rober\OneDrive\Documents\EVE\logs
+                    self.test_path_odrive = self.home_path / "OneDrive" / "Documents" / "EVE" / "logs" / "Chatlogs"
+                    if self.check_path(self.test_path_odrive):
+                        self.configuration.value["eve_log_location"] = str(self.test_path_odrive)
+
+            if self.configuration.value["eve_log_location"] == "":
+                self.error_message("Could not determine Eve log path",
+                                   "Please select your Eve log path in the config tab",
+                                   "Default path did not exist",
+                                   "")
+                self.configuration.value["eve_log_location"] = str(Path.home())
+
             self.lineEditEve_Log_Location.setText(configuration.value["eve_log_location"])
             self.configuration.flush_config_to_file()
 
@@ -139,6 +157,12 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
 
     # Methods
 
+    def check_path(self, test_path):
+        if test_path.exists():
+            return True
+        else:
+            return False
+
     def archive_old_logs_windows(self):
         # When on Windows, archive old chat logs so we aren't dealing with them. Linux will handle it
         # automatically via watchdog
@@ -156,10 +180,16 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         try:
             current_files = os.listdir(self.configuration.value["eve_log_location"])
             for file in current_files:
-                shutil.move(self.configuration.value["eve_log_location"] + file, archive_path)
+                if os.path.exists(archive_path + "\\" + file):
+                    if self.configuration.value["debug"]:
+                        print("Archive path file already existed, skipping")
+                else:
+                    shutil.move(self.configuration.value["eve_log_location"] + "\\" + file, archive_path)
         except IOError as e:
             print(e)
-            raise
+            if self.configuration.value["debug"]:
+                print("Log file was in use while archiving, probably by Eve. Skipping")
+            #raise
 
     def recent_alert_spinbox_changed(self):
         spinbox_value = self.spinBox_recentalerttimeout.value()
