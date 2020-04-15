@@ -177,19 +177,21 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
                     print("Could not create log archive path")
                 print(str(e))
                 raise
-        try:
+
             current_files = os.listdir(self.configuration.value["eve_log_location"])
             for file in current_files:
-                if os.path.exists(archive_path + "\\" + file):
+                try:
+                    if os.path.exists(archive_path + "\\" + file):
+                        if self.configuration.value["debug"]:
+                            print("Archive path file already existed, skipping")
+                    else:
+                        shutil.move(self.configuration.value["eve_log_location"] + "\\" + file, archive_path)
+                except IOError as e:
+                    print(e)
                     if self.configuration.value["debug"]:
-                        print("Archive path file already existed, skipping")
-                else:
-                    shutil.move(self.configuration.value["eve_log_location"] + "\\" + file, archive_path)
-        except IOError as e:
-            print(e)
-            if self.configuration.value["debug"]:
-                print("Log file was in use while archiving, probably by Eve. Skipping")
-            #raise
+                        print("Log file was in use while archiving, probably by Eve. Skipping")
+                    continue
+                    #raise
 
     def recent_alert_spinbox_changed(self):
         spinbox_value = self.spinBox_recentalerttimeout.value()
