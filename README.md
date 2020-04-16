@@ -1,9 +1,21 @@
 # IntelPy
 
-> IntelPy is a simple, cross-platform chat log monitor for the game Eve Online 
+> IntelPy is a simple, cross-platform chat log monitor for the game Eve Online.
 >
 > ![IntelPy](https://i.imgur.com/HmTz4rl.png)
 >
+>
+
+## Features
+
+* Simple but modern UI
+* Audible alarms
+* Will watch any in-game channel you want
+* Alert tracker
+* Filtering options
+* Awareness of the Eve Online map
+* Cross-platform support (Windows and Linux packages, runs anywhere Python 3 will)
+* Dark themes for Windows and Linux
 
 ## How to get started with IntelPy
 
@@ -14,8 +26,6 @@
 3. Run IntelPy.exe
  
 ### Linux
-
-#### Pre-built package
 
 1. Download the latest Linux tar.gz release [here](https://github.com/Riifta/intelpy/releases/latest)
 2. Extract the contents to a directory such as /opt/intelpy 
@@ -43,19 +53,19 @@ Once required packages are installed, run ```python Intelpy.py``` to start the a
 
 Getting started is easy:
 
-1. If you are in the Imperium your intel channels are already configured. If not, go to the Config tab and enter
+1. Set your home system (where you are krabbing). Alerts will be triggered relative to this system. The log
+screen will notify you of the change by indicating `Home set to: homesystem`.
+
+2. If you are in the Imperium your intel channels are already configured. If not, go to the Config tab and enter
 the full name of the in-game intel channel in the Watched Channels configuration.
 
-2. In game, turn on logging via the settings menu under Chat. This is usually already enabled by default. 
+4. In game (if needed) turn on logging via the settings menu under Chat. This is usually already enabled by default. 
 
 ![Chat Setings](https://i.imgur.com/SWErZWy.png)
-
-3. Set your home system (the one where you are krabbing) by entering the name and clicking the Set Home button. The log
-screen will notify you of the change by indicating `Home set to: homesystem`.
  
-3. Adjust the slider to set how many jumps away from your home system that you wish to be notified. IntelPy is aware
+5. Adjust the slider to set how many jumps away from your home system that you wish to be notified. IntelPy is aware
 of the Eve Online solar system map so when someone says the name of a system within that amount of jumps from you, 
-the alert sound and notification will trigger. The easiest way for people to alert each other is to drag and drop the 
+the alert sound and notification will trigger. The easiest way for people to alert each other in game is to drag and drop the 
 system name from the top left of their game screen to the chat dialog box and press enter. 
 
 If IntelPy is not picking up your intel channels, you may need to double check you have entered them in the Watched 
