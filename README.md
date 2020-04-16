@@ -59,11 +59,11 @@ screen will notify you of the change by indicating `Home set to: homesystem`.
 2. If you are in the Imperium your intel channels are already configured. If not, go to the Config tab and enter
 the full name of the in-game intel channel in the Watched Channels configuration.
 
-4. In game (if needed) turn on logging via the settings menu under Chat. This is usually already enabled by default. 
+3. In game (if needed) turn on logging via the settings menu under Chat. This is usually already enabled by default. 
 
 ![Chat Setings](https://i.imgur.com/SWErZWy.png)
  
-5. Adjust the slider to set how many jumps away from your home system that you wish to be notified. IntelPy is aware
+4. Adjust the slider to set how many jumps away from your home system that you wish to be notified. IntelPy is aware
 of the Eve Online solar system map so when someone says the name of a system within that amount of jumps from you, 
 the alert sound and notification will trigger. The easiest way for people to alert each other in game is to drag and drop the 
 system name from the top left of their game screen to the chat dialog box and press enter. 
