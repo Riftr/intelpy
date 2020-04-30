@@ -8,7 +8,7 @@
 
 ## Features
 
-* Simple but modern UI
+* Simple UI
 * Audible alarms
 * Will watch any in-game channel you want
 * Alert tracker
