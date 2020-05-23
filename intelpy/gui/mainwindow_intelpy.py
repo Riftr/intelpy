@@ -4,7 +4,7 @@ from PyQt5.QtGui import QPalette, QColor
 from intelpy.gui.MainWindow import Ui_MainWindow
 from pathlib import Path
 import getpass
-import intelpy.gui.logformatting as log
+import intelpy.logging.logformatting as log
 import intelpy.eve.eveloghandler_worker as eveloghandler
 from intelpy.eve.eveloghandler_signals import EveworkerSignals
 import threading

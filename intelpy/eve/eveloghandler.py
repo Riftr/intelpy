@@ -5,6 +5,7 @@ from pathlib import Path
 from datetime import datetime
 from itertools import islice
 import re
+import os
 
 
 class EveLogHandler(PatternMatchingEventHandler, QObject):
@@ -138,12 +139,21 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
 
     def unpickle_dict(self):
         if Path(self.known_files_loc).exists():
-            with open(self.known_files_loc, "rb") as ku:
-                self.known_files = pickle.load(ku)
+            if os.path.getsize(self.known_files_loc) > 0:
+                try:
+                    with open(self.known_files_loc, "rb") as known_files_file:
+                        self.known_files = pickle.load(known_files_file)
+                except Exception as e:
+                    print(str(e))
+                    raise
 
     def pickle_dict(self):
-        with open(self.known_files_loc, "wb") as kp:
-            pickle.dump(self.known_files, kp)
+        try:
+            with open(self.known_files_loc, "wb") as known_files_file_pic:
+                pickle.dump(self.known_files, known_files_file_pic)
+        except Exception as e:
+            print(str(e))
+            raise
 
     def print_known_file_list(self):
         for key, value in self.known_files.items():
