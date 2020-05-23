@@ -6,8 +6,8 @@ import intelpy.eve.evedata as evedata
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QPalette, QColor
-from tests import debug_config
 import os
+import intelpy.logging.logger
 
 def main():
     app_name = "IntelPy"
@@ -48,8 +48,10 @@ def main():
     configuration.value["config_loc"] = configuration.file_location
 
     if configuration.value["debug"]:
+        logger = intelpy.logging.logger.logger(app_name)
         print("---- IntelPy ----")
-        print("Debug enabled..")
+        print("Debug enabled. See debug.log for output.")
+        logger.write_log("Loading Eve data..")
 
     # Load eve data
     eve_data_file = str(resources_dir) + os.sep + "evedata.p"
@@ -58,11 +60,12 @@ def main():
     eve_data = evedata.EveData(eve_data_file, eve_systems, eve_idstosystems)
 
     if configuration.value["debug"]:
-        print("---- Configuration on loading ----")
-        print("eve_data_file: " + eve_data_file)
-        print("eve_systems: " + eve_systems)
-        print("eve_ids to systems: " + eve_idstosystems)
-        debug_config.debug_config(configuration)
+        logger.write_log("---- Configuration on loading ----")
+        logger.write_log("eve_data_file: " + eve_data_file)
+        logger.write_log("eve_systems: " + eve_systems)
+        logger.write_log("eve_ids to systems: " + eve_idstosystems)
+        #debug_config.debug_config(configuration)
+        logger.debug_config(configuration)
 
     # Load main window GUI
     app = QApplication(sys.argv)
@@ -73,6 +76,7 @@ def main():
         configuration.flush_config_to_file()
 
     if configuration.value['dark_theme'] == 1:
+        logger.write_log("Dark theme was enabled")
         app.setStyle("Fusion")
         palette = QPalette()
         palette.setColor(QPalette.Window, QColor(53, 53, 53))
@@ -95,8 +99,9 @@ def main():
     app.exec_()
 
     if configuration.value["debug"]:
-        print("---- Configuration after closing ----")
-        debug_config.debug_config(configuration)
+        logger.write_log("---- Configuration after closing ----")
+        #debug_config.debug_config(configuration)
+        logger.debug_config(configuration)
 
     # Flush configuration
     configuration.flush_config_to_file()
