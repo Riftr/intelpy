@@ -10,7 +10,7 @@ import intelpy.logging.logger
 class Eveloghandler_worker(QThread):
     pass_message = pyqtSignal(list)
 
-    def __init__(self, configuration, event_stop, logger, *args, **kwargs):
+    def __init__(self, configuration, event_stop, logger=None, *args, **kwargs):
         super(Eveloghandler_worker, self).__init__(*args, **kwargs)
         # Watchdog
         self.configuration = configuration
@@ -75,6 +75,6 @@ class Eveloghandler_worker(QThread):
     @pyqtSlot(list)
     def test_catch_connection(self, this_list):
         # This slot just bubbles our message up to the main UI thread
-        if self.configuration.value["debug"]:
+        if self.configuration.value["debug"] and self.logger:
             self.logger.write_log("Bubbling message from worker")
         self.pass_message.emit(this_list)

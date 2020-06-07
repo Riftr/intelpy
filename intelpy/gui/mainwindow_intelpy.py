@@ -18,7 +18,7 @@ import random
 import intelpy.logging.logger
 
 class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
-    def __init__(self, configuration, eve_data, logger, *args, **kwargs):
+    def __init__(self, configuration, eve_data, logger=None, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.configuration = configuration
@@ -31,7 +31,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.log_location = ""
         self.alarm_location = None
         self.logger = logger
-        if self.configuration.value["debug"]:
+        if self.configuration.value["debug"] and self.logger and self.logger:
             self.logger.write_log("Starting GUI")
 
         # Eve Time
@@ -39,7 +39,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.evetimer = QTimer(self)
         self.evetimer.timeout.connect(self.eve_time_statusbar)
         self.evetimer.start(10000)
-        if self.configuration.value["debug"]:
+        if self.configuration.value["debug"] and self.logger:
             self.logger.write_log("Eve Time Started")
 
         # Recent alerts timer
@@ -47,7 +47,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.recent_alerts_timer.timeout.connect(self.alert_recent_update)
         self.recent_alerts_timer.start(10000)
         self.recent_alerts = deque()
-        if self.configuration.value["debug"]:
+        if self.configuration.value["debug"] and self.logger:
             self.logger.write_log("Recent alert timer started")
 
         # Set initial state
@@ -113,7 +113,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         if self.configuration.value["eve_log_location"] == "":
             self.test_path = ""
             if self.configuration.get_platform() == "unix":
-                if self.configuration.value["debug"]:
+                if self.configuration.value["debug"] and self.logger:
                     self.logger.write_log("Detected OS was Unix")
                 self.test_path = Path(str(Path.home()) +
                                       "/Games/eve-online/drive_c/users/" +
@@ -124,7 +124,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
                     self.configuration.value["eve_log_location"] = str(self.test_path)
 
             elif self.configuration.get_platform() == "windows":
-                if self.configuration.value["debug"]:
+                if self.configuration.value["debug"] and self.logger:
                     self.logger.write_log("Detected OS was Windows")
                 # Check default path on windows
                 self.home_path = Path.home()
@@ -144,7 +144,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
                                    "Default path did not exist",
                                    "")
                 self.configuration.value["eve_log_location"] = str(Path.home())
-                if self.configuration.value["debug"]:
+                if self.configuration.value["debug"] and self.logger:
                     self.logger.write_log("GUI could not determine Eve log path!")
 
             self.lineEditEve_Log_Location.setText(configuration.value["eve_log_location"])
@@ -152,7 +152,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
 
         # Clean up logs on Windows
         if self.configuration.get_platform() == "windows":
-            if self.configuration.value["debug"]:
+            if self.configuration.value["debug"] and self.logger:
                 self.logger.write_log("Windows clean up logs (archive)")
             self.archive_old_logs_windows()
 
@@ -163,7 +163,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.eveloghandler_worker = eveloghandler.Eveloghandler_worker(self.configuration, self.event_stop, self.logger)
         self.eveloghandler_worker.pass_message.connect(self.message_ready_process)
         self.start_watchdog()
-        if self.configuration.value["debug"]:
+        if self.configuration.value["debug"] and self.logger:
             self.logger.write_log("Logfile watchdog thread started")
 
         # Set recent alerts to blank
@@ -187,15 +187,15 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         archive_path = self.configuration.value["eve_log_location"][:-1] + "_Archive"
         if not Path(archive_path).exists():
             try:
-                if self.configuration.value["debug"]:
+                if self.configuration.value["debug"] and self.logger:
                     print("Making " + str(archive_path))
-                    if self.configuration.value["debug"]:
+                    if self.configuration.value["debug"] and self.logger:
                         self.logger.write_log("Making archive path for old logs: " + str(archive_path))
                 os.makedirs(archive_path)
             except IOError as e:
-                if self.configuration.value["debug"]:
+                if self.configuration.value["debug"] and self.logger:
                     print("Could not create log archive path")
-                    if self.configuration.value["debug"]:
+                    if self.configuration.value["debug"] and self.logger:
                         self.logger.write_log("Could not create log archive path! " + str(archive_path))
                 print(str(e))
                 raise
@@ -204,17 +204,17 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
             for file in current_files:
                 try:
                     if os.path.exists(archive_path + "\\" + file):
-                        if self.configuration.value["debug"]:
+                        if self.configuration.value["debug"] and self.logger:
                             print("Archive path file already existed, skipping")
-                            if self.configuration.value["debug"]:
+                            if self.configuration.value["debug"] and self.logger:
                                 self.logger.write_log("Archive path file already existed, skipping")
                     else:
                         shutil.move(self.configuration.value["eve_log_location"] + "\\" + file, archive_path)
                 except IOError as e:
                     print(e)
-                    if self.configuration.value["debug"]:
+                    if self.configuration.value["debug"] and self.logger:
                         print("Log file was in use while archiving, probably by Eve. Skipping")
-                        if self.configuration.value["debug"]:
+                        if self.configuration.value["debug"] and self.logger:
                             self.logger.write_log("Log file was in use while archiving, probably by Eve. Skipping")
                     continue
                     #raise
@@ -229,7 +229,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         for alert in self.recent_alerts:
             alert[0] += 5
 
-        if self.configuration.value["debug"]:
+        if self.configuration.value["debug"] and self.logger:
             print(self.recent_alerts)
         # timer - system - jumps
         # clear alerts
@@ -290,7 +290,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         ignore_on = "set to <font color=\"red\">IGNORE</font>"
         ignore_off = "set to <font color=\"green\">NOT IGNORE</font>"
 
-        if self.configuration.value["debug"]:
+        if self.configuration.value["debug"] and self.logger:
             self.logger.write_log("Config checkbox was changed")
 
         if which_button == "dark_theme":
@@ -350,7 +350,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.configuration.flush_config_to_file()
         # Convert to readable names
         self.update_alert_systems()
-        if self.configuration.value["debug"]:
+        if self.configuration.value["debug"] and self.logger:
             self.logger.write_log("Alert set to " + str(slider_value) + " jumps from " + self.configuration.value["home_system"])
 
     def update_alert_systems(self):
@@ -381,7 +381,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
             self.configuration.flush_config_to_file()
             self.append_log(log.format_info("Log directory set to: " + self.configuration.value["eve_log_location"]))
             self.restart_watchdog()
-            if self.configuration.value["debug"]:
+            if self.configuration.value["debug"] and self.logger:
                 self.logger.write_log("Log directory set to: " + self.configuration.value["eve_log_location"])
 
     def choose_alarm_location(self):
@@ -398,7 +398,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
             self.configuration.value["alarm_sound"] = this_alarm_location
             self.configuration.flush_config_to_file()
             self.append_log(log.format_info("Alarm set to: " + self.configuration.value["alarm_sound"]))
-            if self.configuration.value["debug"]:
+            if self.configuration.value["debug"] and self.logger:
                 self.logger.write_log("Alarm set to: " + self.configuration.value["alarm_sound"])
 
     def set_home(self):
@@ -468,7 +468,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
             msg_dialog.setIcon(QMessageBox.Critical)
         else:
             msg_dialog.setIcon(QMessageBox.Warning)
-        if self.configuration.value["debug"]:
+        if self.configuration.value["debug"] and self.logger:
             self.logger.write_log("Error dialog shown: ")
             self.logger.write_log(" - " + message)
             self.logger.write_log(" - " + informative_text)
@@ -533,7 +533,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
                 # secs, reported system, jumps, msg
                 self.alert_recent_add(0, system, str(short_path), message_list[2])
 
-                if self.configuration.value["debug"]:
+                if self.configuration.value["debug"] and self.logger:
                     self.logger.write_log("Alert sound + message was triggered")
                 return
 

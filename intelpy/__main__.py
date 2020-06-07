@@ -53,6 +53,8 @@ def main():
         print("---- IntelPy ----")
         print("Debug enabled. See debug.log for output.")
         logger.write_log("Loading Eve data..")
+    else:
+        logger = None
 
     # Load eve data
     eve_data_file = str(resources_dir) + os.sep + "evedata.p"
