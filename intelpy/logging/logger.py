@@ -27,16 +27,16 @@ class logger(intelpy.config.Config):
                     print(str(e))
                     raise
 
-            self.flush_config_to_file("== Starting new instance of IntelPy ==")
+            self.flush_config_to_file("== Logging instance started ==")
 
     def read_config_from_file(self):
         pass
 
     def flush_config_to_file(self, log_to_append):
-        if self.debug:
-            print("Writing log to: " + str(self.file_location + self.default_log_file))
+        #if self.debug:
+        #    print("Writing log to: " + str(self.file_location + self.default_log_file))
         try:
-            with open(self.file_location + self.default_log_file, "a") as log_file:
+            with open(self.file_location + self.default_log_file, "a", encoding="utf-8") as log_file:
                 now = datetime.now()
                 date_time_stamp = now.strftime("%m/%d/%Y %H:%M:%S")
                 log_file.write("[" + str(date_time_stamp) + "] " + str(log_to_append) + "\n")

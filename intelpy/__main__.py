@@ -49,6 +49,7 @@ def main():
 
     if configuration.value["debug"]:
         logger = intelpy.logging.logger.logger(app_name)
+        logger.write_log("== New instance of IntelPy Started ==")
         print("---- IntelPy ----")
         print("Debug enabled. See debug.log for output.")
         logger.write_log("Loading Eve data..")
@@ -94,7 +95,7 @@ def main():
         palette.setColor(QPalette.HighlightedText, Qt.black)
         app.setPalette(palette)
 
-    window = mainwindow_intelpy.MainWindow(configuration, eve_data)
+    window = mainwindow_intelpy.MainWindow(configuration, eve_data, logger)
     window.show()
     app.exec_()
 
@@ -102,6 +103,7 @@ def main():
         logger.write_log("---- Configuration after closing ----")
         #debug_config.debug_config(configuration)
         logger.debug_config(configuration)
+        logger.write_log("== This instance of IntelPy closed ==")
 
     # Flush configuration
     configuration.flush_config_to_file()

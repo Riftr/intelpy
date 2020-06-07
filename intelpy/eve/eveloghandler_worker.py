@@ -5,11 +5,12 @@ from watchdog.events import LoggingEventHandler
 import time
 import os
 from pathlib2 import Path
+import intelpy.logging.logger
 
 class Eveloghandler_worker(QThread):
     pass_message = pyqtSignal(list)
 
-    def __init__(self, configuration, event_stop, *args, **kwargs):
+    def __init__(self, configuration, event_stop, logger, *args, **kwargs):
         super(Eveloghandler_worker, self).__init__(*args, **kwargs)
         # Watchdog
         self.configuration = configuration
@@ -24,7 +25,7 @@ class Eveloghandler_worker(QThread):
         self.event_stop = event_stop
         self.platform = self.configuration.get_platform()
         self.toucher = None
-
+        self.logger = logger
 
     @pyqtSlot()
     def run(self):
@@ -32,7 +33,7 @@ class Eveloghandler_worker(QThread):
         # Eveloghandler
         self.eveloghandler_watchdog = eveloghandler.EveLogHandler(self.watched_channels, self.ignore_patterns,
                                                                   self.ignore_directories, self.case_sensitive,
-                                                                  self.configuration)
+                                                                  self.configuration, self.logger)
         self.eveloghandler_watchdog.message_ready.connect(self.test_catch_connection)
         # Observer
         self.watchdog_observer = Observer()
@@ -74,4 +75,6 @@ class Eveloghandler_worker(QThread):
     @pyqtSlot(list)
     def test_catch_connection(self, this_list):
         # This slot just bubbles our message up to the main UI thread
+        if self.configuration.value["debug"]:
+            self.logger.write_log("Bubbling message from worker")
         self.pass_message.emit(this_list)
