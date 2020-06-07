@@ -86,7 +86,7 @@ Some Eve data was also obtained from https://www.fuzzwork.co.uk/. Thanks heaps f
 
 ### Sound Files
 
-The alarm sounds included in IntelPy were sourced from https://freesound.org. Below are credits and licences for these 
+The alarm sounds included with IntelPy were sourced from https://freesound.org. Below are credits and licences for these 
 sounds. Changes were made to most of these sounds to shorten the length to make them suitable for use with IntelPy. 
 
 * military_alarm.wav by KIZILSUNGUR  License: Creative Commons 0
