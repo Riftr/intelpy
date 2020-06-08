@@ -109,7 +109,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         # Timeout spinner
         self.spinBox_recentalerttimeout.valueChanged.connect(self.recent_alert_spinbox_changed)
 
-        # Figure out where logs are stored
+        # Figure out where logs are stored if first run
         if self.configuration.value["eve_log_location"] == "":
             self.test_path = ""
             if self.configuration.get_platform() == "unix":
@@ -133,7 +133,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
                     self.configuration.value["eve_log_location"] = str(self.test_path)
                 else:
                     # Check if its on Onedrive instead
-                    # C:\Users\rober\OneDrive\Documents\EVE\logs
+                    # C:\Users\ user \OneDrive\Documents\EVE\logs
                     self.test_path_odrive = self.home_path / "OneDrive" / "Documents" / "EVE" / "logs" / "Chatlogs"
                     if self.check_path(self.test_path_odrive):
                         self.configuration.value["eve_log_location"] = str(self.test_path_odrive)
@@ -184,40 +184,54 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
     def archive_old_logs_windows(self):
         # When on Windows, archive old chat logs so we aren't dealing with them. Linux will handle it
         # automatically via watchdog
+        if self.configuration.value["debug"] and self.logger:
+            print("Archiving old logs (Windows)")
         archive_path = self.configuration.value["eve_log_location"][:-1] + "_Archive"
+        files_found_count = 0
+        files_archived_count = 0
+        # Create archive path if it doesn't exist
         if not Path(archive_path).exists():
             try:
                 if self.configuration.value["debug"] and self.logger:
                     print("Making " + str(archive_path))
                     if self.configuration.value["debug"] and self.logger:
                         self.logger.write_log("Making archive path for old logs: " + str(archive_path))
+                        print("Making archive path for old logs: " + str(archive_path))
                 os.makedirs(archive_path)
             except IOError as e:
                 if self.configuration.value["debug"] and self.logger:
                     print("Could not create log archive path")
                     if self.configuration.value["debug"] and self.logger:
                         self.logger.write_log("Could not create log archive path! " + str(archive_path))
+                        print("Could not create log archive path! " + str(archive_path))
                 print(str(e))
                 raise
 
-            current_files = os.listdir(self.configuration.value["eve_log_location"])
-            for file in current_files:
-                try:
-                    if os.path.exists(archive_path + "\\" + file):
-                        if self.configuration.value["debug"] and self.logger:
-                            print("Archive path file already existed, skipping")
-                            if self.configuration.value["debug"] and self.logger:
-                                self.logger.write_log("Archive path file already existed, skipping")
-                    else:
-                        shutil.move(self.configuration.value["eve_log_location"] + "\\" + file, archive_path)
-                except IOError as e:
-                    print(e)
+        # Move old logs
+        current_files = os.listdir(self.configuration.value["eve_log_location"])
+        for file in current_files:
+            files_found_count += 1
+            try:
+                if os.path.exists(archive_path + "\\" + file):
                     if self.configuration.value["debug"] and self.logger:
-                        print("Log file was in use while archiving, probably by Eve. Skipping")
-                        if self.configuration.value["debug"] and self.logger:
-                            self.logger.write_log("Log file was in use while archiving, probably by Eve. Skipping")
-                    continue
-                    #raise
+                        print("Archive path file already existed, skipping")
+                        self.logger.write_log("Archive path file already existed, skipping")
+                else:
+                    files_archived_count += 1
+                    shutil.move(self.configuration.value["eve_log_location"] + "\\" + file, archive_path)
+            except IOError as e:
+                print(e)
+                if self.configuration.value["debug"] and self.logger:
+                    print("Log file was in use while archiving, probably by Eve. Skipping file")
+                    self.logger.write_log("Log file was in use while archiving, probably by Eve. Skipping file")
+                continue
+                #raise
+
+        if self.configuration.value["debug"] and self.logger:
+            print("Archive found " + str(files_found_count) + " files.")
+            print("Archive should have moved " + str(files_archived_count) + " files.")
+            self.logger.write_log("Archive: Found " + str(files_found_count) + " files.")
+            self.logger.write_log("Archive: Should have moved " + str(files_archived_count) + " files.")
 
     def recent_alert_spinbox_changed(self):
         spinbox_value = self.spinBox_recentalerttimeout.value()
@@ -478,7 +492,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
     # Logs watchdog functions
     def start_watchdog(self):
         self.eveloghandler_worker.start()
-        #self.eveloghandler_worker.pass_message.connect(self.message_ready_process)
+        # self.eveloghandler_worker.pass_message.connect(self.message_ready_process)
 
     def stop_watchdog(self):
         self.event_stop.set()
@@ -516,7 +530,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
                                                  str(self.configuration.value["alert_jumps"]) +
                                                  " jumps!"
                                                  ))
-                #check if details need to be printed
+                # check if details need to be printed
                 if self.configuration.value["display_alerts"]:
                     self.append_log(log.format_important("<font color=\"red\">Time: </font>" + str(message_list[0])))
                     self.append_log(log.format_important("<font color=\"red\">System: </font>" + system))
@@ -524,8 +538,9 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
                     self.append_log(log.format_important("<font color=\"red\">Message: </font>" + message_list[2]))
 
                 # play alert (blocking on Linux so threading it)
-                self.playalert_worker = playalertworker.PlayAlert_worker(self.configuration)
-                self.playalert_worker.start()
+                alert_worker = playalertworker.PlayAlert_worker(self.configuration, self.logger)
+                alert_worker.start()   # chucking away once done
+
                 # get id codes
                 system_id = self.eve_data.get_id_code(system)
                 home_id = self.eve_data.get_id_code(self.lineEditHome_System.text())

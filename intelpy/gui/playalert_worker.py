@@ -4,18 +4,23 @@ import playsound
 
 
 class PlayAlert_worker(QThread):
-    def __init__(self, configuration, *args, **kwargs):
+    def __init__(self, configuration, logger=None, *args, **kwargs):
         super(PlayAlert_worker, self).__init__(*args, **kwargs)
         # Watchdog
         self.configuration = configuration
+        self.logger = logger
 
     def run(self):
         alarm_sound = self.configuration.value["alarm_sound"]
         try:
             playsound.playsound(alarm_sound)
         except FileNotFoundError as e:
+            if self.logger:
+                self.logger.write_log("Error: Could not play alert sound! File not found.", str(e))
             self.error_diag("Error: Could not play alert sound! File not found.", str(e))
         except Exception as e:
+            if self.logger:
+                self.logger.write_log("Error: Could not play alert sound!", str(e))
             self.error_diag("Error: Could not play alert sound!", str(e))
 
     def error_diag(self, message, error):
