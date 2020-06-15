@@ -47,6 +47,9 @@ def main():
     configuration = config.Config(app_name, default_json)
     configuration.value["config_loc"] = configuration.file_location
 
+    # todo: remove this for release (set to 0)
+    configuration.value["debug"] = 1
+
     if configuration.value["debug"]:
         logger = intelpy.logging.logger.logger(app_name)
         logger.write_log("== New instance of IntelPy Started ==")
@@ -108,6 +111,9 @@ def main():
         logger.write_log("== This instance of IntelPy closed ==")
 
     # Flush configuration
+    # todo: remove this for release (set to 0)
+    configuration.value["debug"] = 0
+
     configuration.flush_config_to_file()
     window.stop_watchdog()
 

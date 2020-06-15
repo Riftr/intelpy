@@ -171,6 +171,8 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
         self.pickle_dict()
 
     # Loads the known_files.p file
+    # todo: move to json both pickle and unpickle functions due to dict usage
+    # fix for now is to just skip and remove the corrupt file
     def unpickle_known_files(self):
         if Path(self.known_files_loc).exists():
             if os.path.getsize(self.known_files_loc) > 0:
@@ -178,18 +180,27 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
                     with open(self.known_files_loc, "rb") as known_files_file:
                         self.known_files = pickle.load(known_files_file)
                 except Exception as e:
-                    print(str(e))
-                    self.logger.write_log(str(e))
-                    raise
+                    self.known_files = None
+                    print("Couldn't load known_files.p, deleting corrupt file. " + str(e))
+                    self.logger.write_log("Couldn't load known_files.p, deleting corrupt file " +
+                                          str(self.known_files_loc) +
+                                          str(e))
+                    try:
+                        os.remove(self.known_files_loc)
+                    except Exception as new_e:
+                        print("Couldn't delete corrupt known_files.p " + str(new_e))
+                        self.logger.write_log("Couldn't delete corrupt known_files.p. " +
+                                              str(self.known_files_loc) +
+                                              str(new_e))
 
     def pickle_dict(self):
         try:
             with open(self.known_files_loc, "wb") as known_files_file_pic:
                 pickle.dump(self.known_files, known_files_file_pic)
         except Exception as e:
-            print(str(e))
-            self.logger.write_log(str(e))
-            raise
+            print("Couldn't save known_files.p, skipping" + str(e))
+            self.logger.write_log("Couldn't save known_files.p, skipping. " + str(e))
+            #raise
 
     def print_known_file_list(self):
         for key, value in self.known_files.items():

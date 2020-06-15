@@ -2,4 +2,5 @@ pyinstaller IntelPy.py --onefile --add-data intelpy\resources;intelpy\resources 
 cd dist
 mkdir intelpy
 xcopy /I ..\intelpy\resources .\intelpy\resources\
+xcopy /I ..\tests\intelpydebug.bat .\intelpy\
 cd..
