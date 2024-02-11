@@ -29,6 +29,9 @@
    <iconset resource="images.qrc">
     <normaloff>:/pieico/goodpie2.ico</normaloff>:/pieico/goodpie2.ico</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background: rgb(25, 25, 25); color: rgb(230,230,230);</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <property name="sizeConstraint">
@@ -114,7 +117,7 @@
              <rect>
               <x>0</x>
               <y>10</y>
-              <width>361</width>
+              <width>382</width>
               <height>51</height>
              </rect>
             </property>
@@ -163,7 +166,7 @@
               <x>0</x>
               <y>80</y>
               <width>361</width>
-              <height>79</height>
+              <height>85</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="alertLayout">
@@ -184,7 +187,6 @@
               <widget class="QSlider" name="horizontalSlider_AlertJumps">
                <property name="font">
                 <font>
-                 <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
@@ -537,8 +539,8 @@
              <rect>
               <x>150</x>
               <y>520</y>
-              <width>192</width>
-              <height>92</height>
+              <width>235</width>
+              <height>112</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout">
@@ -583,8 +585,8 @@
              <rect>
               <x>150</x>
               <y>630</y>
-              <width>197</width>
-              <height>61</height>
+              <width>241</width>
+              <height>73</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -703,7 +705,7 @@
              <rect>
               <x>50</x>
               <y>470</y>
-              <width>180</width>
+              <width>220</width>
               <height>38</height>
              </rect>
             </property>
@@ -771,7 +773,6 @@
                <property name="font">
                 <font>
                  <pointsize>35</pointsize>
-                 <weight>75</weight>
                  <italic>false</italic>
                  <bold>true</bold>
                  <underline>false</underline>

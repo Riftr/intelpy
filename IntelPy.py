@@ -1,4 +1,4 @@
-# entry point script for pyinstaller
+""" entry point script for pyinstaller """
 from intelpy.__main__ import main as mymain
 
 if __name__ == '__main__':
