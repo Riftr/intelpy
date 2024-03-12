@@ -11,6 +11,8 @@ Eve-related data was made available by CCP and obtained from the Eve static data
 
 Some Eve data was also obtained from https://www.fuzzwork.co.uk/. 
 
+The project uses Qt 5 under the Qt Community Edition licence.
+
 ### Sound Files
 
 The alarm sounds included in IntelPy were sourced from https://freesound.org. Below are credits and licences for these 
@@ -38,7 +40,7 @@ EVE Online, the EVE logo, EVE and all associated logos and designs are the intel
 
 ## Contributors
 
-None
+ahoehne 
 
 ## Packagers
 
