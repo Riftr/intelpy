@@ -434,7 +434,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
             # New home not valid
             old_home = self.configuration.value["home_system"]
             self.lineEditHome_System.setText(old_home.upper())
-            self.error_message("PersonalIntel4Eve: Home not valid",
+            self.error_message("Home not valid",
                                "The home system you entered, " + new_home + ", was not valid.",
                                "Please enter a valid system name.",
                                "",
