@@ -76,7 +76,9 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
                     if self.configuration.value["debug"] and self.logger:
                         print("Should be reading line " + str(self.known_files[event.src_path]))
                         self.logger.write_log("Should be reading line " + str(self.known_files[event.src_path]))
-                    if self.date_re.match(line):  # if we get a line with a valid date time
+
+                    # check line against regex, if we get line with valid datetime string
+                    if self.date_re.match(line):
                         new_parsed_msg = self.parse_message(line)
                         if self.configuration.value["debug"] and self.logger:
                             self.logger.write_log("Got regex match: " + str(new_parsed_msg))
@@ -185,7 +187,7 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
                 pickle.dump(self.known_files, known_files_file_pic)
         except Exception as e:
             self.logger.write_log("Couldn't save known_files.p, skipping. " + str(e))
-            #raise
+            raise
 
     def print_known_file_list(self):
         for key, value in self.known_files.items():

@@ -1,6 +1,6 @@
 from PyQt5.QtCore import QThread
 from PyQt5.QtWidgets import QMessageBox
-import playsound
+from playsound import playsound, PlaysoundException
 
 
 class PlayAlert_worker(QThread):
@@ -13,9 +13,14 @@ class PlayAlert_worker(QThread):
     def run(self):
         alarm_sound = self.configuration.value["alarm_sound"]
         try:
-            playsound.playsound(str(alarm_sound))
-            # note: for some reason when playsound errors it does not respect try/catch blocks and just prints
+            self.logger.write_log("Trying to play alarm sound...")
+            playsound(str(alarm_sound))
+            # note: when playsound errors on windows it does not seem respect try/catch blocks and just prints
             # an error with an error code then silently crashes
+        except PlaysoundException as e:
+            if self.logger:
+                self.logger.write_log("Error: Playsound module error code: ", str(e))
+            self.error_diag("Error: Playsound module error code: ", str(e))
         except FileNotFoundError as e:
             if self.logger:
                 self.logger.write_log("Error: Could not play alert sound! File not found.", str(e))
