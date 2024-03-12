@@ -14,3 +14,4 @@ if __name__ == '__main__':
         error_diag.setWindowTitle("IntelPy Error")
         error_diag.showMessage('IntelPy ended with an error: \n ' + str(e))
         app.exec_()
+        raise
