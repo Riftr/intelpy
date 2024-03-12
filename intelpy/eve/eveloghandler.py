@@ -38,18 +38,18 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
         # SyntaxWarning: invalid escape sequence '\['
         # is valid regex tho
         self.date_re = re.compile(".\[ \d\d\d\d.\d\d.\d\d \d\d:\d\d:\d\d \]")
+        #self.date_re = re.compile(r"\.\[ \d\d\d\d.\d\d.\d\d \d\d:\d\d:\d\d \]")
 
         if configuration.value["debug"] and self.logger:
-            #self.logger.write_log("Known files: " + self.known_files)
+            self.logger.write_log("Known files: " + str(self.known_files))
             for filename in self.known_files:
-                print(filename)
+                self.logger.write_log(filename)
 
 
     def on_modified(self, event):
         # will fire on new files as well as modified files
         if self.configuration.value["debug"] and self.logger:
-            # print("Watchdog saw a file modified")
-            self.logger.write_log("Watchdog saw a file modified")
+            self.logger.write_log("Watchdog saw a file modified: " + str(event.src_path))
         # At this point, only files that match the filter will be available. Also,
         # they will have had an update to them. We need to get the file, compare to
         # our dict of files and figure out what line to process from. Once done, trigger
@@ -64,7 +64,6 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
             self.known_files[event.src_path] = 12     # Start at line 13 to avoid processing header
             self.pickle_dict()
         if self.configuration.value["debug"] and self.logger:
-            print("Starting at line: " + str(self.known_files[event.src_path]))
             self.logger.write_log("Starting at line: " + str(self.known_files[event.src_path]))
 
         # get line/s from file
@@ -79,13 +78,13 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
                         self.logger.write_log("Should be reading line " + str(self.known_files[event.src_path]))
                     if self.date_re.match(line):  # if we get a line with a valid date time
                         new_parsed_msg = self.parse_message(line)
+                        if self.configuration.value["debug"] and self.logger:
+                            self.logger.write_log("Got regex match: " + str(new_parsed_msg))
+
                         # Check for system msgs
                         if new_parsed_msg[1] == "EVE System":
                             if self.configuration.value["debug"] and self.logger:
-                                print("Did not parse line, was system msg")
-                                print(new_parsed_msg)
-                                self.logger.write_log("Did not parse line, was system msg")
-                                #self.log_parsed_msg_list("Did not parse line, was system msg: ", new_parsed_msg)
+                                self.logger.write_log("Did not parse line, was system msg \n" + str(new_parsed_msg))
                             continue
                         # Check for old messages
                         present_time = datetime.utcnow()
@@ -93,17 +92,12 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
                         gap_time = (present_time - past_time).total_seconds() / 60
                         if gap_time > self.configuration.value["message_timeout"]:
                             if self.configuration.value["debug"] and self.logger:
-                                print("Did not parse line, was older than " + str(gap_time))
-                                print(new_parsed_msg)
-                                #self.log_parsed_msg_list("Did not parse line, was older than " + str(gap_time))
                                 self.logger.write_log("Did not parse line, was older than " + str(gap_time))
+                                #self.logger.write_log(" " + new_parsed_msg)
                             continue
                         # Check if we've seen the line recently
                         if new_parsed_msg[1] + ">" + new_parsed_msg[2] in self.known_msg_queue:
                             if self.configuration.value["debug"] and self.logger:
-                                print("Did not parse line, msg was seen recently")  # possibly from another client
-                                print(new_parsed_msg)
-                                #self.log_parsed_msg_list("Did not parse line, msg was seen recently")
                                 self.logger.write_log("Did not parse line, msg was seen recently")
                             continue
                         else:
@@ -115,17 +109,14 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
                             self.message_ready.emit(new_parsed_msg)
                     else:
                         if self.configuration.value["debug"] and self.logger:
-                            print("Line did not match date regex")
                             self.logger.write_log("Line did not match date regex")
 
                 self.pickle_dict()  # save file progress
 
         except IOError as e:
-            print("Eveloghandler - Error reading Eve log file" + str(e))
             self.logger.write_log("Eveloghandler - Error reading Eve log file" + str(e))
             raise
         except Exception as err:
-            print("Eveloghandler - Other error " + str(err))
             self.logger.write_log("Eveloghandler - Other error " + str(err))
             raise
 
@@ -140,13 +131,12 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
 
         for key in self.known_files.keys():
             if self.configuration.value["debug"] and self.logger:
-                print("Maintain KF checking:" + str(key))
+                self.logger.write_log("Maintain KF checking:" + str(key))
             try:
                 file_date = str(key)[-19:-11]  # Get the date from the file name
                 file_date_converted = datetime.strptime(file_date, "%Y%m%d")
             except ValueError as e:
                 if self.configuration.value["debug"] and self.logger:
-                    print("Error with known file data: " + str(e))
                     self.logger.write_log("Error with known file data: " + str(e))
                 remove_list.append(key)
                 continue
@@ -158,14 +148,12 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
         for key_to_del in remove_list:
             if key_to_del in self.known_files:
                 if self.configuration.value["debug"] and self.logger:
-                    print("MKF removing:" + str(key))
+                    self.logger.write_log("Maintain KF checking:" + str(key))
                 try:
                     if self.configuration.value["debug"] and self.logger:
-                        print("MKF Deleting key: " + str(key_to_del))
                         self.logger.write_log("deleting key: " + str(key_to_del))
                     del self.known_files[key_to_del]
                 except KeyError as e:
-                    print("key error: " + str(e))
                     self.logger.write_log("key error: " + str(e))
 
         self.pickle_dict()
@@ -181,14 +169,12 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
                         self.known_files = pickle.load(known_files_file)
                 except Exception as e:
                     self.known_files = None
-                    print("Couldn't load known_files.p, deleting corrupt file. " + str(e))
                     self.logger.write_log("Couldn't load known_files.p, deleting corrupt file " +
                                           str(self.known_files_loc) +
                                           str(e))
                     try:
                         os.remove(self.known_files_loc)
                     except Exception as new_e:
-                        print("Couldn't delete corrupt known_files.p " + str(new_e))
                         self.logger.write_log("Couldn't delete corrupt known_files.p. " +
                                               str(self.known_files_loc) +
                                               str(new_e))
@@ -198,18 +184,15 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
             with open(self.known_files_loc, "wb") as known_files_file_pic:
                 pickle.dump(self.known_files, known_files_file_pic)
         except Exception as e:
-            print("Couldn't save known_files.p, skipping" + str(e))
             self.logger.write_log("Couldn't save known_files.p, skipping. " + str(e))
             #raise
 
     def print_known_file_list(self):
         for key, value in self.known_files.items():
-            print(key, value)
             self.logger.write_log(key, value)
 
     def print_current_patterns(self):
         for value in self._patterns:
-            print(value)
             self.logger.write_log(value)
 
     def update_patterns(self, new_patterns):
@@ -231,12 +214,11 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
             message_list.append(nick_and_msg[0])  # nickname
             message_list.append(nick_and_msg[1])  # message
             if self.configuration.value["debug"] and self.logger:
-                print("----")
-                print("parsing line: " + line)
-                print("DTS: " + message_list[0].strftime("%Y.%m.%d %H:%M:%S"))
-                print("Nickname: " + message_list[1])
-                print("Message: " + message_list[2])
-                self.logger.write_log("Parsed message with DTS: " + message_list[0].strftime("%Y.%m.%d %H:%M:%S"))
+                self.logger.write_log(
+                    "Parsed line with DTS: " + message_list[0].strftime("%Y.%m.%d %H:%M:%S") +
+                    "\n Nickname: " + message_list[1] +
+                    "\n Message: " + message_list[2]
+                )
             return message_list
 
         except Exception as e:
