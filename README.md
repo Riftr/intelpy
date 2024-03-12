@@ -51,18 +51,18 @@ Once required packages are installed, run ```python Intelpy.py``` to start the a
 
 ## Usage
 
-Getting started is easy:
+Getting started:
 
-1. Set your home system (where you are krabbing). Alerts will be triggered relative to this system. The log
-screen will notify you of the change by indicating `Home set to: homesystem`.
-
-2. If you are in the Imperium your intel channels are already configured. If not, go to the Config tab and enter
-the full name of the in-game intel channel in the Watched Channels configuration.
-
-3. In game (if needed) turn on logging via the settings menu under Chat. This is usually already enabled by default. 
+1. In game (if needed) turn on logging via the settings menu under Chat. This is usually already enabled by default. 
 
 ![Chat Setings](https://i.imgur.com/SWErZWy.png)
- 
+
+2. In IntelPy, on the Config tab, set the names of the intel channels you want to watch from Eve. You may also need to manually choose
+your Eve chatlog location. If you are in the Imperium your intel channels are already configured. 
+
+3. On the Main tab, set your home system (where you are krabbing). Alerts will be triggered relative to this system. The log
+screen will notify you of the change by indicating `Home set to: homesystem`.
+
 4. Adjust the slider to set how many jumps away from your home system that you wish to be notified. IntelPy is aware
 of the Eve Online solar system map so when someone says the name of a system within that amount of jumps from you, 
 the alert sound and notification will trigger. The easiest way for people to alert each other in game is to drag and drop the 
@@ -72,13 +72,15 @@ If IntelPy is not picking up your intel channels, you may need to double check y
 Channels configuration, as well as double check the Eve Logs: section points to the place where Eve Online is logging
 your chats for you. 
 
-There are a handful of other options also configurable in the Config tab. This includes setting the alarm sound; IntelPy
+There are a handful of other options also configurable in the Config tab. This includes setting the alarm sound, IntelPy
 comes with a number of extra sounds or you may choose your own. You can also set how long until alerts time out from the
 recent alerts screen as well as various filter/ignore options as you desire.
 
 ## Licences / Acknowledgements / Attributions
 
 This source code is available under [GPL3](https://www.gnu.org/licenses/gpl-3.0.en.html). 
+
+The project uses Qt 5 under the Qt Community Edition licence.
 
 Eve-related data was made available by CCP and obtained from the Eve static data dump. See CCP Copyright Notice below.
 
