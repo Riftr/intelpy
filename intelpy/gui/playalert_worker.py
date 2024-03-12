@@ -13,7 +13,9 @@ class PlayAlert_worker(QThread):
     def run(self):
         alarm_sound = self.configuration.value["alarm_sound"]
         try:
-            playsound.playsound(alarm_sound)
+            playsound.playsound(str(alarm_sound))
+            # note: for some reason when playsound errors it does not respect try/catch blocks and just prints
+            # an error with an error code then silently crashes
         except FileNotFoundError as e:
             if self.logger:
                 self.logger.write_log("Error: Could not play alert sound! File not found.", str(e))

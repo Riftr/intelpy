@@ -47,8 +47,10 @@ def main():
     configuration = config.Config(app_name, default_json)
     configuration.value["config_loc"] = configuration.file_location
 
-    # todo: remove this for release (set to 0)
-    configuration.value["debug"] = 0
+    ''' Debug mode - set to 0 for release
+    # logged to debug.log if enabled and also enables console logs
+    # error message will often be separate'''
+    configuration.value["debug"] = 1
 
     if configuration.value["debug"]:
         logger = intelpy.logging.logger.logger(app_name)
