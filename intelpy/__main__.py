@@ -50,7 +50,10 @@ def main():
     ''' Debug mode - set to 0 for release
         logged to debug.log if enabled and also enables console logs
         error message will often be separate'''
-    configuration.value["debug"] = 0
+    # when this is set to 0 the app often crashes at weird places. Probably because logger object doesn't exist
+    # something is probably using it without checking if it's None
+    # weird thing is though it works fine when Pycharm is in debug mode itself regardless of this setting!
+    configuration.value["debug"] = 1  #quick fix - just leave it at 1 and disable console mode on Windows pyinstaller
 
     if configuration.value["debug"]:
         logger = intelpy.logging.logger.logger(app_name)
@@ -67,7 +70,7 @@ def main():
     eve_idstosystems = str(resources_dir) + os.sep + "idtosystems.p"
     eve_data = evedata.EveData(eve_data_file, eve_systems, eve_idstosystems)
 
-    if configuration.value["debug"]:
+    if configuration.value["debug"] and logger is not None:
         logger.write_log("---- Configuration on loading ----")
         logger.write_log("eve_data_file: " + eve_data_file)
         logger.write_log("eve_systems: " + eve_systems)
@@ -76,7 +79,7 @@ def main():
         logger.debug_config(configuration)
 
     # Load main window GUI
-    app = QApplication(sys.argv)
+    intelpyapp = QApplication(sys.argv)
 
     # Nice dark theme if the user wishes to use it
     if 'dark_theme' not in configuration.value:
@@ -84,9 +87,9 @@ def main():
         configuration.flush_config_to_file()
 
     if configuration.value['dark_theme'] == 1:
-        if configuration.value["debug"]:
+        if configuration.value["debug"] and logger is not None:
             logger.write_log("Dark theme was enabled")
-        app.setStyle("Fusion")
+        intelpyapp.setStyle("Fusion")
         palette = QPalette()
         palette.setColor(QPalette.Window, QColor(53, 53, 53))
         palette.setColor(QPalette.WindowText, Qt.white)
@@ -101,21 +104,19 @@ def main():
         palette.setColor(QPalette.Link, QColor(42, 130, 218))
         palette.setColor(QPalette.Highlight, QColor(42, 130, 218))
         palette.setColor(QPalette.HighlightedText, Qt.black)
-        app.setPalette(palette)
+        intelpyapp.setPalette(palette)
 
     window = mainwindow_intelpy.MainWindow(configuration, eve_data, logger)
     window.show()
-    app.exec_()
+    intelpyapp.exec_()  # crash sometimes on windows here
 
-    if configuration.value["debug"]:
+    if configuration.value["debug"] and logger is not None:
         logger.write_log("---- Configuration after closing ----")
-        #debug_config.debug_config(configuration)
         logger.debug_config(configuration)
         logger.write_log("== This instance of IntelPy closed ==")
 
-    # Flush configuration
-    # todo: remove this for release (set to 0)
-    configuration.value["debug"] = 0
+    # Flush configuration (prob don't need this)
+    #configuration.value["debug"] = 0
 
     configuration.flush_config_to_file()
     window.stop_watchdog()

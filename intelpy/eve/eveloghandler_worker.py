@@ -76,6 +76,6 @@ class Eveloghandler_worker(QThread):
     @pyqtSlot(list)
     def test_catch_connection(self, this_list):
         # This slot just bubbles our message up to the main UI thread
-        if self.configuration.value["debug"] and self.logger:
+        if self.configuration.value["debug"] and self.logger is not None:
             self.logger.write_log("Bubbling message from worker")
         self.pass_message.emit(this_list)

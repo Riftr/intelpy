@@ -1,5 +1,5 @@
 from PyQt5.QtCore import QThread
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5 import QtWidgets
 from playsound import playsound, PlaysoundException
 
 
@@ -13,29 +13,32 @@ class PlayAlert_worker(QThread):
     def run(self):
         alarm_sound = self.configuration.value["alarm_sound"]
         try:
-            self.logger.write_log("Trying to play alarm sound...")
+            if self.logger is not None:
+               self.logger.write_log("Trying to play alarm sound...")
             playsound(str(alarm_sound))
             # note: when playsound errors on windows it does not seem respect try/catch blocks and just prints
             # an error with an error code then silently crashes
-        except PlaysoundException as e:
-            if self.logger:
-                self.logger.write_log("Error: Playsound module error code: ", str(e))
-            self.error_diag("Error: Playsound module error code: ", str(e))
+        #except PlaysoundException as e:
+        #    if self.logger is not None:
+        #        self.logger.write_log("Error: Playsound module error code: ", str(e))
+        #    self.error_diag("Error: Playsound module error code: ", str(e))
         except FileNotFoundError as e:
-            if self.logger:
+            if self.logger is not None:
                 self.logger.write_log("Error: Could not play alert sound! File not found.", str(e))
             self.error_diag("Error: Could not play alert sound! File not found.", str(e))
+            raise
         except Exception as e:
-            if self.logger:
+            if self.logger is not None:
                 self.logger.write_log("Error: Could not play alert sound!", str(e))
             self.error_diag("Error: Could not play alert sound!", str(e))
+            raise
 
     def error_diag(self, message, error):
-        msg_dialog = QMessageBox()
-        msg_dialog.setWindowTitle("Alert sound error")
-        msg_dialog.setText(message)
-        msg_dialog.setDetailedText(error)
-        msg_dialog.setInformativeText(self.configuration.value["alarm_sound"])
-        msg_dialog.setStandardButtons(QMessageBox.Ok)
-        msg_dialog.setIcon(QMessageBox.Warning)
-        msg_dialog.exec_()
+        print("Intelpy " + message + str(error))
+        #pop up gui error msg
+        app = QtWidgets.QApplication([])
+        error_diag = QtWidgets.QErrorMessage()
+        error_diag.setWindowTitle("IntelPy: Alert sound error")
+        error_diag.showMessage('IntelPy ended with an error: \n ' + str(error))
+        app.exec_()
+        raise
