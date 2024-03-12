@@ -48,7 +48,7 @@ def main():
     configuration.value["config_loc"] = configuration.file_location
 
     # todo: remove this for release (set to 0)
-    configuration.value["debug"] = 1
+    configuration.value["debug"] = 0
 
     if configuration.value["debug"]:
         logger = intelpy.logging.logger.logger(app_name)
@@ -82,7 +82,8 @@ def main():
         configuration.flush_config_to_file()
 
     if configuration.value['dark_theme'] == 1:
-        logger.write_log("Dark theme was enabled")
+        if configuration.value["debug"]:
+            logger.write_log("Dark theme was enabled")
         app.setStyle("Fusion")
         palette = QPalette()
         palette.setColor(QPalette.Window, QColor(53, 53, 53))
