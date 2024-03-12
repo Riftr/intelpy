@@ -4,7 +4,8 @@ from watchdog.observers import Observer
 from watchdog.events import LoggingEventHandler
 import time
 import os
-from pathlib2 import Path
+#from pathlib2 import Path
+from pathlib import Path
 import intelpy.logging.logger
 
 class Eveloghandler_worker(QThread):
