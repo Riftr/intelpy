@@ -6,12 +6,12 @@ from datetime import datetime
 
 class logger(intelpy.config.Config):
 
-    def __init__(self, app_name, logfile="debug.log"):
+    def __init__(self, app_name, logfile="debug.log", debug=0):
         self.app_name = app_name
         self.default_log_file = logfile
         self.default_config_file = logfile
         self.file_location = self.good_place_for_file()
-        self.debug = 1
+        self.debug = debug
 
         # If debug.log doesn't exist, create it and set default values
         if not Path(self.file_location + self.default_log_file).is_file():
