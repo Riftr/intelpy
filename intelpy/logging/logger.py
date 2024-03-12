@@ -48,6 +48,7 @@ class logger(intelpy.config.Config):
 
     def write_log(self, log_to_append):
         self.flush_config_to_file(log_to_append)
+        print(log_to_append)
 
     def debug_config(self, configuration):
         # takes the JSON from IntelPy and prints out the values
