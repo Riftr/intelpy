@@ -35,10 +35,8 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
         self.unpickle_known_files()
         self.maintain_known_files_file()  # Remove old files
 
-        # SyntaxWarning: invalid escape sequence '\['
-        # is valid regex tho
-        self.date_re = re.compile(".\[ \d\d\d\d.\d\d.\d\d \d\d:\d\d:\d\d \]")
-        #self.date_re = re.compile(r"\.\[ \d\d\d\d.\d\d.\d\d \d\d:\d\d:\d\d \]")
+        # This is valid python style regex now
+        self.date_re = re.compile(r".\[\s(\d{4}\.\d{2}\.\d{2}\s\d{2}:\d{2}:\d{2})\s]")
 
         if configuration.value["debug"] and self.logger is not None:
             self.logger.write_log("Known files: " + str(self.known_files))
