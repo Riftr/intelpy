@@ -29,7 +29,7 @@
 
 1. Download the latest Linux tar.gz release [here](https://github.com/Riifta/intelpy/releases/latest)
 2. Extract the contents to a directory such as /opt/intelpy 
-3. Run the IntelPy execuitable 
+3. Run the IntelPy binary file
 
 ## Required packages (for building or running the source)
  
@@ -40,13 +40,14 @@ The versions below aren't hard requirements, only what IntelPy has been tested o
 * pathlib (now in standard library)
 * Watchdog 0.10.2 
 * Networkx 2.4
-* Playsound 1.2.2 
+* Playsound 1.2.2 (required version, newer ones have issues on Windows)
 * PyGObject 3.36.0 
 
 ### Pip one-liner
 ```shell
-$ sudo pip install pyqt5 watchdog networkx playsound pygobject
+$ sudo pip install pyqt5 watchdog networkx playsound==1.2.2 pygobject
 ```
+
 Once required packages are installed, run ```python Intelpy.py``` to start the application. 
 
 ## Usage
@@ -61,7 +62,8 @@ Getting started:
 your Eve chatlog location. If you are in the Imperium your intel channels are already configured. 
 
 3. On the Main tab, set your home system (where you are krabbing). Alerts will be triggered relative to this system. The log
-screen will notify you of the change by indicating `Home set to: homesystem`.
+screen will notify you of the change by indicating `Home set to: homesystem`. Note that jump bridges are not taken into account as
+your enemies shouldn't be able to use them (you have bigger issues if they can).
 
 4. Adjust the slider to set how many jumps away from your home system that you wish to be notified. IntelPy is aware
 of the Eve Online solar system map so when someone says the name of a system within that amount of jumps from you, 
@@ -69,7 +71,7 @@ the alert sound and notification will trigger. The easiest way for people to ale
 system name from the top left of their game screen to the chat dialog box and press enter. 
 
 If IntelPy is not picking up your intel channels, you may need to double check you have entered them in the Watched 
-Channels configuration, as well as double check the Eve Logs: section points to the place where Eve Online is logging
+Channels configuration, as well as double-check the Eve Logs: section points to the place where Eve Online is logging
 your chats for you. 
 
 There are a handful of other options also configurable in the Config tab. This includes setting the alarm sound, IntelPy
