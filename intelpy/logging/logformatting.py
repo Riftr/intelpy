@@ -1,19 +1,20 @@
 # Format strings for the log screen
 def format_alert(string):
-    return ("<font color=\"red\"><h2>" + string + "</h2></font>")  # Todo: strange bug here when it's the first thing
+    # Todo: strange bug here when it's the first thing
+    return "<font color=\"red\"><h2>" + string + "</h2></font>"
 
 
 def format_info(string):
-    return ("<font color=\"gray\">" + string + "</font>")
+    return "<font color=\"gray\">" + string + "</font>"
 
 
 def format_important(string):
-    return ("<b>" + string + "</b>")
+    return "<b>" + string + "</b>"
 
 
 def format_recent_alert(string):
-    return ("<b>" + string + "</b>")
+    return "<b>" + string + "</b>"
 
 
 def format_recent_alert_timer(string):
-    return ("<font color=\"red\"><b>" + string + "</b></font>")
+    return "<font color=\"red\"><b>" + string + "</b></font>"
