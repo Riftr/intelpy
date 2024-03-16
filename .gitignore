@@ -7,3 +7,4 @@ build/
 *.spec
 __pycache__
 */__pycache__
+intelpy.egg-info

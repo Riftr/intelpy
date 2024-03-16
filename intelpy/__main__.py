@@ -8,6 +8,7 @@ from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QPalette, QColor
 import os
 import intelpy.logging.logger
+from intelpy.logging import logrotate
 
 def main():
     app_name = "IntelPy"
@@ -55,6 +56,14 @@ def main():
     # weird thing is though it works fine when Pycharm is in debug mode itself regardless of this setting!
     configuration.value["debug"] = 1  #quick fix - just leave it at 1 and disable console mode on Windows pyinstaller
 
+    # Rotate debug log
+    if configuration.value["debug"]:
+        debug_file = configuration.value["config_loc"] + "debug.log"
+        moved_debug_file = configuration.value["config_loc"] + "debug.log.1"
+        if logrotate.check_log_size(debug_file):
+            logrotate.rotate_log_file(debug_file, moved_debug_file)
+
+    # start logging to debug
     if configuration.value["debug"]:
         logger = intelpy.logging.logger.logger(app_name)
         logger.write_log("== New instance of IntelPy Started ==")
@@ -63,6 +72,7 @@ def main():
         logger.write_log("Loading Eve data..")
     else:
         logger = None
+
 
     # Load eve data
     eve_data_file = str(resources_dir) + os.sep + "evedata.p"
