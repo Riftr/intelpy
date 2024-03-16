@@ -29,7 +29,7 @@ setup(
     packages=["intelpy"],
     include_package_data=True,
     install_requires=[
-        'setuptools', "pyqt5", "watchdog", "networkx", "playsound==1.2.2", 'gobject', 'pyinstaller'
+        'setuptools', "pyqt5", "watchdog", "networkx", 'gobject', 'pyinstaller', 'pygame'
     ],
     entry_points={"console_scripts": ["intelpy=intelpy.__main__:main"]},
 )

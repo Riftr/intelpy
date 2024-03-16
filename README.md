@@ -36,16 +36,16 @@
 The versions below aren't hard requirements, only what IntelPy has been tested on.
 
 * Python 3 3.7 
-* PyQt 5 5.14.1 
-* pathlib (now in standard library)
+* PyQt 5 5.14.1
 * Watchdog 0.10.2 
 * Networkx 2.4
-* Playsound 1.2.2 (required version, newer ones have issues on Windows)
+* ~~Playsound 1.2.2 (required version, newer ones have issues on Windows)~~ replaced with pygame audio library instead
+* pygame
 * PyGObject 3.36.0 
 
 ### Pip one-liner
 ```shell
-$ sudo pip install pyqt5 watchdog networkx playsound==1.2.2 pygobject
+$ pip install pyqt5 watchdog networkx pygame pygobject
 ```
 
 Once required packages are installed, run ```python Intelpy.py``` to start the application. 
