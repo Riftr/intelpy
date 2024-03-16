@@ -1,4 +1,5 @@
 venv/
+.venv/
 settings.conf
 /.idea/
 .vscode/
@@ -8,3 +9,6 @@ build/
 __pycache__
 */__pycache__
 intelpy.egg-info
+tests/largetestfile.txt
+tests/smalltestfile.txt
+tests/testrotate_after.txt
