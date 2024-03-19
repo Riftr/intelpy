@@ -1,0 +1,16 @@
+id: org.flatpak.IntelPy
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
+command: IntelPy
+modules:
+  - name: IntelPy
+    buildsystem: simple
+    build-commands:
+      - install -D IntelPy /app/bin/IntelPy
+      - install
+    sources:
+      - type: file
+        path: IntelPy
+      - type: dir
+        path: intelpy
