@@ -2,7 +2,7 @@
 
 > IntelPy is a simple, cross-platform chat log monitor for the game Eve Online.
 >
-> ![IntelPy](https://i.imgur.com/HmTz4rl.png)
+> ![IntelPy](https://github.com/Riftr/intelpy/blob/master/intelpy/externals/Intelpy-screenshot.png)
 >
 >
 
@@ -54,9 +54,9 @@ Once required packages are installed, run ```python Intelpy.py``` to start the a
 
 Getting started:
 
-1. In game (if needed) turn on logging via the settings menu under Chat. This is usually already enabled by default. 
+1. In game (if needed) turn on logging via the settings menu under Chat. This is usually already enabled by default.
 
-![Chat Setings](https://i.imgur.com/SWErZWy.png)
+![Chat Setings](https://github.com/Riftr/intelpy/blob/master/intelpy/externals/intelpy-evelogenable.png)
 
 2. In IntelPy, on the Config tab, set the names of the intel channels you want to watch from Eve. You may also need to manually choose
 your Eve chatlog location. If you are in the Imperium your intel channels are already configured. 
