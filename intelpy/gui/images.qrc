@@ -1,8 +1,9 @@
 <RCC>
-  <qresource prefix="piebig">
-    <file>goodpie2.png</file>
-  </qresource>
-  <qresource prefix="pieico">
-    <file>goodpie2.ico</file>
-  </qresource>
+    <qresource prefix="/piebig">
+        <file>goodpie2.png</file>
+        <file>goodpie2mini.png</file>
+    </qresource>
+    <qresource prefix="/pieico">
+        <file>goodpie2.ico</file>
+    </qresource>
 </RCC>

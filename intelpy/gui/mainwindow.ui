@@ -782,7 +782,7 @@
              <rect>
               <x>30</x>
               <y>80</y>
-              <width>311</width>
+              <width>312</width>
               <height>571</height>
              </rect>
             </property>
@@ -809,7 +809,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_3">
+              <widget class="QLabel" name="label_12">
                <property name="text">
                 <string>v2.0</string>
                </property>
@@ -817,6 +817,35 @@
                 <set>Qt::AlignCenter</set>
                </property>
               </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_newpie">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="pixmap">
+                <pixmap resource="images.qrc">:/piebig/goodpie2mini.png</pixmap>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_4">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Maximum</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>10</width>
+                 <height>10</height>
+                </size>
+               </property>
+              </spacer>
              </item>
              <item>
               <widget class="QLabel" name="label_2">
@@ -847,6 +876,9 @@
               <spacer name="verticalSpacer">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Maximum</enum>
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
@@ -903,6 +935,9 @@
               <spacer name="verticalSpacer_2">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Maximum</enum>
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
@@ -967,40 +1002,6 @@
                 </size>
                </property>
               </spacer>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_12">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>300</width>
-                 <height>200</height>
-                </size>
-               </property>
-               <property name="layoutDirection">
-                <enum>Qt::LeftToRight</enum>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="pixmap">
-                <pixmap resource="images.qrc">:/piebig/goodpie2.png</pixmap>
-               </property>
-               <property name="scaledContents">
-                <bool>true</bool>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-               <property name="textInteractionFlags">
-                <set>Qt::NoTextInteraction</set>
-               </property>
-              </widget>
              </item>
             </layout>
            </widget>
