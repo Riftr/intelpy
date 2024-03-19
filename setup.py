@@ -13,14 +13,14 @@ with open(os.path.join(HERE, "README.md")) as fid:
 # This call to setup() does all the work
 setup(
     name="intelpy",
-    version="1.0b",
+    version="2.0",
     description="Chat log monitor for the game Eve Online ",
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/Riifta/intelpy",
     author="Swizzles Saissore",
-    author_email="swizzleseve@gmail.com",
-    license="MIT",
+    author_email="robseso66@gmail.com",
+    license="GPL3",
     classifiers=[
         'License :: OSI Approved :: GNU General Public License (GPL)',
         "Programming Language :: Python",
