@@ -77,6 +77,16 @@ There are a handful of other options also configurable in the Config tab. This i
 comes with a number of extra sounds or you may choose your own. You can also set how long until alerts time out from the
 recent alerts screen as well as various filter/ignore options as you desire.
 
+### Steam
+
+While IntelPy will try to use sane Chatlog paths on most operating systems, if you have installed Eve Online via Steam 
+then your path will need to be manually configured to the appropriate location, especially on Linux.  
+
+On Linux, this will likely be:
+`~/.local/share/Steam/steamapps/compatdata/8500/pfx/drive_c/users/steamuser/My Documents/EVE/logs`
+
+Additionally, you may also need to enable "Show Hidden Files" in order to browse to this path. This can be done by right-clicking on an empty space in the chooser and selecting the appropriate option. 
+
 ## Licences / Acknowledgements / Attributions
 
 This source code is available under [GPL3](https://www.gnu.org/licenses/gpl-3.0.en.html). 
