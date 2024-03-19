@@ -106,7 +106,7 @@
            <enum>Qt::NoFocus</enum>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="main_tab">
            <attribute name="title">
@@ -117,24 +117,11 @@
              <rect>
               <x>0</x>
               <y>10</y>
-              <width>382</width>
-              <height>51</height>
+              <width>361</width>
+              <height>60</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout">
-             <item row="0" column="0">
-              <widget class="QLabel" name="labelHome_System">
-               <property name="maximumSize">
-                <size>
-                 <width>120</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Home system:</string>
-               </property>
-              </widget>
-             </item>
              <item row="0" column="1">
               <widget class="QLineEdit" name="lineEditHome_System">
                <property name="sizePolicy">
@@ -145,9 +132,22 @@
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>150</width>
+                 <width>140</width>
                  <height>0</height>
                 </size>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="labelHome_System">
+               <property name="maximumSize">
+                <size>
+                 <width>120</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Home system:</string>
                </property>
               </widget>
              </item>
