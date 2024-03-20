@@ -1,0 +1,15 @@
+id: org.intelpy.IntelPy
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
+command: intelpy
+modules:
+  - name: IntelPy
+    buildsystem: simple
+    build-commands:
+      - install -D intelpy /app/bin/intelpy
+    sources:
+      - type: file
+        path: intelpy
+      - type: dir
+        path: resources
