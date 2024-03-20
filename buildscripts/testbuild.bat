@@ -1,6 +1,5 @@
-pyinstaller IntelPy.py -w --onefile --add-data intelpy\resources;intelpy\resources --noconfirm --icon=intelpy\gui\goodpie2.ico
+pyinstaller intelpy.py -w --onefile --add-data intelpy\resources;resources --noconfirm --icon=intelpy\gui\goodpie2.ico
 cd dist
-mkdir intelpy
-xcopy /I ..\intelpy\resources .\intelpy\resources\
-xcopy /I ..\tests\intelpydebug.bat .\intelpy\
+xcopy /I ..\intelpy\resources .\resources\
+xcopy /I ..\tests\intelpydebug.bat .
 cd..

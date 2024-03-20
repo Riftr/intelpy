@@ -1,5 +1,5 @@
 #!/bin/bash
-mkdir dist
-mkdir dist/intelpy
-pyinstaller ../IntelPy.py --onefile --add-data ../intelpy/resources:resources --noconfirm --icon=..\intelpy\gui\goodpie2.ico
-cp -R ../intelpy/resources dist/intelpy/resources
+rm -rf dist
+pyinstaller ../intelpy.py --onefile --add-data ../intelpy/resources:. --noconfirm --icon=..\intelpy\gui\goodpie2.ico
+mkdir -pv dist/resources
+cp -R ../intelpy/resources dist/
