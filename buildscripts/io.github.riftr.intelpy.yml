@@ -7,10 +7,10 @@ modules:
   - name: IntelPy
     buildsystem: simple
     build-commands:
-      - install -D dist/intelpy ${FLATPAK_DEST}/bin/intelpy
+      - install -D ./dist/intelpy ${FLATPAK_DEST}/bin/intelpy
       - install -Dm644 ${FLATPAK_ID}.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
       - install -Dm644 ../intelpy/gui/goodpie2-64x32.png ${FLATPAK_DEST}/share/icons/hicolor/64x64/apps/${FLATPAK_ID}.png
-      - install -Dm644 dist/resources/* ${FLATPAK_DEST}/usr/share/intelpy/
+      - install -Dm644 ./dist/resources/* ${FLATPAK_DEST}/usr/share/intelpy/
     sources:
       - type: file
         path: dist/intelpy
