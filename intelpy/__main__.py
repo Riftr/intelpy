@@ -15,9 +15,9 @@ def main():
     app_name = "IntelPy"
     #os.path.dirname(__file__)
     script_dir = os.getcwd()
-    if os.path.exists(os.path.join(script_dir, "resources")):    # use resources folder local to executable
+    if os.path.exists(os.path.join(script_dir, "resources")):    # windows/default use resources folder local to executable
         resources_dir = os.path.join(script_dir, "resources")
-    elif os.path.exists(os.path.join(script_dir, "intelpy", "resources")):  # old directory/windows
+    elif os.path.exists(os.path.join(script_dir, "intelpy", "resources")):  # old directory on previous versions
         resources_dir = os.path.join(script_dir, "intelpy", "resources")
     elif platform.startswith("linux") or platform.startswith("freebsd") or platform.startswith("darwin"):
         resources_dir = os.path.join(script_dir, "resources")  # on posix use /usr/share/intelpy
