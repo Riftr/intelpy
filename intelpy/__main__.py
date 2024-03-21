@@ -9,15 +9,24 @@ from PyQt5.QtGui import QPalette, QColor
 import os
 import intelpy.logging.logger
 from intelpy.logging import logrotate
+from sys import platform
 
 def main():
     app_name = "IntelPy"
     #os.path.dirname(__file__)
     script_dir = os.getcwd()
-    if os.path.exists(os.path.join(script_dir, "resources")):
-        resources_dir = os.path.join(script_dir, "resources")  # new directory
+    if os.path.exists(os.path.join(script_dir, "resources")):    # use resources folder local to executable
+        resources_dir = os.path.join(script_dir, "resources")
+    elif os.path.exists(os.path.join(script_dir, "intelpy", "resources")):  # old directory/windows
+        resources_dir = os.path.join(script_dir, "intelpy", "resources")
+    elif platform.startswith("linux") or platform.startswith("freebsd") or platform.startswith("darwin"):
+        resources_dir = os.path.join(script_dir, "resources")  # on posix use /usr/share/intelpy
     else:
-        resources_dir = os.path.join(script_dir, "intelpy", "resources")  # old directory or run from source
+        print("IntelPy could not find resources directory.")
+        raise OSError(2, "IntelPy could not find the resources directory", "resources")
+
+    print("Resources directory: " + str(script_dir))
+
     # Set the default configuration
     default_json = {
         "home_system": "1DQ1-A",
@@ -51,13 +60,10 @@ def main():
     configuration = config.Config(app_name, default_json)
     configuration.value["config_loc"] = configuration.file_location
 
-    ''' Debug mode - set to 0 for release
+    ''' Debug mode - 
         logged to debug.log if enabled and also enables console logs
         error message will often be separate'''
-    # when this is set to 0 the app often crashes at weird places. Probably because logger object doesn't exist
-    # something is probably using it without checking if it's None
-    # weird thing is though it works fine when Pycharm is in debug mode itself regardless of this setting!
-    configuration.value["debug"] = 1  #quick fix - just leave it at 1 and disable console mode on Windows pyinstaller
+    configuration.value["debug"] = 1
 
     # Rotate debug log
     if configuration.value["debug"]:
