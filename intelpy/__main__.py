@@ -15,9 +15,15 @@ from intelpy.logging import logrotate
 
 def main():
     app_name = "IntelPy"
-    script_dir = os.getcwd()
+
+    # get application root directory from this file's location
+    if getattr(sys, 'frozen', False):
+        script_dir = os.path.dirname(sys.executable)  # cx_Freeze frozen
+    else:
+        script_dir = os.path.dirname(os.path.realpath(__file__))  # Other packers
+
+    # set resources dir based on app root/platform
     resources_dir = main_helpers.discover_resources_dir(script_dir)
-    print("Resources directory: " + str(resources_dir))
 
     # Set the default configuration
     configuration = config.Config(app_name, main_helpers.default_json_config(resources_dir))
@@ -35,9 +41,6 @@ def main():
     if configuration.value["debug"]:
         logger = intelpy.logging.logger.logger(app_name)
         logger.write_log("== New instance of IntelPy Started ==")
-        print("---- IntelPy ----")
-        print("Debug enabled. See debug.log for output.")
-        logger.write_log("Loading Eve data..")
     else:
         logger = None
 
@@ -49,6 +52,8 @@ def main():
 
     if configuration.value["debug"] and logger is not None:
         logger.write_log("---- Configuration on loading ----")
+        logger.write_log("Exe directory: " + str(script_dir))
+        logger.write_log("Resources directory: " + str(resources_dir))
         logger.write_log("eve_data_file: " + eve_data_file)
         logger.write_log("eve_systems: " + eve_systems)
         logger.write_log("eve_ids to systems: " + eve_idstosystems)

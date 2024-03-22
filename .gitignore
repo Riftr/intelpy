@@ -14,3 +14,4 @@ tests/smalltestfile.txt
 tests/testrotate_after.txt
 flatpak
 .flatpak-builder
+build-dir

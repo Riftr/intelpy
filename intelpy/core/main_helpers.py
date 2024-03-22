@@ -1,5 +1,7 @@
 import os
+import sys
 from sys import platform
+import intelpy.logging.logger
 
 def default_json_config(resources_dir):
     default_json = {
@@ -33,17 +35,14 @@ def default_json_config(resources_dir):
     return default_json
 
 def discover_resources_dir(script_dir):
-    if os.path.exists(os.path.join(script_dir, "resources")):    # windows/default use resources folder local to executable
+    if os.path.exists(os.path.join(script_dir, "resources")):    # windows/pyinstaller/default use local folder
         resources_dir = os.path.join(script_dir, "resources")
     elif os.path.exists(os.path.join(script_dir, "intelpy", "resources")):  # old directory on previous versions
         resources_dir = os.path.join(script_dir, "intelpy", "resources")
     elif platform.startswith("linux") or platform.startswith("freebsd") or platform.startswith("darwin"):
-        resources_dir = os.path.join("usr", "share", "intelpy")  # on posix use /usr/share/intelpy
+        resources_dir = os.path.join("/", "usr", "share", "intelpy")  # on posix use /usr/share/intelpy
     else:
-        print("IntelPy could not find resources directory.")
         raise OSError(2, "IntelPy could not find the resources directory", "resources")
     return resources_dir
-
-
 
 
