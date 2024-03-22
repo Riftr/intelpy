@@ -27,7 +27,9 @@ finish-args:
   - --socket=fallback-x11
   # Wayland access
   - --socket=wayland
-  # GPU acceleration if needed
+  # GPU acceleration
   - --device=dri
-  # Needs to save files locally
+  # Needs to access config and Eve Chatlog directories which can vary
   - --filesystem=~
+  # Audio access
+  - --socket=pulseaudio

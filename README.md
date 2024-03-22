@@ -83,7 +83,7 @@ While IntelPy will try to use sane Chatlog paths on most operating systems, if y
 then your path will need to be manually configured to the appropriate location, especially on Linux.  
 
 On Linux, this will likely be:
-`~/.local/share/Steam/steamapps/compatdata/8500/pfx/drive_c/users/steamuser/My Documents/EVE/logs`
+`~/.local/share/Steam/steamapps/compatdata/8500/pfx/drive_c/users/steamuser/My Documents/EVE/logs/Chatlogs`
 
 Additionally, you may also need to enable "Show Hidden Files" in order to browse to this path. This can be done by right-clicking on an empty space in the chooser and selecting the appropriate option. 
 
