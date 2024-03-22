@@ -2,6 +2,7 @@
 import sys
 from intelpy import config
 from intelpy.gui import mainwindow_intelpy
+from intelpy.core import main_helpers
 import intelpy.eve.evedata as evedata
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication
@@ -9,60 +10,18 @@ from PyQt5.QtGui import QPalette, QColor
 import os
 import intelpy.logging.logger
 from intelpy.logging import logrotate
-from sys import platform
+
+
 
 def main():
     app_name = "IntelPy"
-    #os.path.dirname(__file__)
     script_dir = os.getcwd()
-    if os.path.exists(os.path.join(script_dir, "resources")):    # windows/default use resources folder local to executable
-        resources_dir = os.path.join(script_dir, "resources")
-    elif os.path.exists(os.path.join(script_dir, "intelpy", "resources")):  # old directory on previous versions
-        resources_dir = os.path.join(script_dir, "intelpy", "resources")
-    elif platform.startswith("linux") or platform.startswith("freebsd") or platform.startswith("darwin"):
-        resources_dir = os.path.join(script_dir, "resources")  # on posix use /usr/share/intelpy
-    else:
-        print("IntelPy could not find resources directory.")
-        raise OSError(2, "IntelPy could not find the resources directory", "resources")
-
-    print("Resources directory: " + str(script_dir))
+    resources_dir = main_helpers.discover_resources_dir(script_dir)
+    print("Resources directory: " + str(resources_dir))
 
     # Set the default configuration
-    default_json = {
-        "home_system": "1DQ1-A",
-        "eve_log_location": "",
-        "watched_channels": [
-            "delve.imperium",
-            "querious.imperium",
-            "ftn.imperium",
-            "vnl.imperium",
-            "cr.imperium",
-            "aridia.imperium",
-            "khanid.imperium",
-            "lone.imperium"
-        ],
-        "alert_jumps": 3,
-        "alert_systems": [],
-        "log_watch_active": 1,
-        "config_loc": "",
-        "alarm_sound": str(resources_dir) + os.sep + "alarm2.mp3",
-        "display_alerts": 1,
-        "display_clear": 1,
-        "display_all": 1,
-        "filter_status": 1,
-        "filter_clear": 1,
-        "debug": 0,
-        "message_timeout": 1.0,
-        "alert_timeout": 5,
-        "dark_theme": 0
-    }
-
-    configuration = config.Config(app_name, default_json)
+    configuration = config.Config(app_name, main_helpers.default_json_config(resources_dir))
     configuration.value["config_loc"] = configuration.file_location
-
-    ''' Debug mode - 
-        logged to debug.log if enabled and also enables console logs
-        error message will often be separate'''
     configuration.value["debug"] = 1
 
     # Rotate debug log
@@ -82,7 +41,6 @@ def main():
     else:
         logger = None
 
-
     # Load eve data
     eve_data_file = str(resources_dir) + os.sep + "evedata.p"
     eve_systems = str(resources_dir) + os.sep + "systems.p"
@@ -94,7 +52,6 @@ def main():
         logger.write_log("eve_data_file: " + eve_data_file)
         logger.write_log("eve_systems: " + eve_systems)
         logger.write_log("eve_ids to systems: " + eve_idstosystems)
-        #debug_config.debug_config(configuration)
         logger.debug_config(configuration)
 
     # Load main window GUI
@@ -133,9 +90,6 @@ def main():
         logger.write_log("---- Configuration after closing ----")
         logger.debug_config(configuration)
         logger.write_log("== This instance of IntelPy closed ==")
-
-    # Flush configuration (prob don't need this)
-    #configuration.value["debug"] = 0
 
     configuration.flush_config_to_file()
     window.stop_watchdog()
