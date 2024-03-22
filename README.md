@@ -25,29 +25,29 @@
 2. Extract the contents to a directory 
 3. Run IntelPy.exe
  
-### Linux
+### Linux (source)
 
-1. Download the latest Linux tar.gz release [here](https://github.com/Riifta/intelpy/releases/latest)
-2. Extract the contents to a directory such as /opt/intelpy 
-3. Run the IntelPy binary file
+1. [Download this repository](https://github.com/Riftr/intelpy/archive/refs/heads/master.zip)
+2. Install the required packages below
+3. Extract the contents to a directory, such as /opt/intelpy
+4. Run `python /opt/intelpy/intelpy.py`
+
+We are hoping to release a Flatpak version soon.
 
 ## Required packages (for building or running the source)
  
 The versions below aren't hard requirements, only what IntelPy has been tested on.
 
-* Python 3 3.7 
+* Python 3 3.12
 * PyQt 5 5.14.1
 * Watchdog 0.10.2 
 * Networkx 2.4
 * pygame (replaces playsound)
-* PyGObject 3.36.0 
 
 ### Pip one-liner
 ```shell
-$ pip install pyqt5 watchdog networkx pygame pygobject
+$ pip install pyqt5 watchdog networkx pygame
 ```
-
-Once required packages are installed, run ```python Intelpy.py``` to start the application. 
 
 ## Usage
 

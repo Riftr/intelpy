@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.riftr.intelpy</id>
+
+  <name>IntelPy</name>
+  <summary>IntelPy is a simple, cross-platform chat log monitor for the game Eve Online</summary>
+
+  <metadata_license>MIT</metadata_license>
+  <project_license>GPL-3.0-only</project_license>
+
+  <description>
+    <p>
+      IntelPy is a simple, cross-platform chat log monitor for the game Eve Online.
+    </p>
+  </description>
+
+  <launchable type="desktop-id">io.github.riftr.intelpy.desktop</launchable>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://github.com/Riftr/intelpy/blob/master/intelpy/externals/Intelpy-2-main.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://github.com/Riftr/intelpy/blob/master/intelpy/externals/intelpy-2-config.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://github.com/Riftr/intelpy/blob/master/intelpy/externals/intelpy-2-about.png</image>
+    </screenshot>
+  </screenshots>
+</component>

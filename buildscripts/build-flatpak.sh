@@ -9,3 +9,6 @@ flatpak-builder build-dir io.github.riftr.intelpy.yml
 echo "*** Testing Flatpak ***"
 flatpak-builder --user --install --force-clean build-dir io.github.riftr.intelpy.yml
 flatpak run io.github.riftr.intelpy
+
+#echo "*** Sending flatpak to Flathub repo ***"
+# todo
