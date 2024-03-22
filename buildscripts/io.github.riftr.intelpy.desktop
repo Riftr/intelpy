@@ -3,4 +3,4 @@ Name=IntelPy
 Exec=intelpy
 Type=Application
 Icon=io.github.riftr.intelpy
-Categories=Games
+Categories=Game;
