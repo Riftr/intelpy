@@ -89,20 +89,23 @@ modules:
   - name: intelpy
     buildsystem: simple
     build-commands:
-      # copy resources dir - there may be a better option
+      # copy resources dir
+      - mkdir -p ${FLATPAK_DEST}/usr/share/intelpy  # crappy workaround
+      - cp -R * ${FLATPAK_DEST}/usr/share/intelpy
 
       # install python deps
       - pip3 install --no-build-isolation .
 
+      # icons
+      - install -Dm644 goodpie2-64x64.png ${FLATPAK_DEST}/share/icons/hicolor/64x64/apps/io.github.riftr.intelpy.png
+      - install -Dm644 goodpie2.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/io.github.riftr.intelpy-symbolic.svg
+      - install -Dm644 goodpie2.svg ${FLATPAK_DEST}/share/icons/hicolor/64x64/apps/io.github.riftr.intelpy.svg
 
-      # no idea what this does
-      #- ./pep517build/build_metadata.py
-      #- ./pep517build/install_metadata.py dist/metadata --prefix=/app
-      #- touch /app/share/run-as-flatpak
-      #- cp -t ${FLATPAK_DEST} app-overrides.json
     sources:
       - type: git
         url: https://github.com/Riftr/intelpy.git
         tag: 1.2b3
-    #post-install:
-    #  - install -d /app/plugins
+      - type: file
+        path: ../../intelpy/gui/goodpie2-64x64.png
+      - type: file
+        path: ../../intelpy/gui/goodpie2.svg
