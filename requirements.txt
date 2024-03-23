@@ -1,0 +1,6 @@
+networkx~=3.2.1
+PyQt5~=5.15.10
+watchdog~=4.0.0
+touch~=2020.12.3
+pygame~=2.5.2
+setuptools~=69.2.0
