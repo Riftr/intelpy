@@ -1,0 +1,108 @@
+app-id: io.github.riftr.intelpy
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
+command: intelpy
+finish-args:
+  # X11 + XShm access
+  - --share=ipc
+  - --socket=fallback-x11
+  # Wayland access
+  - --socket=wayland
+  # GPU acceleration
+  - --device=dri
+  # Needs to access config and Eve Chatlog directories which can vary
+  - --filesystem=~
+  # Audio access
+  - --socket=pulseaudio
+
+build-options:
+  env:
+    PIP_PREFIX: /app
+    PIP_DISABLE_PIP_VERSION_CHECK: "1"
+
+cleanup:
+  - /include
+  - /lib/pkgconfig
+  - /share/gtk-doc
+  - /share/man
+  - '*.a'
+  - '*.la'
+
+# dependencies
+modules:
+  - name: python3-packaging
+    buildsystem: simple
+    build-commands:
+      - pip3 install packaging-23.2-py3-none-any.whl
+    sources:
+      - type: file
+        url: https://files.pythonhosted.org/packages/py3/p/packaging/packaging-23.2-py3-none-any.whl
+        sha256: 8c491190033a9af7e1d931d0b5dacc2ef47509b34dd0de67ed209b5203fc88c7
+
+  - name: setuptools
+    buildsystem: simple
+    build-commands:
+      - pip3 install setuptools-69.2.0-py3-none-any.whl
+    sources:
+      - type: file
+        url: https://files.pythonhosted.org/packages/92/e1/1c8bb3420105e70bdf357d57dd5567202b4ef8d27f810e98bb962d950834/setuptools-69.2.0-py3-none-any.whl
+        sha256: c21c49fb1042386df081cb5d86759792ab89efca84cf114889191cd09aacc80c
+
+  - name: pyqt5
+    buildsystem: simple
+    build-commands:
+      - pip3 install PyQt5-5.15.10-cp37-abi3-manylinux_2_17_x86_64.whl
+    sources:
+      - type: file
+        url: https://files.pythonhosted.org/packages/2f/e6/a1f9853e4933c312c6de9c79d126c7d92ef69ae0e53895fb1ceb0ecc77a6/PyQt5-5.15.10-cp37-abi3-manylinux_2_17_x86_64.whl
+        sha256: b89478d16d4118664ff58ed609e0a804d002703c9420118de7e4e70fa1cb5486
+
+  - name: watchdog
+    buildsystem: simple
+    build-commands:
+      - pip3 install watchdog-4.0.0-py3-none-manylinux2014_x86_64.whl
+    sources:
+      - type: file
+        url: https://files.pythonhosted.org/packages/91/7b/26d2f43aa9fe428416be21ee1cb9ac75638cf302466b7e706c14eeaea42c/watchdog-4.0.0-py3-none-manylinux2014_x86_64.whl
+        sha256: 6a80d5cae8c265842c7419c560b9961561556c4361b297b4c431903f8c33b269
+
+  - name: networkx
+    buildsystem: simple
+    build-commands:
+      - pip3 install networkx-3.2.1-py3-none-any.whl
+    sources:
+      - type: file
+        url: https://files.pythonhosted.org/packages/d5/f0/8fbc882ca80cf077f1b246c0e3c3465f7f415439bdea6b899f6b19f61f70/networkx-3.2.1-py3-none-any.whl
+        sha256: f18c69adc97877c42332c170849c96cefa91881c99a7cb3e95b7c659ebdc1ec2
+
+  - name: pygame
+    buildsystem: simple
+    build-commands:
+      - pip3 install pygame_2048-1.9.4-py3-none-any.whl
+    sources:
+      - type: file
+        url: https://files.pythonhosted.org/packages/63/45/05316f37f2a5ae76a94e143bf53f647667216cc21cf99eeeba2bb3029ae8/pygame_2048-1.9.4-py3-none-any.whl
+        sha256: 27b2fefc266e65e5d38e9a50f49711c4be5ae708ccf93a47646b9b8a7fbe188b
+
+  # our app
+  - name: intelpy
+    buildsystem: simple
+    build-commands:
+      # copy resources dir - there may be a better option
+
+      # install python deps
+      - pip3 install --no-build-isolation .
+
+
+      # no idea what this does
+      #- ./pep517build/build_metadata.py
+      #- ./pep517build/install_metadata.py dist/metadata --prefix=/app
+      #- touch /app/share/run-as-flatpak
+      #- cp -t ${FLATPAK_DEST} app-overrides.json
+    sources:
+      - type: git
+        url: https://github.com/Riftr/intelpy.git
+        tag: 1.2b3
+    #post-install:
+    #  - install -d /app/plugins
