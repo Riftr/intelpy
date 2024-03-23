@@ -1,8 +1,9 @@
 app-id: io.github.riftr.intelpy
 runtime: org.kde.Platform
 runtime-version: "5.15-23.08"
-sdk: org.kde.Platform
-#base: com.riverbankcomputing.PyQt.BaseApp
+sdk: org.kde.Sdk
+base: com.riverbankcomputing.PyQt.BaseApp
+base-version: "5.15-23.08"
 command: intelpy
 finish-args:
   # X11 + XShm access
@@ -16,23 +17,23 @@ finish-args:
   - --filesystem=~
   # Audio access
   - --socket=pulseaudio
-  - --env=PYTHONPATH=/app/site-packages
 
-build-options:
-  env:
-    PIP_PREFIX: /app
-    PIP_DISABLE_PIP_VERSION_CHECK: "1"
+#build-options:
+#  env:
+#    PIP_PREFIX: /app
+#    PIP_DISABLE_PIP_VERSION_CHECK: "1"
 
-cleanup:
-  - /include
-  - /lib/pkgconfig
-  - /share/gtk-doc
-  - /share/man
-  - '*.a'
-  - '*.la'
+#cleanup:
+#  - /include
+#  - /lib/pkgconfig
+#  - /share/gtk-doc
+#  - /share/man
+#  - '*.a'
+#  - '*.la'
 
-# dependencies
+
 modules:
+  # dependencies
 
   - name: setuptools
     buildsystem: simple
@@ -42,15 +43,6 @@ modules:
       - type: file
         url: https://files.pythonhosted.org/packages/92/e1/1c8bb3420105e70bdf357d57dd5567202b4ef8d27f810e98bb962d950834/setuptools-69.2.0-py3-none-any.whl
         sha256: c21c49fb1042386df081cb5d86759792ab89efca84cf114889191cd09aacc80c
-
-  - name: pyqt5
-    buildsystem: simple
-    build-commands:
-      - pip3 install PyQt5-5.15.10-cp37-abi3-manylinux_2_17_x86_64.whl
-    sources:
-      - type: file
-        url: https://files.pythonhosted.org/packages/2f/e6/a1f9853e4933c312c6de9c79d126c7d92ef69ae0e53895fb1ceb0ecc77a6/PyQt5-5.15.10-cp37-abi3-manylinux_2_17_x86_64.whl
-        sha256: b89478d16d4118664ff58ed609e0a804d002703c9420118de7e4e70fa1cb5486
 
   - name: watchdog
     buildsystem: simple
@@ -73,11 +65,12 @@ modules:
   - name: pygame
     buildsystem: simple
     build-commands:
-      - pip3 install pygame_2048-1.9.4-py3-none-any.whl
+      - pip3 install pygame-2.5.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
     sources:
       - type: file
-        url: https://files.pythonhosted.org/packages/7e/a7/97cee3e83f45114448a31081d8c9897571241256c6ed271068e9c5dfa3bb/pygame-2.5.2-pp39-pypy39_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
-        sha256: 1f3849f97372a3381c66955f99a0d58485ccd513c3d00c030b869094ce6997a6
+        url: https://files.pythonhosted.org/packages/5f/0d/64b84142b477c0d7041bd93a91d4dc6d7901dad4f58323f69779c86757f5/pygame-2.5.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+        sha256: 0e24d05184e4195fe5ebcdce8b18ecb086f00182b9ae460a86682d312ce8d31f
+
 
   # our app
   - name: intelpy
@@ -98,3 +91,5 @@ modules:
       - type: git
         url: https://github.com/Riftr/intelpy.git
         tag: 1.2b3
+      - type: file
+        path: ../touch-2020.12.3-py3-none-any.whl
