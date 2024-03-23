@@ -1,7 +1,8 @@
 app-id: io.github.riftr.intelpy
-runtime: org.freedesktop.Platform
-runtime-version: '23.08'
-sdk: org.freedesktop.Sdk
+runtime: org.kde.Platform
+runtime-version: "5.15-23.08"
+sdk: org.kde.Platform
+#base: com.riverbankcomputing.PyQt.BaseApp
 command: intelpy
 finish-args:
   # X11 + XShm access
@@ -15,6 +16,7 @@ finish-args:
   - --filesystem=~
   # Audio access
   - --socket=pulseaudio
+  - --env=PYTHONPATH=/app/site-packages
 
 build-options:
   env:
@@ -31,14 +33,6 @@ cleanup:
 
 # dependencies
 modules:
-  - name: python3-packaging
-    buildsystem: simple
-    build-commands:
-      - pip3 install packaging-23.2-py3-none-any.whl
-    sources:
-      - type: file
-        url: https://files.pythonhosted.org/packages/py3/p/packaging/packaging-23.2-py3-none-any.whl
-        sha256: 8c491190033a9af7e1d931d0b5dacc2ef47509b34dd0de67ed209b5203fc88c7
 
   - name: setuptools
     buildsystem: simple
