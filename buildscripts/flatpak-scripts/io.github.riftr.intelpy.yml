@@ -82,30 +82,25 @@ modules:
       - pip3 install pygame_2048-1.9.4-py3-none-any.whl
     sources:
       - type: file
-        url: https://files.pythonhosted.org/packages/63/45/05316f37f2a5ae76a94e143bf53f647667216cc21cf99eeeba2bb3029ae8/pygame_2048-1.9.4-py3-none-any.whl
-        sha256: 27b2fefc266e65e5d38e9a50f49711c4be5ae708ccf93a47646b9b8a7fbe188b
+        url: https://files.pythonhosted.org/packages/7e/a7/97cee3e83f45114448a31081d8c9897571241256c6ed271068e9c5dfa3bb/pygame-2.5.2-pp39-pypy39_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+        sha256: 1f3849f97372a3381c66955f99a0d58485ccd513c3d00c030b869094ce6997a6
 
   # our app
   - name: intelpy
     buildsystem: simple
     build-commands:
-      # copy resources dir
-      - mkdir -p ${FLATPAK_DEST}/usr/share/intelpy  # crappy workaround
-      - cp -R * ${FLATPAK_DEST}/usr/share/intelpy
-
-      # install python deps
+      - # install python deps
       - pip3 install --no-build-isolation .
-
+      # copy resources dir
+      - mkdir -p ${FLATPAK_DEST}/usr/share/intelpy
+      - cp -R ${FLATPAK_DEST}/intelpy/resources/* ${FLATPAK_DEST}/usr/share/intelpy/
       # icons
-      - install -Dm644 goodpie2-64x64.png ${FLATPAK_DEST}/share/icons/hicolor/64x64/apps/io.github.riftr.intelpy.png
-      - install -Dm644 goodpie2.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/io.github.riftr.intelpy-symbolic.svg
-      - install -Dm644 goodpie2.svg ${FLATPAK_DEST}/share/icons/hicolor/64x64/apps/io.github.riftr.intelpy.svg
-
+      - install -Dm644 ${FLATPAK_DEST}/intelpy/gui/goodpie2-64x64.png ${FLATPAK_DEST}/share/icons/hicolor/64x64/apps/io.github.riftr.intelpy.png
+      - install -Dm644 ${FLATPAK_DEST}/intelpy/gui/goodpie2.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/io.github.riftr.intelpy-symbolic.svg
+      - install -Dm644 ${FLATPAK_DEST}/intelpy/gui/goodpie2.svg ${FLATPAK_DEST}/share/icons/hicolor/64x64/apps/io.github.riftr.intelpy.svg
+      # metadata
+      - install -Dm644 ${FLATPAK_DEST}io.github.riftr.intelpy.desktop ${FLATPAK_DEST}/share/applications/io.github.riftr.intelpy.desktop
     sources:
       - type: git
         url: https://github.com/Riftr/intelpy.git
         tag: 1.2b3
-      - type: file
-        path: ../../intelpy/gui/goodpie2-64x64.png
-      - type: file
-        path: ../../intelpy/gui/goodpie2.svg
