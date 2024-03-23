@@ -1,7 +1,5 @@
 import intelpy.config
-from pathlib import Path
-from sys import platform
-from os import makedirs
+import os
 from datetime import datetime
 
 class logger(intelpy.config.Config):
@@ -14,13 +12,13 @@ class logger(intelpy.config.Config):
         self.debug = debug
 
         # If debug.log doesn't exist, create it and set default values
-        if not Path(self.file_location + self.default_log_file).is_file():
+        if not os.path.exists(self.file_location + self.default_log_file):
             # Create directory as well if it doesn't exist
-            if not Path(self.file_location).exists():
+            if not os.path.exists(self.file_location):
                 try:
                     if self.debug:
                         print("Making " + str(self.file_location))
-                    makedirs(self.file_location)
+                    os.makedirs(self.file_location)
                 except IOError as e:
                     if self.debug:
                         print("Could not access directory path for debug log, check permissions")

@@ -2,7 +2,6 @@ from PyQt5.QtCore import pyqtSlot, QTimer, QThreadPool, QDir, Qt
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QWidget, QMessageBox
 from PyQt5.QtGui import QPalette, QColor
 from intelpy.gui.MainWindow import Ui_MainWindow
-from pathlib import Path
 import getpass
 import intelpy.logging.logformatting as log
 import intelpy.eve.eveloghandler_worker as eveloghandler
@@ -115,7 +114,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
             if self.configuration.get_platform() == "unix":
                 if self.configuration.value["debug"] and self.logger is not None:
                     self.logger.write_log("Detected OS was Unix")
-                self.test_path = Path(str(Path.home()) +
+                self.test_path = str(os.path.expanduser("~") +
                                       "/Games/eve-online/drive_c/users/" +
                                       getpass.getuser() +
                                       "/My Documents/EVE/logs/Chatlogs/")
@@ -127,14 +126,14 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
                 if self.configuration.value["debug"] and self.logger is not None:
                     self.logger.write_log("Detected OS was Windows")
                 # Check default path on windows
-                self.home_path = Path.home()
-                self.test_path = self.home_path / "Documents" / "EVE" / "logs" / "Chatlogs"
+                self.home_path = os.path.expanduser("~")
+                self.test_path = os.path.join(self.home_path + "Documents" + "EVE" + "logs" + "Chatlogs")
                 if self.check_path(self.test_path):
                     self.configuration.value["eve_log_location"] = str(self.test_path)
                 else:
                     # Check if its on Onedrive instead
                     # C:\Users\ user \OneDrive\Documents\EVE\logs
-                    self.test_path_odrive = self.home_path / "OneDrive" / "Documents" / "EVE" / "logs" / "Chatlogs"
+                    self.test_path_odrive = os.path.join(self.home_path + "OneDrive" + "Documents" + "EVE" + "logs" + "Chatlogs")
                     if self.check_path(self.test_path_odrive):
                         self.configuration.value["eve_log_location"] = str(self.test_path_odrive)
 
@@ -143,7 +142,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
                                    "Please select your Eve log path in the config tab",
                                    "Default path did not exist",
                                    "")
-                self.configuration.value["eve_log_location"] = str(Path.home())
+                self.configuration.value["eve_log_location"] = str(os.path.expanduser("~"))
                 if self.configuration.value["debug"] and self.logger is not None:
                     self.logger.write_log("GUI could not determine Eve log path!")
 
@@ -176,7 +175,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
     # Methods
 
     def check_path(self, test_path):
-        if test_path.exists():
+        if os.path.exists(test_path):
             return True
         else:
             return False
@@ -190,7 +189,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         files_found_count = 0
         files_archived_count = 0
         # Create archive path if it doesn't exist
-        if not Path(archive_path).exists():
+        if not os.path.exists(archive_path):
             try:
                 if self.configuration.value["debug"] and self.logger is not None:
                     print("Making " + str(archive_path))
@@ -382,7 +381,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.log_location = QFileDialog.getExistingDirectory(
             self,
             "Choose Eve Log Files Directory",
-            str(Path.home()),
+            str(os.path.expanduser("~")),
             options=QFileDialog.DontUseNativeDialog | QFileDialog.ShowDirsOnly)
 
         if len(self.log_location) > 0:

@@ -1,7 +1,6 @@
 import json
-from pathlib import Path
+import os
 from sys import platform
-from os import makedirs
 
 
 class Config:
@@ -37,19 +36,19 @@ class Config:
 
     def __init__(self, app_name, default_config_json, default_config_file="settings.json"):
         self.value = default_config_json                 # Config values stored in here
-        self.default_config_file = default_config_file   # Path to file (without filename)
+        self.default_config_file = default_config_file   # os.path to file (without filename)
         self.app_name = app_name                         # App name for the folder to save in
-        self.file_location = self.good_place_for_file()  # Path excluding filename to save/read file
+        self.file_location = self.good_place_for_file()  # os.path excluding filename to save/read file
         self.debug = 0
 
         # If settings.json doesn't exist, create it and set default values
-        if not Path(self.file_location + self.default_config_file).is_file():
+        if not os.path.exists(self.file_location + self.default_config_file):
             # Create directory as well if it doesn't exist
-            if not Path(self.file_location).exists():
+            if not os.path.exists(self.file_location):
                 try:
                     if self.debug:
                         print("Making " + str(self.file_location))
-                    makedirs(self.file_location)
+                    os.makedirs(self.file_location)
                 except IOError as e:
                     if self.debug:
                         print("Could not access directory path for config, check permissions")
@@ -95,9 +94,9 @@ class Config:
         # Note: Linux = /home/user/, Freebsd = /home/user/ (symlink), OSX = /Users/user/
         my_platform = self.get_platform()
         if my_platform == "unix":
-            return(str(Path.home()) + "/.config/" + self.app_name + "/")
+            return(str(os.path.expanduser("~")) + "/.config/" + self.app_name + "/")
         elif my_platform == "windows":
-            return str(Path.home()) + "\\AppData\\Local\\" + self.app_name + "\\"
+            return str(os.path.expanduser("~")) + "\\AppData\\Local\\" + self.app_name + "\\"
         else:
             return ""  # Fallback, return blank string so it saves in the current app location
 

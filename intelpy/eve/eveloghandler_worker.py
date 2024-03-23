@@ -4,9 +4,8 @@ from watchdog.observers import Observer
 from watchdog.events import LoggingEventHandler
 import time
 import os
-#from pathlib2 import Path
-from pathlib import Path
 import intelpy.logging.logger
+import touch
 
 class Eveloghandler_worker(QThread):
     pass_message = pyqtSignal(list)
@@ -44,10 +43,13 @@ class Eveloghandler_worker(QThread):
 
         while not self.event_stop.is_set():
             # Windows workaround - for some reason Eve doesn't trigger the watchdog modify event on Windows.
+            # todo: test on windows!
+            # https://stackoverflow.com/questions/3207219/how-do-i-list-all-files-of-a-directory
             if self.platform == "windows":
-                path = Path(self.configuration.value["eve_log_location"])
-                for file in path.iterdir():
-                    Path(file).touch()
+                log_path = [os.path.join(self.configuration.value["eve_log_location"], fn)
+                            for fn in next(os.walk(self.configuration.value["eve_log_location"]))[2]]
+                for file in log_path:
+                    touch.touch(file)
                 time.sleep(2)
             else:
                 time.sleep(1)

@@ -1,7 +1,6 @@
 from PyQt5.QtCore import pyqtSignal, QObject
 from watchdog.events import PatternMatchingEventHandler
 import pickle
-from pathlib import Path
 from datetime import datetime
 from itertools import islice
 import re
@@ -165,7 +164,7 @@ class EveLogHandler(PatternMatchingEventHandler, QObject):
     # todo: move to json both pickle and unpickle functions due to dict usage
     # fix for now is to just skip and remove the corrupt file
     def unpickle_known_files(self):
-        if Path(self.known_files_loc).exists():
+        if os.path.exists(self.known_files_loc):
             if os.path.getsize(self.known_files_loc) > 0:
                 try:
                     with open(self.known_files_loc, "rb") as known_files_file:
