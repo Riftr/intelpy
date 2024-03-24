@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2024 Riftr -->
 <component type="desktop-application">
   <id>io.github.riftr.intelpy</id>
 
@@ -10,7 +11,9 @@
   <developer id="tld.vendor">
     <name>Riftr on Github</name>
   </developer>
-
+  <categories>
+    <category>Game</category>
+  </categories>
   <description>
     <p>
       IntelPy is a simple, cross-platform chat log monitor for the game Eve Online. It monitors chat logs and displays
@@ -42,4 +45,9 @@
       </description>
     </release>
   </releases>
+  <provides>
+     <id>intelpy</id>
+  </provides>
+    <icon type="stock">io.github.riftr.intelpy</icon>
+  <icon type="remote">https://github.com/Riftr/intelpy/blob/master/intelpy/gui/goodpie2.png</icon>
 </component>

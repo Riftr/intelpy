@@ -4,7 +4,7 @@ runtime-version: "5.15-23.08"
 sdk: org.kde.Sdk
 base: com.riverbankcomputing.PyQt.BaseApp
 base-version: "5.15-23.08"
-command: intelpy
+command: /usr/share/intelpy/run_intelpy.sh
 finish-args:
   # X11 + XShm access
   - --share=ipc
@@ -82,20 +82,28 @@ modules:
     build-commands:
       - echo $PATH
       - # install python deps
-      #- pip3 install --no-build-isolation .
-      - pip install -r requirements.txt
+      - pip3 install --no-build-isolation .
+      #- pip install -r requirements.txt
       # copy resources dir
       - mkdir -p ${FLATPAK_DEST}/usr/share/intelpy
-      - cp -R ${FLATPAK_DEST}/intelpy/resources/* ${FLATPAK_DEST}/usr/share/intelpy/
-      # icons
-      - install -Dm644 ${FLATPAK_DEST}/intelpy/gui/goodpie2-64x64.png ${FLATPAK_DEST}/share/icons/hicolor/64x64/apps/io.github.riftr.intelpy.png
-      - install -Dm644 ${FLATPAK_DEST}/intelpy/gui/goodpie2.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/io.github.riftr.intelpy-symbolic.svg
-      - install -Dm644 ${FLATPAK_DEST}/intelpy/gui/goodpie2.svg ${FLATPAK_DEST}/share/icons/hicolor/64x64/apps/io.github.riftr.intelpy.svg
+      - pwd
+      - cp -R * ${FLATPAK_DEST}/usr/share/intelpy
       # metadata
-      - install -Dm644 ${FLATPAK_DEST}io.github.riftr.intelpy.desktop ${FLATPAK_DEST}/share/applications/io.github.riftr.intelpy.desktop
+      # icons
+      # install -Dm644 ../../intelpy/gui/goodpie2-64x64.png ${FLATPAK_DEST}/share/icons/hicolor/64x64/apps/io.github.riftr.intelpy.png
+      #- install -Dm644 ../../intelpy/gui/goodpie2.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/io.github.riftr.intelpy-symbolic.svg
+      #- install -Dm644 ../../intelpy/gui/goodpie2.svg ${FLATPAK_DEST}/share/icons/hicolor/64x64/apps/io.github.riftr.intelpy.svg
+      # metadata
+      - install -Dm644 io.github.riftr.intelpy.desktop ${FLATPAK_DEST}/share/applications/io.github.riftr.intelpy.desktop
     sources:
       - type: git
         url: https://github.com/Riftr/intelpy.git
         tag: "2.0"
+      #- type: file
+      #  path: ../../requirements.txt
+      #- type: dir
+      #  path: ../../intelpy/resources
       - type: file
-        path: ../../requirements.txt
+        path: io.github.riftr.intelpy.desktop
+      - type: file
+        path: run_intelpy.sh
