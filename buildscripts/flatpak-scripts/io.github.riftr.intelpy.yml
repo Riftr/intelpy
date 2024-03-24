@@ -18,18 +18,23 @@ finish-args:
   # Audio access
   - --socket=pulseaudio
 
-#build-options:
+build-options:
+  append-path: "/var/data/python/bin"
 #  env:
+#     "PATH": "$PATH:/var/data/python/bin"
 #    PIP_PREFIX: /app
 #    PIP_DISABLE_PIP_VERSION_CHECK: "1"
+  build-args:
+    - --share=network
 
-#cleanup:
-#  - /include
-#  - /lib/pkgconfig
-#  - /share/gtk-doc
-#  - /share/man
-#  - '*.a'
-#  - '*.la'
+
+
+cleanup:
+  - /include
+  - /lib/pkgconfig
+  - /share/man
+  - '*.a'
+  - '*.la'
 
 
 modules:
@@ -43,15 +48,6 @@ modules:
       - type: file
         url: https://files.pythonhosted.org/packages/92/e1/1c8bb3420105e70bdf357d57dd5567202b4ef8d27f810e98bb962d950834/setuptools-69.2.0-py3-none-any.whl
         sha256: c21c49fb1042386df081cb5d86759792ab89efca84cf114889191cd09aacc80c
-
-  - name: watchdog
-    buildsystem: simple
-    build-commands:
-      - pip3 install watchdog-4.0.0-py3-none-manylinux2014_x86_64.whl
-    sources:
-      - type: file
-        url: https://files.pythonhosted.org/packages/91/7b/26d2f43aa9fe428416be21ee1cb9ac75638cf302466b7e706c14eeaea42c/watchdog-4.0.0-py3-none-manylinux2014_x86_64.whl
-        sha256: 6a80d5cae8c265842c7419c560b9961561556c4361b297b4c431903f8c33b269
 
   - name: networkx
     buildsystem: simple
@@ -71,13 +67,23 @@ modules:
         url: https://files.pythonhosted.org/packages/5f/0d/64b84142b477c0d7041bd93a91d4dc6d7901dad4f58323f69779c86757f5/pygame-2.5.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
         sha256: 0e24d05184e4195fe5ebcdce8b18ecb086f00182b9ae460a86682d312ce8d31f
 
+  - name: watchdog
+    buildsystem: simple
+    build-commands:
+      - pip3 install watchdog-4.0.0-py3-none-manylinux2014_x86_64.whl
+    sources:
+      - type: file
+        url: https://files.pythonhosted.org/packages/91/7b/26d2f43aa9fe428416be21ee1cb9ac75638cf302466b7e706c14eeaea42c/watchdog-4.0.0-py3-none-manylinux2014_x86_64.whl
+        sha256: 6a80d5cae8c265842c7419c560b9961561556c4361b297b4c431903f8c33b269
 
   # our app
   - name: intelpy
     buildsystem: simple
     build-commands:
+      - echo $PATH
       - # install python deps
-      - pip3 install --no-build-isolation .
+      #- pip3 install --no-build-isolation .
+      - pip install -r requirements.txt
       # copy resources dir
       - mkdir -p ${FLATPAK_DEST}/usr/share/intelpy
       - cp -R ${FLATPAK_DEST}/intelpy/resources/* ${FLATPAK_DEST}/usr/share/intelpy/
@@ -91,3 +97,5 @@ modules:
       - type: git
         url: https://github.com/Riftr/intelpy.git
         tag: "2.0"
+      - type: file
+        path: ../../requirements.txt

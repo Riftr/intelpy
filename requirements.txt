@@ -1,6 +1,6 @@
 networkx~=3.2.1
 PyQt5~=5.15.10
-watchdog~=4.0.0
+watchdog==4.0.0
 pygame~=2.5.2
 setuptools~=69.2.0
 pathlib~=1.0.1
