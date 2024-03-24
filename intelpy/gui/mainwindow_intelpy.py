@@ -114,37 +114,65 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
             if self.configuration.get_platform() == "unix":
                 if self.configuration.value["debug"] and self.logger is not None:
                     self.logger.write_log("Detected OS was Unix")
-                self.test_path = str(os.path.expanduser("~") +
-                                      "/Games/eve-online/drive_c/users/" +
-                                      getpass.getuser() +
-                                      "/My Documents/EVE/logs/Chatlogs/")
 
-                if self.check_path(self.test_path):
-                    self.configuration.value["eve_log_location"] = str(self.test_path)
+                lutris_path = os.path.join(os.path.expanduser("~"),
+                                           "Games",
+                                           "eve-online",
+                                           "drive_c",
+                                           "users",
+                                           getpass.getuser(),
+                                           "My Documents",
+                                           "EVE",
+                                           "logs",
+                                           "Chatlogs")
+                steam_path = os.path.join(os.path.expanduser("~"),
+                                          ".local",
+                                          "share",
+                                          "Steam",
+                                          "steamapps",
+                                          "compatdata",
+                                          "8500",
+                                          "pfx",
+                                          "drive_c",
+                                          "users",
+                                          "steamuser",
+                                          "My Documents",
+                                          "EVE",
+                                          "logs",
+                                          "Chatlogs")
+
+                if os.path.exists(lutris_path):
+                    self.test_path = lutris_path
+                    self.configuration.value["eve_log_location"] = str(lutris_path)
+                elif os.path.exists(steam_path):
+                    self.test_path = steam_path
+                    self.configuration.value["eve_log_location"] = str(steam_path)
 
             elif self.configuration.get_platform() == "windows":
                 if self.configuration.value["debug"] and self.logger is not None:
                     self.logger.write_log("Detected OS was Windows")
                 # Check default path on windows
                 self.home_path = os.path.expanduser("~")
-                self.test_path = os.path.join(self.home_path + "Documents" + "EVE" + "logs" + "Chatlogs")
+                self.test_path = os.path.join(self.home_path, "Documents", "EVE", "logs", "Chatlogs")
                 if self.check_path(self.test_path):
                     self.configuration.value["eve_log_location"] = str(self.test_path)
                 else:
                     # Check if its on Onedrive instead
-                    # C:\Users\ user \OneDrive\Documents\EVE\logs
-                    self.test_path_odrive = os.path.join(self.home_path + "OneDrive" + "Documents" + "EVE" + "logs" + "Chatlogs")
+                    self.test_path_odrive = os.path.join(self.home_path, "OneDrive", "Documents", "EVE", "logs", "Chatlogs")
                     if self.check_path(self.test_path_odrive):
                         self.configuration.value["eve_log_location"] = str(self.test_path_odrive)
 
             if self.configuration.value["eve_log_location"] == "":
                 self.error_message("Could not determine Eve log path",
                                    "Please select your Eve log path in the config tab",
-                                   "Default path did not exist",
+                                   "Default path/s did not exist",
                                    "")
                 self.configuration.value["eve_log_location"] = str(os.path.expanduser("~"))
                 if self.configuration.value["debug"] and self.logger is not None:
                     self.logger.write_log("GUI could not determine Eve log path!")
+            else:
+                if self.configuration.value["debug"] and self.logger is not None:
+                    self.logger.write_log("Eve log path detected was: " + self.configuration.value["eve_log_location"])
 
             self.lineEditEve_Log_Location.setText(configuration.value["eve_log_location"])
             self.configuration.flush_config_to_file()
