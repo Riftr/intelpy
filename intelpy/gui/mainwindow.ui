@@ -27,6 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="images.qrc">
+   <iconset>
     <normaloff>:/pieico/goodpie2.ico</normaloff>:/pieico/goodpie2.ico</iconset>
   </property>
   <property name="styleSheet">

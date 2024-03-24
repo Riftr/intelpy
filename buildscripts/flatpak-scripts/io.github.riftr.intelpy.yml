@@ -90,6 +90,4 @@ modules:
     sources:
       - type: git
         url: https://github.com/Riftr/intelpy.git
-        tag: 1.2b3
-      - type: file
-        path: ../touch-2020.12.3-py3-none-any.whl
+        tag: "2.0"
