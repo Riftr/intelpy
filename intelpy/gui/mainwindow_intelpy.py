@@ -185,7 +185,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         # automatically via watchdog
         if self.configuration.value["debug"] and self.logger is not None:
             print("Archiving old logs (Windows)")
-        archive_path = self.configuration.value["eve_log_location"][:-1] + "_Archive"
+        archive_path = os.path.join(os.path.expanduser("~"), "Documents", "Eve", "LogArchive")
         files_found_count = 0
         files_archived_count = 0
         # Create archive path if it doesn't exist

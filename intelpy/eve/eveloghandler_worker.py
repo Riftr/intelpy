@@ -5,8 +5,8 @@ from watchdog.events import LoggingEventHandler
 import time
 import os
 import intelpy.logging.logger
-import touch
-
+import glob
+from pathlib import Path as oldpath
 class Eveloghandler_worker(QThread):
     pass_message = pyqtSignal(list)
 
@@ -46,10 +46,10 @@ class Eveloghandler_worker(QThread):
             # todo: test on windows!
             # https://stackoverflow.com/questions/3207219/how-do-i-list-all-files-of-a-directory
             if self.platform == "windows":
-                log_path = [os.path.join(self.configuration.value["eve_log_location"], fn)
-                            for fn in next(os.walk(self.configuration.value["eve_log_location"]))[2]]
-                for file in log_path:
-                    touch.touch(file)
+                log_path = self.configuration.value["eve_log_location"]
+                log_files = glob.glob(log_path + "/*")
+                for file in log_files:
+                    oldpath.touch(file)
                 time.sleep(2)
             else:
                 time.sleep(1)
