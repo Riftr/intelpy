@@ -28,25 +28,26 @@
 ### Linux (source)
 
 1. [Download this repository](https://github.com/Riftr/intelpy/archive/refs/heads/master.zip)
-2. Install the required packages below
-3. Extract the contents to a directory, such as /opt/intelpy
+2. Extract the contents to a directory, such as /opt/intelpy
+3. Install the required packages below
 4. Run `python /opt/intelpy/intelpy.py`
 
-We are hoping to release a Flatpak version soon.
+Flatpak TBA.
 
 ## Required packages (for building or running the source)
  
 The versions below aren't hard requirements, only what IntelPy has been tested on.
 
-* Python 3 3.12
-* PyQt 5 5.14.1
-* Watchdog 0.10.2 
-* Networkx 2.4
-* pygame (replaces playsound)
+* Python 3.12
+* networkx 3.2.1
+* PyQt5 5.15.10
+* watchdog 4.0.0
+* pygame 2.5.2
+* pathlib 1.0.1
 
 ### Pip one-liner
 ```shell
-$ pip install pyqt5 watchdog networkx pygame
+$ pip install networkx pyqt5 watchdog pygame pathlib
 ```
 
 ## Usage
