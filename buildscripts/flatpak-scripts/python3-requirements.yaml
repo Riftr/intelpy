@@ -1,27 +1,6 @@
-id: org.github.riftr.intelpy
-runtime: org.kde.Platform
-runtime-version: "5.15-23.08"
-sdk: org.kde.Sdk
-base: com.riverbankcomputing.PyQt.BaseApp
-base-version: 5.15-21.08
-name: intelpy
-command: run.sh
-finish-args:
-  # X11 + XShm access
-  - --share=ipc
-  - --socket=fallback-x11
-  # Wayland access
-  - --socket=wayland
-  # GPU acceleration
-  - --device=dri
-  # Needs to access config and Eve Chatlog directories which can vary
-  - --filesystem=~
-  # Audio access
-  - --socket=pulseaudio
-build-options:
-  env:
-    - BASEAPP_REMOVE_WEBENGINE=1
-
+# Generated with flatpak-pip-generator --yaml -r ../../requirements.txt
+build-commands: []
+buildsystem: simple
 modules:
   - name: python3-networkx
     buildsystem: simple
@@ -59,22 +38,4 @@ modules:
       - type: file
         url: https://files.pythonhosted.org/packages/78/f9/690a8600b93c332de3ab4a344a4ac34f00c8f104917061f779db6a918ed6/pathlib-1.0.1-py3-none-any.whl
         sha256: f35f95ab8b0f59e6d354090350b44a80a80635d22efdedfa84c7ad1cf0a74147
-  - name: intelpy
-    buildsystem: simple
-    build-commands:
-      - install -D run.sh /app/bin/run.sh
-      - mkdir -p /app/intelpy/resources/
-      - cp -R intelpy/* /app/intelpy
-      - install -Dm644 io.github.riftr.intelpy.desktop ${FLATPAK_DEST}/share/applications/io.github.riftr.intelpy.desktop
-    #sources:
-    #  - type: git
-    #    url: https://github.com/Riftr/flatpak-python-template.git
-    #    tag: "1.0"
-    sources:
-      - type: file
-        path: run.sh
-      - type: dir
-        path: ../../
-        dest: intelpy
-      - type: file
-        path: io.github.riftr.intelpy.desktop
+name: python3-requirements

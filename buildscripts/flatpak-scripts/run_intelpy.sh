@@ -1,1 +1,0 @@
-python /usr/share/intelpy/intelpy.py
