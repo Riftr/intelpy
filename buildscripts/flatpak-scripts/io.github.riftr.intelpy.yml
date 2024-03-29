@@ -1,4 +1,4 @@
-id: org.github.riftr.intelpy
+id: io.github.riftr.intelpy
 runtime: org.kde.Platform
 runtime-version: '5.15-23.08'
 sdk: org.kde.Sdk
