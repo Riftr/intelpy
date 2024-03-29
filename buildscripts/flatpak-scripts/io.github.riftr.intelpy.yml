@@ -63,19 +63,11 @@ modules:
   - name: intelpy
     buildsystem: simple
     build-commands:
-      - install -D run.sh /app/bin/run.sh
       - mkdir -p /app/intelpy/
-      - cp -R intelpy/* /app/intelpy
-      - install -Dm644 io.github.riftr.intelpy.desktop ${FLATPAK_DEST}/share/applications/io.github.riftr.intelpy.desktop
-    #sources:
-    #  - type: git
-    #    url: https://github.com/Riftr/flatpak-python-template.git
-    #    tag: "1.0"
+      - cp --verbose -R * /app/intelpy
+      - install -Dm644 ./buildscripts/flatpak-scripts/io.github.riftr.intelpy.desktop ${FLATPAK_DEST}/share/applications/io.github.riftr.intelpy.desktop
+      - install -D ./buildscripts/flatpak-scripts/run.sh /app/bin/run.sh
     sources:
-      - type: file
-        path: run.sh
-      - type: dir
-        path: ../../
-        dest: intelpy
-      - type: file
-        path: io.github.riftr.intelpy.desktop
+      - type: git
+        url: https://github.com/Riftr/intelpy.git
+        tag: "2.0"
