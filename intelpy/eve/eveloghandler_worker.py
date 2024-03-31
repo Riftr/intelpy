@@ -1,12 +1,19 @@
 from PyQt5.QtCore import *
+from PyQt5 import QtWidgets
 import intelpy.eve.eveloghandler as eveloghandler
 from watchdog.observers import Observer
-from watchdog.events import LoggingEventHandler
 import time
-import os
-import intelpy.logging.logger
 import glob
 from pathlib import Path as oldpath
+
+
+def worker_error(error_msg):
+    app = QtWidgets.QApplication([])
+    error_diag = QtWidgets.QErrorMessage()
+    error_diag.setWindowTitle("IntelPy Error")
+    error_diag.showMessage('IntelPy ended with an error: \n ' + str(error_msg))
+    app.exec_()
+
 class Eveloghandler_worker(QThread):
     pass_message = pyqtSignal(list)
 
@@ -29,34 +36,37 @@ class Eveloghandler_worker(QThread):
 
     @pyqtSlot()
     def run(self):
+        try:
+            # Eveloghandler
+            self.eveloghandler_watchdog = eveloghandler.EveLogHandler(self.watched_channels, self.ignore_patterns,
+                                                                      self.ignore_directories, self.case_sensitive,
+                                                                      self.configuration, self.logger)
+            self.eveloghandler_watchdog.message_ready.connect(self.test_catch_connection)
+            # Observer
+            self.watchdog_observer = Observer()
+            self.watchdog_observer.schedule(self.eveloghandler_watchdog,
+                                            self.configuration.value['eve_log_location'], False)
+            self.watchdog_observer.start()
 
-        # Eveloghandler
-        self.eveloghandler_watchdog = eveloghandler.EveLogHandler(self.watched_channels, self.ignore_patterns,
-                                                                  self.ignore_directories, self.case_sensitive,
-                                                                  self.configuration, self.logger)
-        self.eveloghandler_watchdog.message_ready.connect(self.test_catch_connection)
-        # Observer
-        self.watchdog_observer = Observer()
-        self.watchdog_observer.schedule(self.eveloghandler_watchdog,
-                                        self.configuration.value['eve_log_location'], False)
-        self.watchdog_observer.start()
+            while not self.event_stop.is_set():
+                # Windows workaround - for some reason Eve doesn't trigger the watchdog modify event on Windows.
+                if self.platform == "windows":
+                    log_path = self.configuration.value["eve_log_location"]
+                    log_files = glob.glob(log_path + "/*")
+                    for file in log_files:
+                        #oldpath(file).touch()
+                        oldpath.touch(file)
+                    time.sleep(2)
+                else:
+                    time.sleep(1)
 
-        while not self.event_stop.is_set():
-            # Windows workaround - for some reason Eve doesn't trigger the watchdog modify event on Windows.
-            # todo: test on windows!
-            # https://stackoverflow.com/questions/3207219/how-do-i-list-all-files-of-a-directory
-            if self.platform == "windows":
-                log_path = self.configuration.value["eve_log_location"]
-                log_files = glob.glob(log_path + "/*")
-                for file in log_files:
-                    oldpath(file).touch()
-                time.sleep(2)
-            else:
-                time.sleep(1)
-
-        # when stopping
-        self.eveloghandler_watchdog.pickle_dict()
-        self.watchdog_observer.stop()
+            # when stopping
+            self.eveloghandler_watchdog.pickle_dict()
+            self.watchdog_observer.stop()
+        except Exception as e:
+            print("IntelPy worker encountered an error: \n" + str(e))
+            worker_error(str(e))
+            raise SystemExit
 
     def set_patterns(self):
         # try to update the pattern list
