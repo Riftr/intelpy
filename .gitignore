@@ -14,3 +14,5 @@ tests/smalltestfile.txt
 tests/testrotate_after.txt
 .flatpak-builder
 build-dir
+builddir
+/buildscripts/flatpak-scripts/repo/
