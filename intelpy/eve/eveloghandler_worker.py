@@ -54,8 +54,7 @@ class Eveloghandler_worker(QThread):
                     log_path = self.configuration.value["eve_log_location"]
                     log_files = glob.glob(log_path + "/*")
                     for file in log_files:
-                        #oldpath(file).touch()
-                        oldpath.touch(file)
+                        oldpath(file).touch()
                     time.sleep(2)
                 else:
                     time.sleep(1)
