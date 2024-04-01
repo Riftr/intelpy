@@ -550,7 +550,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         for system in self.alert_system_names_readable:
             if system in this_message:
                 # display alert msg
-                self.append_log(log.format_alert("Bad guy reported within " +
+                self.append_log(log.format_alert("Enemy reported within " +
                                                  str(self.configuration.value["alert_jumps"]) +
                                                  " jumps!"
                                                  ))
