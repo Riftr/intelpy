@@ -13,7 +13,7 @@
 * Audible alarms
 * Filtering options
 * Dark themes for Windows and Linux
-* Awareness of the Eve Online map to calculate jumps from alert
+* Awareness of the Eve Online map to calculate proximity 
 * Will watch any in-game channel you want, including system channels
 
 ## How to Install IntelPy
@@ -50,9 +50,18 @@ include the right versions themselves. The versions below aren't hard requiremen
 ## Usage
 
 IntelPy watches your Eve Online chat logs for text that matches a solar system relative to your current location (home). 
-This is typically used with intel chat channels in eve
+This is typically used with player-run intel chat channels in Eve Online. When a fellow capsuleer spots an enemy, they can
+alert others with a line like "Jita 10+ reds" in the chat channel. IntelPy captures this and alerts you depending on 
+your proximity to Jita and your preferences.  
 
+Alerts come in the form of both a red text log message and an audible alarm you can set. IntelPy also tracks the last 5
+alerts separately to the log and will clear them after a while. Now you can go grab another coffee or get distracted
+while updating a program for a game you've already won and know if your enemy has your internet spaceship in their sights.  
 
+A little bit of configuration is required to get IntelPy working. This mainly involves enabling chat logging in Eve Online
+and making sure IntelPy can see your logs. 
+
+### Configuration
 
 1. In game (if needed) turn on logging via the settings menu under Chat. This is usually already enabled by default.
 
