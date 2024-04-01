@@ -26,8 +26,8 @@
    <string>IntelPy</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>.</normaloff>.</iconset>
+   <iconset resource="images.qrc">
+    <normaloff>:/piebig/goodpie2.png</normaloff>:/piebig/goodpie2.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
