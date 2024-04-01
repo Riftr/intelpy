@@ -1,6 +1,6 @@
 # IntelPy
 
-> IntelPy is a simple, cross-platform chat log monitor for the game Eve Online.
+> IntelPy is a cross-platform chat log monitor and alert system for the game Eve Online.
 >
 > ![IntelPy](https://github.com/Riftr/intelpy/blob/master/intelpy/externals/Intelpy-screenshot.png)
 >
@@ -8,16 +8,15 @@
 
 ## Features
 
-* Simple UI
-* Audible alarms
-* Will watch any in-game channel you want
+* Cross-platform
 * Alert tracker
+* Audible alarms
 * Filtering options
-* Awareness of the Eve Online map
-* Cross-platform support (Windows and Linux packages, runs anywhere Python 3 will)
 * Dark themes for Windows and Linux
+* Awareness of the Eve Online map to calculate jumps from alert
+* Will watch any in-game channel you want, including system channels
 
-## How to get started with IntelPy
+## How to Install IntelPy
 
 ### Windows
 
@@ -25,54 +24,58 @@
 2. Extract the contents to a directory 
 3. Run IntelPy.exe
  
-### Linux (source)
+### Linux / Run From Source
 
-1. [Download this repository](https://github.com/Riftr/intelpy/archive/refs/heads/master.zip)
+1. Download the latest source release from [here](https://github.com/Riifta/intelpy/releases/latest)
 2. Extract the contents to a directory, such as /opt/intelpy
 3. Install the required packages below
 4. Run `python /opt/intelpy/intelpy.py`
 
-Flatpak TBA.
+Flatpak has been submitted and waiting on approval. 
 
-## Required packages (for building or running the source)
+## Required packages (for source)
  
-The versions below aren't hard requirements, only what IntelPy has been tested on.
+You only need these if you are downloading and running from source. The Windows and Flatpak will
+include the right versions themselves. The versions below aren't hard requirements, only what IntelPy has been tested on.
 
-* Python 3.12
+* Python 3.12**
 * networkx 3.2.1
 * PyQt5 5.15.10
 * watchdog 4.0.0
 * pygame 2.5.2
 * pathlib 1.0.1
 
-### Pip one-liner
-```shell
-$ pip install networkx pyqt5 watchdog pygame pathlib
-```
+** For building with PyInstaller on Windows, you require Python 3.10 instead as well as pyinstaller 5.1.
 
 ## Usage
 
-Getting started:
+IntelPy watches your Eve Online chat logs for text that matches a solar system relative to your current location (home). 
+This is typically used with intel chat channels in eve
+
+
 
 1. In game (if needed) turn on logging via the settings menu under Chat. This is usually already enabled by default.
 
 ![Chat Setings](https://github.com/Riftr/intelpy/blob/master/intelpy/externals/intelpy-evelogenable.png)
 
-2. In IntelPy, on the Config tab, set the names of the intel channels you want to watch from Eve. You may also need to manually choose
+2. IntelPy should usually automatically detect your Eve Online Chatlog path. Check this is correct on the Config tab if you 
+have trouble getting it to detect your chat channels.
+
+3. On the Config tab, set the names of the intel channels you want to watch from Eve. You may also need to manually choose
 your Eve chatlog location. If you are in the Imperium your intel channels are already configured. 
 
-3. On the Main tab, set your home system (where you are krabbing). Alerts will be triggered relative to this system. The log
+4. On the Main tab, set your home system (where you are krabbing). Alerts will be triggered relative to this system. The log
 screen will notify you of the change by indicating `Home set to: homesystem`. Note that jump bridges are not taken into account as
 your enemies shouldn't be able to use them (you have bigger issues if they can).
 
-4. Adjust the slider to set how many jumps away from your home system that you wish to be notified. IntelPy is aware
+5. Adjust the slider to set how many jumps away from your home system that you wish to be notified. IntelPy is aware
 of the Eve Online solar system map so when someone says the name of a system within that amount of jumps from you, 
 the alert sound and notification will trigger. The easiest way for people to alert each other in game is to drag and drop the 
 system name from the top left of their game screen to the chat dialog box and press enter. 
 
-If IntelPy is not picking up your intel channels, you may need to double check you have entered them in the Watched 
+**If IntelPy is not picking up your intel channels, you may need to double check you have entered them in the Watched 
 Channels configuration, as well as double-check the Eve Logs: section points to the place where Eve Online is logging
-your chats for you. 
+your chats for you. The path to which Eve logs everything depends on how you installed it.**
 
 There are a handful of other options also configurable in the Config tab. This includes setting the alarm sound, IntelPy
 comes with a number of extra sounds or you may choose your own. You can also set how long until alerts time out from the
@@ -81,12 +84,13 @@ recent alerts screen as well as various filter/ignore options as you desire.
 ### Steam
 
 While IntelPy will try to use sane Chatlog paths on most operating systems, if you have installed Eve Online via Steam 
-then your path will need to be manually configured to the appropriate location, especially on Linux.  
+then your path may need to be manually configured to the appropriate location, especially on Linux.  
 
 On Linux, this will likely be:
 `~/.local/share/Steam/steamapps/compatdata/8500/pfx/drive_c/users/steamuser/My Documents/EVE/logs/Chatlogs`
 
-Additionally, you may also need to enable "Show Hidden Files" in order to browse to this path. This can be done by right-clicking on an empty space in the chooser and selecting the appropriate option. 
+Additionally, you may also need to enable "Show Hidden Files" in order to browse to this path. This can be done by 
+right-clicking on an empty space in the chooser and selecting the appropriate option. 
 
 ## Licences / Acknowledgements / Attributions
 
