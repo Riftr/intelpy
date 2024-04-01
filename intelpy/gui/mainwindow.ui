@@ -26,9 +26,8 @@
    <string>IntelPy</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="images.qrc">
    <iconset>
-    <normaloff>:/pieico/goodpie2.ico</normaloff>:/pieico/goodpie2.ico</iconset>
+    <normaloff>.</normaloff>.</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -118,7 +117,7 @@
              <rect>
               <x>0</x>
               <y>10</y>
-              <width>361</width>
+              <width>374</width>
               <height>60</height>
              </rect>
             </property>
@@ -586,7 +585,7 @@
              <rect>
               <x>130</x>
               <y>630</y>
-              <width>241</width>
+              <width>243</width>
               <height>73</height>
              </rect>
             </property>
@@ -812,7 +811,7 @@
              <item>
               <widget class="QLabel" name="label_12">
                <property name="text">
-                <string>v2.0</string>
+                <string>v2.1</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
