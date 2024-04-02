@@ -4,7 +4,7 @@
   <id>io.github.riftr.intelpy</id>
 
   <name>IntelPy</name>
-  <summary>IntelPy is a cross-platform chat log monitor and alert system for the game Eve Online.</summary>
+  <summary>IntelPy is a cross-platform chat log monitor and alert system for the game Eve Online</summary>
 
   <metadata_license>MIT</metadata_license>
   <project_license>GPL-3.0-only</project_license>
