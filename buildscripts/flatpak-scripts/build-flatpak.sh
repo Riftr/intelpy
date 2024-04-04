@@ -15,3 +15,4 @@ flatpak run org.flatpak.Builder --force-clean --sandbox --user --install --insta
 echo "** Running Flatpak **"
 #set QT_DEBUG_PLUGINS = 1
 #flatpak-builder --run build-dir ../../io.github.riftr.intelpy.yml run.sh
+flatpak run io.github.riftr.intelpy &
