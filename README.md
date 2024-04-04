@@ -2,7 +2,7 @@
 
 IntelPy is a cross-platform chat log monitor and alert system for the game Eve Online.
 
-![IntelPy](https://github.com/Riftr/intelpy/blob/master/intelpy/externals/Intelpy-screenshot.png)
+<img alt="Screenshot of the IntelPy application" height="500" src="https://raw.githubusercontent.com/Riftr/intelpy/master/intelpy/externals/Intelpy-2-Main.png" title="IntelPy Application"/>
 
 
 
