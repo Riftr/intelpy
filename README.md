@@ -33,7 +33,7 @@ IntelPy is a cross-platform chat log monitor and alert system for the game Eve O
 
 Flatpak has been submitted and waiting on approval. 
 
-## Required packages (for source)
+## Required Packages (for source)
  
 You only need these if you are downloading and running from source. The Windows and Flatpak will
 include the right versions themselves. The versions below aren't hard requirements, only what IntelPy has been tested on.
