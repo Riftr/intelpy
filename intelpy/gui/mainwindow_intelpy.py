@@ -105,7 +105,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         # Timeout spinner
         self.spinBox_recentalerttimeout.valueChanged.connect(self.recent_alert_spinbox_changed)
 
-        # Figure out where logs are stored if first run !
+        # Figure out where logs are stored if first run
         if self.configuration.value["eve_log_location"] is None:
             # automatically find eve chatlog dir
             detected_eve_chatlog_path = findevechatlogsdir.find_eve_chatlogs_dir(self.configuration.get_platform(), logger)
