@@ -37,6 +37,10 @@ class Eveloghandler_worker(QThread):
     @pyqtSlot()
     def run(self):
         try:
+            # this is None if it's not set by the user or auto-detection fails or Eve isn't installed
+            while self.configuration.value["eve_log_location"] is None:
+                time.sleep(2)
+
             # Eveloghandler
             self.eveloghandler_watchdog = eveloghandler.EveLogHandler(self.watched_channels, self.ignore_patterns,
                                                                       self.ignore_directories, self.case_sensitive,
