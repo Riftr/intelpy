@@ -335,7 +335,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
     def set_home(self):
         # Check home value against list. If valid, set new home and calculate jumps from
         # If not valid, don't save/calculate and instead display a dialog
-        # TODO: Provide suggestions as user types
         new_home = (self.lineEditHome_System.text()).upper()
 
         # Check if new home is valid
