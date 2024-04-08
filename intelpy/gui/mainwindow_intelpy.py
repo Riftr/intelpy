@@ -1,7 +1,6 @@
 from PyQt5.QtCore import pyqtSlot, QTimer, QThreadPool, QDir, Qt
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QWidget, QMessageBox
 from intelpy.gui.MainWindow import Ui_MainWindow
-import getpass
 import intelpy.logging.logformatting as log
 import intelpy.eve.eveloghandler_worker as eveloghandler
 from intelpy.eve.eveloghandler_signals import EveworkerSignals
@@ -12,6 +11,7 @@ from datetime import datetime
 from collections import deque
 import os
 import intelpy.core.windows_log_management as winlogsmgt
+import intelpy.core.find_eve_chatlogs_dir as findevechatlogsdir
 
 class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
     def __init__(self, configuration, eve_data, logger=None, *args, **kwargs):
@@ -105,72 +105,22 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         # Timeout spinner
         self.spinBox_recentalerttimeout.valueChanged.connect(self.recent_alert_spinbox_changed)
 
-        # Figure out where logs are stored if first run
+        # Figure out where logs are stored if first run !
         if self.configuration.value["eve_log_location"] is None:
-            self.test_path = ""
-            if self.configuration.get_platform() == "unix":
-                if self.configuration.value["debug"] and self.logger is not None:
-                    self.logger.write_log("Detected OS was Unix")
-
-                lutris_path = os.path.join(os.path.expanduser("~"),
-                                           "Games",
-                                           "eve-online",
-                                           "drive_c",
-                                           "users",
-                                           getpass.getuser(),
-                                           "My Documents",
-                                           "EVE",
-                                           "logs",
-                                           "Chatlogs")
-                steam_path = os.path.join(os.path.expanduser("~"),
-                                          ".local",
-                                          "share",
-                                          "Steam",
-                                          "steamapps",
-                                          "compatdata",
-                                          "8500",
-                                          "pfx",
-                                          "drive_c",
-                                          "users",
-                                          "steamuser",
-                                          "My Documents",
-                                          "EVE",
-                                          "logs",
-                                          "Chatlogs")
-
-                if os.path.exists(lutris_path):
-                    self.test_path = lutris_path
-                    self.configuration.value["eve_log_location"] = str(lutris_path)
-                elif os.path.exists(steam_path):
-                    self.test_path = steam_path
-                    self.configuration.value["eve_log_location"] = str(steam_path)
-
-            elif self.configuration.get_platform() == "windows":
-                if self.configuration.value["debug"] and self.logger is not None:
-                    self.logger.write_log("Detected OS was Windows")
-                self.home_path = os.path.expanduser("~")
-                self.test_path = os.path.join(self.home_path, "Documents", "EVE", "logs", "Chatlogs")
-                self.test_path_odrive = os.path.join(self.home_path, "OneDrive", "Documents", "EVE", "logs", "Chatlogs")
-                # Check default path on windows
-                if self.check_path(self.test_path):
-                    self.configuration.value["eve_log_location"] = str(self.test_path)
-                # Check if its on Onedrive instead
-                elif self.check_path(self.test_path_odrive):
-                    self.configuration.value["eve_log_location"] = str(self.test_path_odrive)
-            if self.configuration.value["eve_log_location"] is None:
+            # automatically find eve chatlog dir
+            detected_eve_chatlog_path = findevechatlogsdir.find_eve_chatlogs_dir(self.configuration.get_platform(), logger)
+            if detected_eve_chatlog_path is None:
+                self.lineEditEve_Log_Location.setText("")
+                #couldn't find it, display error telling user to manually set it
                 self.error_message("Could not determine Eve log path",
-                                   "Please select your Eve log path in the config tab",
-                                   "Default path/s did not exist",
-                                   "")
-                self.configuration.value["eve_log_location"] = str(os.path.expanduser("~"))
-                if self.configuration.value["debug"] and self.logger is not None:
-                    self.logger.write_log("Could not determine Eve log path!")
+                                   "Please manually configure your Eve chatlog path in the config tab",
+                                   "Default Eve chatlog path/s did not exist",
+                                   "Could not automatically determine Eve chatlog path")
             else:
-                if self.configuration.value["debug"] and self.logger is not None:
-                    self.logger.write_log("Eve log path detected was: " + self.configuration.value["eve_log_location"])
-
-            self.lineEditEve_Log_Location.setText(configuration.value["eve_log_location"])
-            self.configuration.flush_config_to_file()
+                configuration.value["eve_log_location"] = str(detected_eve_chatlog_path)
+                self.logger.write_log("Eve log path detected was: " + str(detected_eve_chatlog_path))
+                self.lineEditEve_Log_Location.setText(configuration.value["eve_log_location"])
+                self.configuration.flush_config_to_file()
 
         # Clean up logs on Windows
         if self.configuration.get_platform() == "windows":
@@ -200,14 +150,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.label_recentalert5.setText("")
 
     # Methods
-
-    def check_path(self, test_path):
-        if os.path.exists(test_path):
-            return True
-        else:
-            return False
-
-
     def recent_alert_spinbox_changed(self):
         spinbox_value = self.spinBox_recentalerttimeout.value()
         self.configuration.value["alert_timeout"] = spinbox_value
