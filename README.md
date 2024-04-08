@@ -33,7 +33,7 @@ IntelPy is a cross-platform chat log monitor and alert system for the game Eve O
 
 Flatpak has been submitted and waiting on approval. 
 
-## Required packages (for source)
+## Required Packages (for source)
  
 You only need these if you are downloading and running from source. The Windows and Flatpak will
 include the right versions themselves. The versions below aren't hard requirements, only what IntelPy has been tested on.
@@ -55,8 +55,9 @@ alert others with a line like "Jita 10+ reds" in the chat channel. IntelPy captu
 your proximity to Jita and your preferences.  
 
 Alerts come in the form of both a red text log message and an audible alarm you can set. IntelPy also tracks the last 5
-alerts separately to the log and will clear them after a while. Now you can go grab another coffee or get distracted
-while updating a program for a game you've already won and know if your enemy has your internet spaceship in their sights.  
+alerts separately to the log and will clear them after a while. Now you can go grab another coffee and get distracted 
+making a cheese toastie and know that if any of your friends spot an enemy you will have the chance to save 
+your shiny internet spaceship.
 
 A little bit of configuration is required to get IntelPy working. This mainly involves enabling chat logging in Eve Online
 and making sure IntelPy can see your logs. 
@@ -82,12 +83,12 @@ of the Eve Online solar system map so when someone says the name of a system wit
 the alert sound and notification will trigger. The easiest way for people to alert each other in game is to drag and drop the 
 system name from the top left of their game screen to the chat dialog box and press enter. 
 
-**If IntelPy is not picking up your intel channels, you may need to double check you have entered them in the Watched 
+**If IntelPy is not picking up your intel channels, you may need to double-check you have entered them in the Watched 
 Channels configuration, as well as double-check the Eve Logs: section points to the place where Eve Online is logging
 your chats for you. The path to which Eve logs everything depends on how you installed it.**
 
 There are a handful of other options also configurable in the Config tab. This includes setting the alarm sound, IntelPy
-comes with a number of extra sounds or you may choose your own. You can also set how long until alerts time out from the
+comes with a number of extra sounds, or you may choose your own. You can also set how long until alerts time out from the
 recent alerts screen as well as various filter/ignore options as you desire.
 
 ### Steam
