@@ -6,7 +6,7 @@ import intelpy.logging.logger
 def default_json_config(resources_dir):
     default_json = {
         "home_system": "1DQ1-A",
-        "eve_log_location": "",
+        "eve_log_location": None,
         "watched_channels": [
             "delve.imperium",
             "querious.imperium",

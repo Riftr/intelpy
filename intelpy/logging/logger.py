@@ -52,7 +52,7 @@ class logger(intelpy.config.Config):
         # takes the JSON from IntelPy and prints out the values
         self.write_log("** Debug Configuration Values **")
         self.write_log("Home system: " + configuration.value["home_system"])
-        self.write_log("Eve Log Location: " + configuration.value["eve_log_location"])
+        self.write_log("Eve Log Location: " + str(configuration.value["eve_log_location"]))
         self.write_log("All watched channels:")
         for channel in configuration.value["watched_channels"]:
             self.write_log("- " + channel)

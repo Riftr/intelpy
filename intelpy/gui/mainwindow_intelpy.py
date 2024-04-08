@@ -1,6 +1,5 @@
 from PyQt5.QtCore import pyqtSlot, QTimer, QThreadPool, QDir, Qt
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QWidget, QMessageBox
-from PyQt5.QtGui import QPalette, QColor
 from intelpy.gui.MainWindow import Ui_MainWindow
 import getpass
 import intelpy.logging.logformatting as log
@@ -12,9 +11,7 @@ import time
 from datetime import datetime
 from collections import deque
 import os
-import shutil
-import random
-import intelpy.logging.logger
+import intelpy.core.windows_log_management as winlogsmgt
 
 class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
     def __init__(self, configuration, eve_data, logger=None, *args, **kwargs):
@@ -109,7 +106,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.spinBox_recentalerttimeout.valueChanged.connect(self.recent_alert_spinbox_changed)
 
         # Figure out where logs are stored if first run
-        if self.configuration.value["eve_log_location"] == "":
+        if self.configuration.value["eve_log_location"] is None:
             self.test_path = ""
             if self.configuration.get_platform() == "unix":
                 if self.configuration.value["debug"] and self.logger is not None:
@@ -151,25 +148,23 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
             elif self.configuration.get_platform() == "windows":
                 if self.configuration.value["debug"] and self.logger is not None:
                     self.logger.write_log("Detected OS was Windows")
-                # Check default path on windows
                 self.home_path = os.path.expanduser("~")
                 self.test_path = os.path.join(self.home_path, "Documents", "EVE", "logs", "Chatlogs")
+                self.test_path_odrive = os.path.join(self.home_path, "OneDrive", "Documents", "EVE", "logs", "Chatlogs")
+                # Check default path on windows
                 if self.check_path(self.test_path):
                     self.configuration.value["eve_log_location"] = str(self.test_path)
-                else:
-                    # Check if its on Onedrive instead
-                    self.test_path_odrive = os.path.join(self.home_path, "OneDrive", "Documents", "EVE", "logs", "Chatlogs")
-                    if self.check_path(self.test_path_odrive):
-                        self.configuration.value["eve_log_location"] = str(self.test_path_odrive)
-
-            if self.configuration.value["eve_log_location"] == "":
+                # Check if its on Onedrive instead
+                elif self.check_path(self.test_path_odrive):
+                    self.configuration.value["eve_log_location"] = str(self.test_path_odrive)
+            if self.configuration.value["eve_log_location"] is None:
                 self.error_message("Could not determine Eve log path",
                                    "Please select your Eve log path in the config tab",
                                    "Default path/s did not exist",
                                    "")
                 self.configuration.value["eve_log_location"] = str(os.path.expanduser("~"))
                 if self.configuration.value["debug"] and self.logger is not None:
-                    self.logger.write_log("GUI could not determine Eve log path!")
+                    self.logger.write_log("Could not determine Eve log path!")
             else:
                 if self.configuration.value["debug"] and self.logger is not None:
                     self.logger.write_log("Eve log path detected was: " + self.configuration.value["eve_log_location"])
@@ -179,9 +174,13 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
 
         # Clean up logs on Windows
         if self.configuration.get_platform() == "windows":
-            if self.configuration.value["debug"] and self.logger is not None:
-                self.logger.write_log("Windows clean up logs (archive)")
-            self.archive_old_logs_windows()
+            if self.configuration.value["eve_log_location"] is not None:
+                # skip this if we didn't figure out the correct log path directory
+                if self.configuration.value["debug"] and self.logger is not None:
+                    self.logger.write_log("Windows clean up logs (archive)")
+                winlogsmgt.windows_archive_eve_logs(self.configuration.value["eve_log_location"], self.logger)
+            elif self.configuration.value["debug"] and self.logger is not None:
+                self.logger.write_log("Skipped Windows clean up logs (archive) because it was None")
 
         # Re-set home to calculate alerts
         self.set_home()
@@ -208,54 +207,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         else:
             return False
 
-    def archive_old_logs_windows(self):
-        # When on Windows, archive old chat logs so we aren't dealing with them. Linux will handle it
-        # automatically via watchdog
-        if self.configuration.value["debug"] and self.logger is not None:
-            print("Archiving old logs (Windows)")
-        archive_path = os.path.join(os.path.expanduser("~"), "Documents", "Eve", "LogArchive")
-        files_found_count = 0
-        files_archived_count = 0
-        # Create archive path if it doesn't exist
-        if not os.path.exists(archive_path):
-            try:
-                if self.configuration.value["debug"] and self.logger is not None:
-                    print("Making " + str(archive_path))
-                    self.logger.write_log("Making archive path for old logs: " + str(archive_path))
-                    print("Making archive path for old logs: " + str(archive_path))
-                os.makedirs(archive_path)
-            except IOError as e:
-                if self.configuration.value["debug"] and self.logger is not None:
-                    self.logger.write_log("Could not create log archive path! " + str(archive_path))
-                    print("Could not create log archive path! " + str(archive_path))
-                print(str(e))
-                raise
-
-        # Move old logs
-        current_files = os.listdir(self.configuration.value["eve_log_location"])
-        for file in current_files:
-            files_found_count += 1
-            try:
-                if os.path.exists(archive_path + "\\" + file):
-                    if self.configuration.value["debug"] and self.logger is not None:
-                        print("Archive path file already existed, skipping")
-                        self.logger.write_log("Archive path file already existed, skipping")
-                else:
-                    files_archived_count += 1
-                    shutil.move(self.configuration.value["eve_log_location"] + "\\" + file, archive_path)
-            except IOError as e:
-                print(e)
-                if self.configuration.value["debug"] and self.logger is not None:
-                    print("Log file was in use while archiving, probably by Eve. Skipping file")
-                    self.logger.write_log("Log file was in use while archiving, probably by Eve. Skipping file")
-                continue
-                #raise
-
-        if self.configuration.value["debug"] and self.logger is not None:
-            print("Archive found " + str(files_found_count) + " files.")
-            print("Archive should have moved " + str(files_archived_count) + " files.")
-            self.logger.write_log("Archive: Found " + str(files_found_count) + " files.")
-            self.logger.write_log("Archive: Should have moved " + str(files_archived_count) + " files.")
 
     def recent_alert_spinbox_changed(self):
         spinbox_value = self.spinBox_recentalerttimeout.value()
