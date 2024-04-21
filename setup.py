@@ -19,7 +19,7 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/Riifta/intelpy",
     author="Swizzles Saissore",
-    author_email="robseso66@gmail.com",
+    author_email="9170186+Riftr@users.noreply.github.com",
     license="GPL3",
     classifiers=[
         'License :: OSI Approved :: GNU General Public License (GPL)',
