@@ -24,14 +24,16 @@ IntelPy is a cross-platform chat log monitor and alert system for the game Eve O
 2. Extract the contents to a directory 
 3. Run IntelPy.exe
  
-### Linux / Run From Source
+### Linux 
+
+[Install the Flatpak.](https://flathub.org/apps/io.github.riftr.intelpy)
+
+### Run From Source
 
 1. Download the latest source release from [here](https://github.com/Riifta/intelpy/releases/latest)
 2. Extract the contents to a directory, such as /opt/intelpy
 3. Install the required packages below
 4. Run `python /opt/intelpy/intelpy.py`
-
-Flatpak has been submitted and waiting on approval. 
 
 ## Required Packages (for source)
  
