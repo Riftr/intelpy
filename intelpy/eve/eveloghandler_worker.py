@@ -1,5 +1,4 @@
 from PyQt5.QtCore import *
-from PyQt5 import QtWidgets
 import intelpy.eve.eveloghandler as eveloghandler
 from watchdog.observers import Observer
 import time
@@ -7,15 +6,9 @@ import glob
 from pathlib import Path as oldpath
 
 
-def worker_error(error_msg):
-    app = QtWidgets.QApplication([])
-    error_diag = QtWidgets.QErrorMessage()
-    error_diag.setWindowTitle("IntelPy Error")
-    error_diag.showMessage('IntelPy ended with an error: \n ' + str(error_msg))
-    app.exec_()
-
 class Eveloghandler_worker(QThread):
     pass_message = pyqtSignal(list)
+    worker_error = pyqtSignal(str)
 
     def __init__(self, configuration, event_stop, logger=None, *args, **kwargs):
         super(Eveloghandler_worker, self).__init__(*args, **kwargs)
@@ -49,7 +42,8 @@ class Eveloghandler_worker(QThread):
             # Observer
             self.watchdog_observer = Observer()
             self.watchdog_observer.schedule(self.eveloghandler_watchdog,
-                                            self.configuration.value['eve_log_location'], False)
+                                            self.configuration.value['eve_log_location'],
+                                            recursive=False)
             self.watchdog_observer.start()
 
             while not self.event_stop.is_set():
@@ -66,10 +60,11 @@ class Eveloghandler_worker(QThread):
             # when stopping
             self.eveloghandler_watchdog.pickle_dict()
             self.watchdog_observer.stop()
+            self.watchdog_observer.join(timeout=2)
         except Exception as e:
             print("IntelPy worker encountered an error: \n" + str(e))
-            worker_error(str(e))
-            raise SystemExit
+            self.worker_error.emit(str(e))
+            return
 
     def set_patterns(self):
         # try to update the pattern list
@@ -81,7 +76,7 @@ class Eveloghandler_worker(QThread):
     def watched_channels_to_wildcards(self):
         return_list = []
         first_slash = "*/"
-        if self.configuration.get_platform == "windows":
+        if self.configuration.get_platform() == "windows":
             first_slash = "*\\"
         for channel in self.configuration.value["watched_channels"]:
             return_list.append(first_slash + channel + "*")

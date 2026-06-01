@@ -138,6 +138,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         # Watchdog worker thread to monitor logs
         self.eveloghandler_worker = eveloghandler.Eveloghandler_worker(self.configuration, self.event_stop, self.logger)
         self.eveloghandler_worker.pass_message.connect(self.message_ready_process)
+        self.eveloghandler_worker.worker_error.connect(self.handle_worker_error)
         self.start_watchdog()
         if self.configuration.value["debug"] and self.logger is not None:
             self.logger.write_log("Logfile watchdog thread started")
@@ -472,6 +473,16 @@ class MainWindow(QMainWindow, Ui_MainWindow, QWidget):
         if self.configuration.value["display_all"]:
             self.append_log("<b> > </b> " + log.format_info(str(message_list[0])))
             self.append_log(log.format_info(message_list[2]))
+
+    @pyqtSlot(str)
+    def handle_worker_error(self, error_text):
+        self.error_message(
+            "IntelPy Error",
+            "IntelPy worker encountered an error",
+            str(error_text),
+            "The log watcher stopped. Check the configured Eve log path and restart monitoring.",
+            "critical",
+        )
 
 
 

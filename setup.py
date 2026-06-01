@@ -29,7 +29,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        'setuptools', "pyqt5", "watchdog", "networkx", 'pyinstaller', 'pygame', 'pathlib'
+        "pyqt5", "watchdog", "networkx", "pygame"
     ],
     entry_points={"console_scripts": ["intelpy=intelpy.__main__:main"]},
 )
