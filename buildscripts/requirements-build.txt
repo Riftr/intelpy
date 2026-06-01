@@ -1,0 +1,4 @@
+# Build-only dependencies (not required to run IntelPy from source)
+setuptools>=78.1.1
+pyinstaller>=6.0.0
+

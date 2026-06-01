@@ -41,13 +41,19 @@ You only need these if you are downloading and running from source. The Windows 
 include the right versions themselves. The versions below aren't hard requirements, only what IntelPy has been tested on.
 
 * Python 3.12**
-* networkx 3.2.1
-* PyQt5 5.15.10
-* watchdog 4.0.0
-* pygame 2.5.2
-* pathlib 1.0.1
+* networkx 3.6.1
+* PyQt5 5.15.11
+* watchdog 6.0.0
+* pygame 2.6.1
 
-** For building with PyInstaller on Windows, you require Python 3.10 instead as well as pyinstaller 5.1.
+** For building with PyInstaller on Windows, you require Python 3.10 and PyInstaller 6.0.0+.
+
+### Build Tooling (for packagers)
+
+Use `buildscripts/requirements-build.txt` for build-only tooling:
+
+* setuptools 78.1.1+
+* pyinstaller 6.0.0+
 
 ## Usage
 
