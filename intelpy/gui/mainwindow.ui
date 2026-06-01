@@ -814,7 +814,7 @@
              <item>
               <widget class="QLabel" name="label_12">
                <property name="text">
-                <string>v2.1</string>
+                <string>v2.2</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>

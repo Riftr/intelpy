@@ -501,7 +501,7 @@ class Ui_MainWindow(object):
         self.checkBoxDarkMode.setText(_translate("MainWindow", "Dark mode (restart required)"))
         self.tab_widget.setTabText(self.tab_widget.indexOf(self.advancedtab), _translate("MainWindow", "Config"))
         self.label.setText(_translate("MainWindow", "IntelPy"))
-        self.label_12.setText(_translate("MainWindow", "v2.1"))
+        self.label_12.setText(_translate("MainWindow", "v2.2"))
         self.label_2.setText(_translate("MainWindow", "<a href=\"https://github.com/Riftr/intelpy\">https://github.com/Riftr/intelpy</a>"))
         self.label_4.setText(_translate("MainWindow", "Main Developer"))
         self.label_8.setText(_translate("MainWindow", "Swizzles Saissore"))
