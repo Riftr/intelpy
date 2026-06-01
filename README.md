@@ -55,6 +55,10 @@ Use `buildscripts/requirements-build.txt` for build-only tooling:
 * setuptools 78.1.1+
 * pyinstaller 6.0.0+
 
+Validate dependency hygiene and minimum secure versions with:
+
+`python buildscripts/check_dependency_hygiene.py`
+
 ## Usage
 
 IntelPy watches your Eve Online chat logs for text that matches a solar system relative to your current location (home). 
